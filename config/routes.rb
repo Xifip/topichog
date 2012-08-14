@@ -1,4 +1,9 @@
 AssessmentApp::Application.routes.draw do
+  root to: 'static_pages#home'
+  match '/help', to: 'static_pages#help'
+
+  devise_for :users
+
   resources :company_assessments
 
 

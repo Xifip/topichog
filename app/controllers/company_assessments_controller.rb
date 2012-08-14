@@ -1,4 +1,5 @@
 class CompanyAssessmentsController < ApplicationController
+  before_filter :authenticate_user!
   def index
     #debugger
     @company_results = CompanyAssessment.all

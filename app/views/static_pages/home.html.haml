@@ -1,0 +1,11 @@
+.center.hero-unit
+  %h1 Product Innovator assessment app
+  %h2
+    This is the home page for the Product Innovator assessment application.
+  %p
+    - if user_signed_in?
+      = link_to 'Go to assessments', company_assessments_path, class: "btn btn-large btn-primary"
+      \#{link_to "Logout", destroy_user_session_path, method: :delete}
+    - else
+      = link_to "Sign up", new_user_registration_path, class: "btn btn-large btn-primary"
+      \#{link_to "Login", new_user_session_path} 
