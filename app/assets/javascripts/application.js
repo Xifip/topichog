@@ -12,4 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap
+//= require jquery.jqplot.min
+//= require jqplot_plugins/jqplot.pieRenderer.min.js
+//= require excanvas.min
 //= require_tree .
+

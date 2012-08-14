@@ -1,0 +1,25 @@
+!!! 5
+=include_gon
+%html
+  %head
+    %title Product Innovator Assessments
+    = stylesheet_link_tag 'application', media: "all"
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+
+  %body
+    %header.navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          .row
+            #logo.span4
+              %a{:href => "#"}
+                =image_tag "pi_logo.jpg"
+            .span8       
+              %nav
+                %ul.nav.pull-right
+                  %li= link_to "Home", '#'
+                  %li= link_to "Help", '#'
+                  %li= link_to "Sign in", '#'
+    .container
+      = yield

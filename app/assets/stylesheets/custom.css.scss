@@ -1,0 +1,27 @@
+@import "bootstrap";
+
+/* universal */
+html {
+overflow-y: scroll;
+}
+body {
+padding-top: 100px;
+}
+section {
+overflow: auto;
+}
+textarea {
+resize: vertical;
+}
+.center {
+text-align: center;
+}
+.center h1 {
+margin-bottom: 10px;
+}
+header {height:86px}
+#logo {
+        background-repeat: no-repeat;
+        background-position: top left;
+        height: 100%;
+      }

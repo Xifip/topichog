@@ -1,0 +1,17 @@
+%h1 Company Assessments
+
+%table#companyassessments.table  
+  %thead
+    %tr
+      %th=  @company_results.class
+      %th Date Assessed
+      %th Company Description
+      %th More Info
+  %tbody 
+    - @company_results.each do |result|
+      %tr
+        %td= result.company_name
+        %td= result.assessment_date.strftime("%B %d, %Y")
+        %td= result.description
+        %td= link_to "More about #{result.company_name}", company_assessment_path(result)
+      
