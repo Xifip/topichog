@@ -11,32 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120814101545) do
-
-  create_table "company_assessments", :force => true do |t|
-    t.string   "company_name"
-    t.datetime "assessment_date"
-    t.text     "description"
-    t.integer  "company_id"
-    t.decimal  "ma_satisfaction"
-    t.integer  "ma_satisfaction_count"
-    t.decimal  "ma_impact_high"
-    t.decimal  "ma_impact_med"
-    t.decimal  "ma_impact_low"
-    t.integer  "ma_impact_count"
-    t.decimal  "ma_urgency_high"
-    t.decimal  "ma_urgency_med"
-    t.decimal  "ma_urgency_low"
-    t.integer  "ma_urgency_count"
-    t.decimal  "ma_tasks_research"
-    t.decimal  "ma_tasks_segmentation"
-    t.decimal  "ma_tasks_customer_analysis"
-    t.decimal  "ma_tasks_swot"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
-  end
-
-  add_index "company_assessments", ["company_id", "created_at"], :name => "index_company_assessments_on_company_id_and_created_at"
+ActiveRecord::Schema.define(:version => 20120821115723) do
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
