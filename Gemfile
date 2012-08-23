@@ -10,6 +10,7 @@ gem 'devise'
 group :development, :test do
 gem 'sqlite3', '1.3.5'
 #gem 'ruby-debug19'
+gem 'debugger'
 end
 # Gems used only for assets and not required
 # in production environments by default.
@@ -43,6 +44,4 @@ end
 # use Haml for templates
 gem 'haml'
 
-group :development do
-  gem 'debugger'
-end
+
