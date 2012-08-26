@@ -1,8 +1,8 @@
 ### UTILITY METHODS ###
 
 def create_visitor
-  @visitor ||= { :name => "TestyMcUserton", :email => "example@example.com",
-    :password => "please", :password_confirmation => "please" }   
+  @visitor ||= { :name => "Testy McUserton", :email => "example@example.com",
+    :password => "foobar", :password_confirmation => "foobar" }   
 end
 
 def find_user
@@ -19,7 +19,7 @@ end
 def create_user
   create_visitor
   delete_user
-  @user = FactoryGirl.create(:user, email: @visitor[:email])
+  @user = FactoryGirl.create(:user, name: @visitor[:name])
 end
 
 def delete_user

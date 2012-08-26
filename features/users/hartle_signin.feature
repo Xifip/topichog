@@ -10,4 +10,4 @@ Feature: Signing in
 		And the user has an account
 		And the user submits valid signin information
 		Then he should see a success message
-		And he should see a signout link
+		And he should see a signout link		

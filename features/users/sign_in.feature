@@ -3,26 +3,32 @@ Feature: Sign in
   A user
   Should be able to sign in
 
+    Scenario: User is not signed up
+      Given I do not exist as a user
+      When I sign in with valid credentials
+      Then I see an invalid login message
+        And I should be signed out
+
     Scenario: User signs in successfully
       Given I exist as a user
-      And I am not logged in
+        And I am not logged in
       When I sign in with valid credentials
+      Then I see a successful sign in message
       When I return to the site
       Then I should be signed in
-      
-      Scenario: User signs in successfully 2
-      Given a user visits the signin page
-	  And the user has an account
-      And the user submits valid signin information
-	  Then he should see a success message
-	  And he should see a signout link
-	  
-	  Scenario: User signs in successfully 3      
-      And I am not logged in
-      When I sign in with valid credentials
-      Then he should see a success message
-	  And he should see a signout link
 
-  
+    Scenario: User enters wrong username
+      Given I exist as a user
+      And I am not logged in
+      When I sign in with a wrong username
+      Then I see an invalid login message
+      And I should be signed out
+      
+    Scenario: User enters wrong password
+      Given I exist as a user
+      And I am not logged in
+      When I sign in with a wrong password
+      Then I see an invalid login message
+      And I should be signed out
 
       
