@@ -1,4 +1,8 @@
 AssessmentApp::Application.routes.draw do
+  authenticated :user do
+    root :to => 'static_pages#home'
+  end
+  
   root to: 'static_pages#home'
   match '/help', to: 'static_pages#help'
 
