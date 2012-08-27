@@ -21,7 +21,7 @@ gem 'uglifier', '1.2.3'
 end
 gem 'jquery-rails'
 group :test, :development do
-gem 'rspec-rails', '2.10.0'
+gem 'rspec-rails', '2.11.0'
 gem 'ZenTest'
 gem 'guard-rspec', '0.5.5'
 gem 'guard-spork', '0.3.2'
