@@ -2,7 +2,7 @@
 
 def create_visitor
   @visitor ||= { :name => "Testy McUserton", :email => "example@example.com",
-    :password => "foobar", :password_confirmation => "foobar" }   
+    :password => "foobar", :password_confirmation => "foobar" }
 end
 
 def find_user
@@ -13,13 +13,14 @@ def create_unconfirmed_user
   create_visitor
   delete_user
   sign_up
-  visit '/users/sign_out'
+  #visit '/users/sign_out'
+  visit destroy_user_session_path
 end
 
 def create_user
   create_visitor
   delete_user
-  @user = FactoryGirl.create(:user, name: @visitor[:name])
+  @user = FactoryGirl.create(:user, email: @visitor[:email])
 end
 
 def delete_user
@@ -29,7 +30,8 @@ end
 
 def sign_up
   delete_user
-  visit '/users/sign_up'
+  #visit '/users/sign_up'
+  visit new_user_registration_path
   fill_in "Name", :with => @visitor[:name]
   fill_in "Email", :with => @visitor[:email]
   fill_in "Password", :with => @visitor[:password]
@@ -39,15 +41,17 @@ def sign_up
 end
 
 def sign_in
-  visit '/users/sign_in'  
-  fill_in "Name", :with => @visitor[:name]
+  #visit '/users/sign_up'
+  visit new_user_session_path
+  fill_in "Email", :with => @visitor[:email]
   fill_in "Password", :with => @visitor[:password]
   click_button "Sign in"
 end
 
 ### GIVEN ###
-Given /^I am not logged in$/ do  
-  visit '/users/sign_out'
+Given /^I am not logged in$/ do
+  #visit '/users/sign_out'
+  visit destroy_user_session_path
 end
 
 Given /^I am logged in$/ do
@@ -59,7 +63,7 @@ Given /^I exist as a user$/ do
   create_user
 end
 
-Given /^I do not exist as a user$/ do  
+Given /^I do not exist as a user$/ do
   create_visitor
   delete_user
 end
@@ -75,7 +79,8 @@ When /^I sign in with valid credentials$/ do
 end
 
 When /^I sign out$/ do
-  visit '/users/sign_out'
+  #visit '/users/sign_out'
+  visit destroy_user_session_path
 end
 
 When /^I sign up with valid user data$/ do
@@ -103,16 +108,17 @@ end
 
 When /^I sign up with a mismatched password confirmation$/ do
   create_visitor
-  @visitor = @visitor.merge(:password_confirmation => "please123")
+  @visitor = @visitor.merge(:password_confirmation => "foobar123")
   sign_up
 end
 
 When /^I return to the site$/ do
-  visit '/'
+  #visit '/'
+  visit root_path
 end
 
-When /^I sign in with a wrong username$/ do
-  @visitor = @visitor.merge(:name => "wrong_user_name")
+When /^I sign in with a wrong email$/ do
+  @visitor = @visitor.merge(:email => "wrong@example.com")
   sign_in
 end
 
@@ -129,7 +135,8 @@ When /^I edit my account details$/ do
 end
 
 When /^I look at the list of users$/ do
-  visit '/'
+  #visit '/'
+  visit root_path
 end
 
 ### THEN ###
@@ -189,5 +196,3 @@ Then /^I should see my name$/ do
   create_user
   page.should have_content @user[:name]
 end
-
-

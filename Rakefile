@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-AssessmentApp::Application.load_tasks
+TopicHog::Application.load_tasks

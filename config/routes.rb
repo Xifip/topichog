@@ -1,4 +1,4 @@
-AssessmentApp::Application.routes.draw do
+TopicHog::Application.routes.draw do
   authenticated :user do
     root :to => 'static_pages#home'
   end
@@ -7,7 +7,7 @@ AssessmentApp::Application.routes.draw do
   match '/help', to: 'static_pages#help'
 
   devise_for :users
-
+  resources :users, :only => [:show, :index]
 
 
   # The priority is based upon order of creation:
