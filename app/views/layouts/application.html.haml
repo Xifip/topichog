@@ -25,11 +25,11 @@
                     %li.dropdown
                       %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
                         = succeed "." do
-                          %strong= current_user.email
+                          %strong= current_user.name
                         %b.caret
                       %ul.dropdown-menu
                         %li
-                          = link_to 'Edit profile', edit_user_registration_path
+                          = link_to 'Edit account', edit_user_registration_path
                           \#{link_to "Logout", destroy_user_session_path, method: :delete}             
                   - else
                     %li
