@@ -1,0 +1,63 @@
+{
+  "RSpec": {
+    "coverage": {
+      "C:/Development/rails_projects/topichog/app/models/user.rb": [
+        1,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        null,
+        1,
+        null,
+        1,
+        1,
+        null
+      ],
+      "C:/Development/rails_projects/topichog/app/controllers/application_controller.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        1,
+        null,
+        null
+      ],
+      "C:/Development/rails_projects/topichog/app/helpers/application_helper.rb": [
+        1,
+        null
+      ],
+      "C:/Development/rails_projects/topichog/app/helpers/static_pages_helper.rb": [
+        1,
+        null
+      ],
+      "C:/Development/rails_projects/topichog/app/controllers/static_pages_controller.rb": [
+        1,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null
+      ],
+      "C:/Development/rails_projects/topichog/app/controllers/users_controller.rb": [
+        1,
+        1,
+        null,
+        1,
+        1,
+        null,
+        null,
+        1,
+        2,
+        null,
+        null,
+        null
+      ]
+    },
+    "timestamp": 1346148616
+  }
+}

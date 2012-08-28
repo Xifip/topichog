@@ -1,5 +1,5 @@
 require 'spec_helper'
-
+require 'debugger'
 describe UsersController do
 
   before (:each) do
@@ -20,5 +20,14 @@ describe UsersController do
     end
     
   end
+  
+  describe "GET 'index'" do
+  it "populates an list of users" do
+      
+      User.stub(:all).and_return(@user)
+      get :index       
+      assigns(:users).should == @user      
+    end
+  end  
 
 end

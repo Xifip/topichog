@@ -6,5 +6,7 @@ Feature: Show Users
 
     Scenario: I sign in and view users
       Given I am logged in
+      And I should see my profile
       When I look at the list of users
-      Then I should see my name
+      Then I should be on the user list page
+      And I should see my name

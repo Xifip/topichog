@@ -113,8 +113,8 @@ When /^I sign up with a mismatched password confirmation$/ do
 end
 
 When /^I return to the site$/ do
-  visit '/'
-  #visit help_path
+  #visit '/'
+  visit root_path
 end
 
 When /^I sign in with a wrong email$/ do
@@ -134,8 +134,7 @@ When /^I edit my account details$/ do
   click_button "Update"
 end
 
-When /^I look at the list of users$/ do
-  #visit '/'
+When /^I look at the list of users$/ do  
   click_link "View all users"
 end
 
@@ -144,6 +143,9 @@ Then /^I should be signed in$/ do
   page.should have_content "Logout"
   page.should_not have_content "Sign up"
   page.should_not have_content "Login"
+end
+Then /^I should be on the user list page/ do
+  page.should have_content "Users list"
 end
 
 Then /^I should be signed out$/ do

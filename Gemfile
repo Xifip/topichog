@@ -21,6 +21,7 @@ gem 'uglifier', '1.2.3'
 end
 gem 'jquery-rails'
 group :test, :development do
+gem 'simplecov', :require => false
 gem 'rspec-rails', '2.11.0'
 gem 'ZenTest'
 gem 'guard-rspec', '0.5.5'

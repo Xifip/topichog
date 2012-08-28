@@ -14,6 +14,7 @@ Feature: Sign in
         And I am not logged in
       When I sign in with valid credentials
       Then I see a successful sign in message
+      And I should see my profile
       When I return to the site
       Then I should be signed in
 
