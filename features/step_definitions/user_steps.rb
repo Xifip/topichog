@@ -113,8 +113,8 @@ When /^I sign up with a mismatched password confirmation$/ do
 end
 
 When /^I return to the site$/ do
-  #visit '/'
-  visit root_path
+  visit '/'
+  #visit help_path
 end
 
 When /^I sign in with a wrong email$/ do
@@ -136,7 +136,7 @@ end
 
 When /^I look at the list of users$/ do
   #visit '/'
-  visit root_path
+  click_link "View all users"
 end
 
 ### THEN ###
@@ -195,4 +195,8 @@ end
 Then /^I should see my name$/ do
   create_user
   page.should have_content @user[:name]
+end
+
+Then /^I should see my profile$/ do
+  page.should have_content "Profile page"
 end
