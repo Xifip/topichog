@@ -13,11 +13,12 @@
         1,
         null,
         1,
+        null,
+        1,
         1,
         null
       ],
       "C:/Development/rails_projects/topichog/app/controllers/application_controller.rb": [
-        1,
         1,
         1,
         1,
@@ -56,8 +57,19 @@
         null,
         null,
         null
+      ],
+      "C:/Development/rails_projects/topichog/app/models/project.rb": [
+        1,
+        1,
+        1,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null
       ]
     },
-    "timestamp": 1346148616
+    "timestamp": 1346173439
   }
 }

@@ -99,5 +99,42 @@ describe User do
     end
 
   end
-
+ describe "fields that user responds to" do 
+    before do
+        @user = User.new(@attr)
+      end
+    
+    subject {@user}
+    
+    it { should respond_to(:name) }
+    it { should respond_to(:email) }
+    it { should respond_to(:projects) }
+  end
+  
+  describe "project associations" do
+    before do
+        @user = User.new(@attr)
+        @user.save
+      end
+    #before { @user.save }
+    let!(:older_project) do
+      FactoryGirl.create(:project, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_project) do
+      FactoryGirl.create(:project, user: @user, created_at: 1.hour.ago)
+    end
+    it "should have the right projects in the right order" do
+      @user.projects.should == [newer_project, older_project]
+    end
+    
+    it "should destroy associated projects" do
+      projects = @user.projects
+      @user.destroy
+      projects.each do |project|
+        Project.find_by_id(project.id).should be_nil
+      end
+    end
+  end
+  
+  
 end

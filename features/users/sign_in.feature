@@ -13,7 +13,6 @@ Feature: Sign in
       Given I exist as a user
         And I am not logged in
       When I sign in with valid credentials
-      Then I should see my profile
       Then I see a successful sign in message
       And I should see my profile
       When I return to the site
