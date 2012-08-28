@@ -134,9 +134,8 @@ When /^I edit my account details$/ do
   click_button "Update"
 end
 
-When /^I look at the list of users$/ do
-  #visit '/'
-  visit root_path
+When /^I look at the list of users$/ do  
+  click_link "View all users"
 end
 
 ### THEN ###
@@ -144,6 +143,9 @@ Then /^I should be signed in$/ do
   page.should have_content "Logout"
   page.should_not have_content "Sign up"
   page.should_not have_content "Login"
+end
+Then /^I should be on the user list page/ do
+  page.should have_content "Users list"
 end
 
 Then /^I should be signed out$/ do
@@ -195,4 +197,8 @@ end
 Then /^I should see my name$/ do
   create_user
   page.should have_content @user[:name]
+end
+
+Then /^I should see my profile$/ do
+  page.should have_content "Profile page"
 end

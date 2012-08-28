@@ -1,12 +1,15 @@
 TopicHog::Application.routes.draw do
+  
   authenticated :user do
     root :to => 'static_pages#home'
   end
   
   root to: 'static_pages#home'
   match '/help', to: 'static_pages#help'
-
-  devise_for :users
+  #match 'users' => 'users#index', :as => 'user_root'
+  #match 'users/:id' => 'users#show', :as => 'user_root'
+  
+  devise_for :users #, :controllers => { :registrations => "registrations" } 
   resources :users, :only => [:show, :index]
 
 
@@ -67,3 +70,4 @@ TopicHog::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
 end
+
