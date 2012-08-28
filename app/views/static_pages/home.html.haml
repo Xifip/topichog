@@ -4,7 +4,7 @@
     This is the home page TopicHog Beta
   %p
     - if user_signed_in?
-      = link_to 'Go to assessments', new_user_registration_path, class: "btn btn-large btn-primary"
+      = link_to 'My profile', new_user_registration_path, class: "btn btn-large btn-primary"
       \#{link_to "Logout", destroy_user_session_path, method: :delete}
     - else
       = link_to "Sign up", new_user_registration_path, class: "btn btn-large btn-primary"
