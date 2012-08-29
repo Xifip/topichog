@@ -1,11 +1,17 @@
-.center.hero-unit
-  %h1 TopicHog
-  %h2
-    This is the home page TopicHog Beta
-  %p
-    - if user_signed_in?
-      = link_to 'My profile', user_path(current_user), class: "btn btn-large btn-primary"
-      \#{link_to "Logout", destroy_user_session_path, method: :delete}
-    - else
-      = link_to "Sign up", new_user_registration_path, class: "btn btn-large btn-primary"
-      \#{link_to "Login", new_user_session_path} 
+- if user_signed_in?
+  .row
+    %aside.span4
+      %section
+        = render 'shared/user_info'
+      %section
+        = render 'shared/project_form'
+  .span8
+    %h3 Project Feed
+    = render 'shared/project_feed'
+- else
+  .center.hero-unit
+    %h1 Welcome to TopicHog Beta
+    %h2
+      Organise resources for topics you're interested in and showcase your project work 
+    = link_to "Sign up now!", new_user_registration_path, |
+      class: "btn btn-large btn-primary"   |

@@ -1,0 +1,4 @@
+- if @project_feed_items.any?
+  %ol.microposts
+    = render partial: 'shared/project_feed_item', collection: @project_feed_items
+  = will_paginate @project_feed_items

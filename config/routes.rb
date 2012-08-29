@@ -6,12 +6,10 @@ TopicHog::Application.routes.draw do
   
   root to: 'static_pages#home'
   match '/help', to: 'static_pages#help'
-  #match 'users' => 'users#index', :as => 'user_root'
-  #match 'users/:id' => 'users#show', :as => 'user_root'
   
   devise_for :users #, :controllers => { :registrations => "registrations" } 
   resources :users, :only => [:show, :index]
-
+  resources :projects, only: [:create, :destroy]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

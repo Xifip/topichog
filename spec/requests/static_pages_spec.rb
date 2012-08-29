@@ -20,4 +20,6 @@ describe "StaticPages" do
       page.should have_content('TopicHog Help page')
     end
   end
+  
+
 end

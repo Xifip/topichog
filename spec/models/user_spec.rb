@@ -109,6 +109,7 @@ describe User do
     it { should respond_to(:name) }
     it { should respond_to(:email) }
     it { should respond_to(:projects) }
+    it { should respond_to(:project_feed) }
   end
   
   describe "project associations" do
@@ -134,7 +135,17 @@ describe User do
         Project.find_by_id(project.id).should be_nil
       end
     end
-  end
   
+    describe "status" do
+      let(:unfollowed_project) do
+        FactoryGirl.create(:project, user: FactoryGirl.create(:user))
+      end
+      
+      subject {@user}
+      its(:project_feed) { should include(newer_project) }
+      its(:project_feed) { should include(older_project) }
+      its(:project_feed) { should_not include(unfollowed_project) }
+    end
+  end 
   
 end

@@ -1,6 +1,6 @@
 Feature: Access my projects from my profile page
   As a signed in user
-  I should be see myprojects listed on my profile page
+  I should be see my projects listed on my profile page
   So that I can easily manage my projects
 
     Scenario: A signed in user sees their projects on their profile page
@@ -16,4 +16,3 @@ Feature: Access my projects from my profile page
 	Scenario:  A signed in user can edit the details of a project
 	
 	Scenario:  A signed in user can delete a project
-	

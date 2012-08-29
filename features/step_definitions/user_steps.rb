@@ -1,3 +1,4 @@
+require 'debugger'
 ### UTILITY METHODS ###
 
 def create_visitor
@@ -46,6 +47,10 @@ def sign_in
   fill_in "Email", :with => @visitor[:email]
   fill_in "Password", :with => @visitor[:password]
   click_button "Sign in"
+end
+
+def current_path
+  URI.parse(current_url).path
 end
 
 ### GIVEN ###
@@ -117,6 +122,11 @@ When /^I return to the site$/ do
   visit root_path
 end
 
+When /^I am on the home page$/ do
+  #visit '/'
+  visit root_path
+end
+
 When /^I sign in with a wrong email$/ do
   @visitor = @visitor.merge(:email => "wrong@example.com")
   sign_in
@@ -138,7 +148,10 @@ When /^I look at the list of users$/ do
   click_link "View all users"
 end
 
+
 ### THEN ###
+
+
 Then /^I should be signed in$/ do
   page.should have_content "Logout"
   page.should_not have_content "Sign up"

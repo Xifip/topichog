@@ -1,0 +1,7 @@
+%li{:id => project_feed_item.id}  
+  %span.user
+    = link_to project_feed_item.user.name, project_feed_item.user
+  %span.title= project_feed_item.title
+  %span.summary= project_feed_item.summary
+  %span.timestamp
+    Posted #{time_ago_in_words(project_feed_item.created_at)} ago.
