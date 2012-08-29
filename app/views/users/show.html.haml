@@ -1,6 +1,13 @@
 %h3 Profile page
-%p
+%h1
   User: #{@user.name}
 %p
   Email: #{@user.email if @user.email}
 %p= link_to "View all users", users_path
+.span8
+  - if @user.projects.any?
+    %h3
+      Projects (#{@user.projects.count})
+    %ol.projects
+      = render @projects
+    = will_paginate @projects

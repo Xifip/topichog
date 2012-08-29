@@ -201,4 +201,6 @@ end
 
 Then /^I should see my profile$/ do
   page.should have_content "Profile page"
+  page.should have_selector('h1', text: @user.name)
+  #page.have_selector('title', text: @user.name) 
 end

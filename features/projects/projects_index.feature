@@ -5,9 +5,10 @@ Feature: Access my projects from my profile page
 
     Scenario: A signed in user sees their projects on their profile page
       Given I exist as a user
+      And I have projects
       And I am not logged in
       When I sign in with valid credentials
-      Then I should see my profile
+      Then I should see my profile      
       And I should see my projects
     
 	Scenario:  A signed in user can view the details of a project
