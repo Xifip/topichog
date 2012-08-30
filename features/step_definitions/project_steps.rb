@@ -3,8 +3,17 @@ def create_projects
   @m2 = FactoryGirl.create(:project, user: @user, title: "Bar", summary: "barley") 
 end
 
+def create_a_project
+  @m3 = FactoryGirl.create(:project, user: @user, title: "Foo", summary: "football") 
+end
+
+
 Given /^I have projects/ do
   create_projects
+end
+
+Given /^I have a project/ do
+  create_a_project
 end
 
 And /^I should see my projects$/ do
@@ -29,6 +38,10 @@ end
 
 When /^I click save the project should be saved$/ do
     expect { click_button "Submit" }.to change(Project, :count).by(1)
+end
+
+When /^I click delete the project should be deleted$/ do
+    expect { click_link "delete" }.to change(Project, :count).by(-1)
 end
 
 Then /^I should get an error message$/ do

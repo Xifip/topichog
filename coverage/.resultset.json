@@ -19,7 +19,7 @@
         null,
         1,
         null,
-        4,
+        3,
         null,
         null
       ],
@@ -43,6 +43,7 @@
       "C:/Development/rails_projects/topichog/app/controllers/projects_controller.rb": [
         1,
         1,
+        1,
         null,
         1,
         null,
@@ -55,11 +56,20 @@
         0,
         null,
         0,
+        0,
         null,
         null,
         null,
         1,
+        0,
+        0,
         null,
+        null,
+        1,
+        null,
+        1,
+        0,
+        0,
         null,
         null
       ],
@@ -103,6 +113,6 @@
         null
       ]
     },
-    "timestamp": 1346276493
+    "timestamp": 1346326273
   }
 }
