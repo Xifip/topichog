@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    debugger
     @projects = @user.projects.paginate(page: params[:page])
   end
 

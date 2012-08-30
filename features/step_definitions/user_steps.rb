@@ -24,6 +24,13 @@ def create_user
   @user = FactoryGirl.create(:user, email: @visitor[:email])
 end
 
+def create_other_user
+  #create_visitor
+  #delete_user
+  @other_user = FactoryGirl.create(:user, :name => "Following McUserton", :email => "following@example.com",
+    :password => "foobar", :password_confirmation => "foobar")
+end
+
 def delete_user
   @user ||= User.where(:email => @visitor[:email]).first
   @user.destroy unless @user.nil?
