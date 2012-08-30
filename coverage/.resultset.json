@@ -13,6 +13,12 @@
         1,
         null,
         1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
         null,
         1,
         1,
@@ -20,6 +26,17 @@
         1,
         null,
         3,
+        null,
+        null,
+        1,
+        2,
+        null,
+        null,
+        1,
+        5,
+        null,
+        1,
+        2,
         null,
         null
       ],
@@ -111,8 +128,19 @@
         null,
         null,
         null
+      ],
+      "C:/Development/rails_projects/topichog/app/models/relationship.rb": [
+        1,
+        1,
+        null,
+        1,
+        1,
+        null,
+        1,
+        1,
+        null
       ]
     },
-    "timestamp": 1346326273
+    "timestamp": 1346343741
   }
 }
