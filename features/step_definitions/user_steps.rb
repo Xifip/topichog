@@ -156,7 +156,7 @@ When /^I edit my account details$/ do
   click_button "Update"
 end
 
-When /^I look at the list of users$/ do  
+When /^I click the link "View all users"$/ do  
   click_link "View all users"
 end
 
@@ -169,7 +169,7 @@ Then /^I should be signed in$/ do
   page.should_not have_content "Sign up"
   page.should_not have_content "Login"
 end
-Then /^I should be on the user list page/ do
+Then /^I should see the user list/ do
   page.should have_content "Users list"
 end
 
