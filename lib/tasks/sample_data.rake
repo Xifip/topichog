@@ -22,12 +22,9 @@ def make_users
                     password: password,
                     password_confirmation: password)
     end
-end   
+end      
     
-       
-
-
-def make_microposts    
+def make_projects  
   users = User.all(limit: 6)
   50.times do
     title = Faker::Lorem.words(1)
