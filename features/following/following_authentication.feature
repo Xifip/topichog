@@ -7,11 +7,9 @@ Feature: authentication for following and follower pages
     Scenario: I am not signed in and try to view follower pages
       Given I am not logged in
       And I visit a users follower page
-      Then I should be on the root page
-      And I should be signed out
+      Then I should be redirected to the root page
 
 	Scenario: I am not signed in and try to view following pages
       Given I am not logged in
       And I visit a users following page
-      Then I should be on the root page
-      And I should be signed out
+      Then I should be redirected to the root page

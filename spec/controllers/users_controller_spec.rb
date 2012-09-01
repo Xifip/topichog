@@ -24,7 +24,8 @@ describe UsersController do
   describe "GET 'index'" do
   it "populates an list of users" do
       
-      User.stub(:all).and_return(@user)
+      User.stub(:paginate).and_return(@user)
+      #User.stub(:all).and_return(@user)
       get :index       
       assigns(:users).should == @user      
     end
