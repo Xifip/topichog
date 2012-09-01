@@ -23,26 +23,26 @@
       <img src="./assets/0.5.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2012-09-01T13:27:07+01:00">2012-09-01T13:27:07+01:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2012-09-01T19:32:57+01:00">2012-09-01T19:32:57+01:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="red">78.72%</span></span>
+    (<span class="covered_percent"><span class="red">79.59%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         2.23
+         2.45
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>11</b> files in total.
-    <b>94</b> relevant lines. 
-    <span class="green"><b>74</b> lines covered</span> and
+    <b>98</b> relevant lines. 
+    <span class="green"><b>78</b> lines covered</span> and
     <span class="red"><b>20</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -82,11 +82,11 @@
       <tr>
         <td class="strong"><a href="#6bdb5d3a5ab2b0c9e9ba5dde3e13646d51940e85" class="src_link" title="app/controllers/relationships_controller.rb">app/controllers/relationships_controller.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>16</td>
-        <td>10</td>
-        <td>10</td>
+        <td>22</td>
+        <td>14</td>
+        <td>14</td>
         <td>0</td>
-        <td>2.2</td>
+        <td>4.3</td>
       </tr>
       
       <tr>
@@ -166,7 +166,7 @@
         <td>18</td>
         <td>18</td>
         <td>0</td>
-        <td>2.6</td>
+        <td>2.9</td>
       </tr>
       
     </tbody>
@@ -178,19 +178,19 @@
           <div class="file_list_container" id="Controllers">
   <h2>
     <span class="group_name">Controllers</span>
-    (<span class="covered_percent"><span class="red">63.64%</span></span>
+    (<span class="covered_percent"><span class="red">66.1%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         1.38
+         1.8
        </span>
     </span> hits/line)
   </h2>
   <a name="Controllers"></a>
   <div>
     <b>5</b> files in total.
-    <b>55</b> relevant lines. 
-    <span class="green"><b>35</b> lines covered</span> and
+    <b>59</b> relevant lines. 
+    <span class="green"><b>39</b> lines covered</span> and
     <span class="red"><b>20</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -230,11 +230,11 @@
       <tr>
         <td class="strong"><a href="#6bdb5d3a5ab2b0c9e9ba5dde3e13646d51940e85" class="src_link" title="app/controllers/relationships_controller.rb">app/controllers/relationships_controller.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>16</td>
-        <td>10</td>
-        <td>10</td>
+        <td>22</td>
+        <td>14</td>
+        <td>14</td>
         <td>0</td>
-        <td>2.2</td>
+        <td>4.3</td>
       </tr>
       
       <tr>
@@ -269,7 +269,7 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         1.53
+         1.63
        </span>
     </span> hits/line)
   </h2>
@@ -321,7 +321,7 @@
         <td>18</td>
         <td>18</td>
         <td>0</td>
-        <td>2.6</td>
+        <td>2.9</td>
       </tr>
       
     </tbody>
@@ -786,8 +786,8 @@
     <h3>app/controllers/relationships_controller.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>10</b> relevant lines. 
-      <span class="green"><b>10</b> lines covered</span> and
+      <b>14</b> relevant lines. 
+      <span class="green"><b>14</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -816,76 +816,112 @@
         <li class="covered" data-hits="1" data-linenumber="4">
           <span class="hits">1</span>
           
-          <code class="ruby">  def create</code>
+          <code class="ruby">  def create    </code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="5">
-          <span class="hits">3</span>
+        <li class="covered" data-hits="5" data-linenumber="5">
+          <span class="hits">5</span>
           
           <code class="ruby">    @user = User.find(params[:relationship][:followed_id])</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="6">
-          <span class="hits">3</span>
+        <li class="covered" data-hits="5" data-linenumber="6">
+          <span class="hits">5</span>
           
           <code class="ruby">    current_user.follow!(@user)</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="7">
-          <span class="hits">3</span>
+        <li class="covered" data-hits="5" data-linenumber="7">
+          <span class="hits">5</span>
           
-          <code class="ruby">    redirect_to @user</code>
+          <code class="ruby">    respond_to do |format|</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="8">
+        <li class="covered" data-hits="8" data-linenumber="8">
+          <span class="hits">8</span>
+          
+          <code class="ruby">      format.html { redirect_to @user }</code>
+        </li>
+      
+        <li class="covered" data-hits="5" data-linenumber="9">
+          <span class="hits">5</span>
+          
+          <code class="ruby">      format.js</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="10">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="11">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="9">
+        <li class="never" data-hits="" data-linenumber="12">
           
           
           <code class="ruby">  </code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="10">
+        <li class="covered" data-hits="1" data-linenumber="13">
           <span class="hits">1</span>
           
           <code class="ruby">  def destroy</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="11">
-          <span class="hits">3</span>
+        <li class="covered" data-hits="5" data-linenumber="14">
+          <span class="hits">5</span>
           
           <code class="ruby">    @user = Relationship.find(params[:id]).followed</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="12">
-          <span class="hits">3</span>
+        <li class="covered" data-hits="5" data-linenumber="15">
+          <span class="hits">5</span>
           
           <code class="ruby">    current_user.unfollow!(@user)</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="13">
-          <span class="hits">3</span>
+        <li class="covered" data-hits="5" data-linenumber="16">
+          <span class="hits">5</span>
           
-          <code class="ruby">    redirect_to @user</code>
+          <code class="ruby">    respond_to do |format|</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="14">
+        <li class="covered" data-hits="8" data-linenumber="17">
+          <span class="hits">8</span>
+          
+          <code class="ruby">      format.html { redirect_to @user }</code>
+        </li>
+      
+        <li class="covered" data-hits="5" data-linenumber="18">
+          <span class="hits">5</span>
+          
+          <code class="ruby">      format.js</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="19">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="20">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="15">
+        <li class="never" data-hits="" data-linenumber="21">
           
           
           <code class="ruby">  </code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="16">
+        <li class="never" data-hits="" data-linenumber="22">
           
           
           <code class="ruby">end</code>
@@ -1635,8 +1671,8 @@
           <code class="ruby">  def follow!(other_user)</code>
         </li>
       
-        <li class="covered" data-hits="11" data-linenumber="32">
-          <span class="hits">11</span>
+        <li class="covered" data-hits="15" data-linenumber="32">
+          <span class="hits">15</span>
           
           <code class="ruby">    relationships.create!(followed_id: other_user.id)</code>
         </li>
@@ -1653,8 +1689,8 @@
           <code class="ruby">  def unfollow!(other_user)</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="35">
-          <span class="hits">5</span>
+        <li class="covered" data-hits="7" data-linenumber="35">
+          <span class="hits">7</span>
           
           <code class="ruby">    relationships.find_by_followed_id(other_user.id).destroy</code>
         </li>
