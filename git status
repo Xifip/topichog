@@ -1,0 +1,99 @@
+[1mdiff --git a/app/views/users/show.html.erb b/app/views/users/show.html.erb[m
+[1mdeleted file mode 100644[m
+[1mindex a03139e..0000000[m
+[1m--- a/app/views/users/show.html.erb[m
+[1m+++ /dev/null[m
+[36m@@ -1,19 +0,0 @@[m
+[31m-%h3 Profile page[m
+[31m-.row[m
+[31m-  %aside.span4[m
+[31m-    %section[m
+[31m-      %h1[m
+[31m-        User: #{@user.name}[m
+[31m-      %p[m
+[31m-        Email: #{@user.email if @user.email}[m
+[31m-      %p= link_to "View all users", users_path[m
+[31m-    %section[m
+[31m-      = render 'shared/stats'[m
+[31m-  .span8[m
+[31m-    = render 'follow_form' if user_signed_in?[m
+[31m-    - if @user.projects.any?[m
+[31m-      %h3[m
+[31m-        Projects (#{@user.projects.count})[m
+[31m-      %ol.projects[m
+[31m-        = render @projects[m
+[31m-      = will_paginate @projects[m
+\ No newline at end of file[m
+[1mdiff --git a/features/step_definitions/hartle_auth_steps.rb b/features/step_definitions/hartle_auth_steps.rb[m
+[1mdeleted file mode 100644[m
+[1mindex 2b02ad6..0000000[m
+[1m--- a/features/step_definitions/hartle_auth_steps.rb[m
+[1m+++ /dev/null[m
+[36m@@ -1,30 +0,0 @@[m
+[31m-Given /^a user visits the signin page$/ do[m
+[31m-visit '/users/sign_in'[m
+[31m-end[m
+[31m-When /^he submits invalid signin information$/ do[m
+[31m-click_button "Sign in"[m
+[31m-end[m
+[31m-Then /^he should see an error message$/ do[m
+[31m-page.should have_content('Invalid email or password')[m
+[31m-#page.should have_selector('div.alert.alert-error')[m
+[31m-end[m
+[31m-Then /^he should see a success message$/ do[m
+[31m-page.should have_content('Signed in successfully')[m
+[31m-#page.should have_selector('div.alert.alert-error')[m
+[31m-end[m
+[31m-Given /^the user has an account$/ do[m
+[31m-@user = User.create(name: "ExampleUser", email: "user@example.com",[m
+[31m-password: "foobar", password_confirmation: "foobar")[m
+[31m-end[m
+[31m-When /^the user submits valid signin information$/ do[m
+[31m-fill_in "Name", with: @user.name[m
+[31m-#fill_in "Email", with: @user.email[m
+[31m-fill_in "Password", with: @user.password[m
+[31m-click_button "Sign in"[m
+[31m-end[m
+[31m-Then /^he should see his profile page$/ do[m
+[31m-page.should have_selector('title', text: @user.name)[m
+[31m-end[m
+[31m-Then /^he should see a signout link$/ do[m
+[31m-page.should have_link('Logout', href: '/users/sign_out')[m
+[31m-end[m
+\ No newline at end of file[m
+[1mdiff --git a/features/users/hartle_signin.feature b/features/users/hartle_signin.feature[m
+[1mdeleted file mode 100644[m
+[1mindex 0e2abf1..0000000[m
+[1m--- a/features/users/hartle_signin.feature[m
+[1m+++ /dev/null[m
+[36m@@ -1,13 +0,0 @@[m
+[31m-Feature: Signing in[m
+[31m-[m
+[31m-	Scenario: Unsuccessful signin[m
+[31m-		Given a user visits the signin page[m
+[31m-		When he submits invalid signin information[m
+[31m-		Then he should see an error message[m
+[31m-		[m
+[31m-	Scenario: Successful signin[m
+[31m-		Given a user visits the signin page[m
+[31m-		And the user has an account[m
+[31m-		And the user submits valid signin information[m
+[31m-		Then he should see a success message[m
+[31m-		And he should see a signout link		[m
+\ No newline at end of file[m
+[1mdiff --git a/spec/factories.rb b/spec/factories.rb[m
+[1mdeleted file mode 100644[m
+[1mindex 0cec470..0000000[m
+[1m--- a/spec/factories.rb[m
+[1m+++ /dev/null[m
+[36m@@ -1,9 +0,0 @@[m
+[31m-FactoryGirl.define do[m
+[31m-  factory :user do[m
+[31m-    name "Michael Hartl"[m
+[31m-    email "michael@example.com"[m
+[31m-    password "foobar"[m
+[31m-    password_confirmation "foobar"[m
+[31m-    remember_me false[m
+[31m-  end[m
+[31m-end[m
+\ No newline at end of file[m
