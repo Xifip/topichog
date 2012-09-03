@@ -19,9 +19,8 @@ class User < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name, :email, :case_sensitive => false
   
-  def project_feed
-    # This is preliminary. See "Following users" for the full implementation.
-    Project.where("user_id = ?", id)
+  def project_feed    
+    Project.from_users_followed_by(self)
   end
   
   def following?(other_user)
@@ -34,4 +33,5 @@ class User < ActiveRecord::Base
   def unfollow!(other_user)
     relationships.find_by_followed_id(other_user.id).destroy
   end
+  
 end

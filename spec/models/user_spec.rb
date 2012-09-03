@@ -1,7 +1,9 @@
 require 'spec_helper'
+require 'database_cleaner'
+DatabaseCleaner.strategy = :truncation
 
 describe User do
-  
+  #DatabaseCleaner.clean
   before(:each) do
     @attr = { 
       :name => "Example User",
@@ -140,15 +142,32 @@ describe User do
       end
     end
   
-    describe "status" do
+    describe "status feed" do
+      #DatabaseCleaner.clean
       let(:unfollowed_project) do
-        FactoryGirl.create(:project, user: FactoryGirl.create(:user))
+        FactoryGirl.create(:project, user: FactoryGirl.create(:user, name: "unfollowed", email:"unfollowed@user.com"))
+      end      
+      
+      let(:followed_user) { FactoryGirl.create(:user) }
+      
+      before do
+        @user.follow! followed_user
+        3.times { followed_user.projects.create!(title: "Lorem ipsum", summary: "Ipsum lorem") }
+        #3.times { FactoryGirl.create(:project, user: followed_user) }
       end
+      
+      #let(:followed_project) { FactoryGirl.create(:project, user: @followed_user) }
       
       subject {@user}
       its(:project_feed) { should include(newer_project) }
       its(:project_feed) { should include(older_project) }
+      #its(:project_feed) { should include(followed_project) }
       its(:project_feed) { should_not include(unfollowed_project) }
+      its(:project_feed) do
+          followed_user.projects.each do |project|
+          should include(project)
+        end
+      end
     end
   end 
   
