@@ -6,6 +6,11 @@ class ProjectsController < ApplicationController
     
   end
   
+  def show
+    @project_user = User.find_by_id(params[:user_id]) 
+    @project = @project_user.projects.find_by_id(params[:id])
+  end  
+
   def create
     @project = current_user.projects.build(params[:project])
     if @project.save

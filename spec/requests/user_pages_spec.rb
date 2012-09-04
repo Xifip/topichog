@@ -18,7 +18,7 @@ describe "User pages" do
       it { page.should have_content(m2.title) }
       it { page.should have_content(user.projects.count) }
     end
-        
+    
     describe "follow/unfollow buttons" do
       let(:other_user) { FactoryGirl.create(:user, name: "foo_other", email: "other@foo.com", password: "other_foo", password_confirmation: "other_foo") }
       
@@ -64,8 +64,29 @@ describe "User pages" do
         end
       end
     end
-
-
+  end
+  
+  describe "project pages" do
+    
+    #let(:user) { FactoryGirl.create(:user) }
+    #before { @project = user.projects.build(title: "Lorem ipsum", summary: "My rails project") }   
+    
+    describe "users project page" do
+      let(:user) { create_logged_in_user } 
+      let(:other_user) { FactoryGirl.create(:user, name: "foo_other", email: "other@foo.com", password: "other_foo", password_confirmation: "other_foo") }
+      let!(:m1) { FactoryGirl.create(:project, user: other_user, title: "Foo", summary: "football") }
+      
+      before do        
+        visit user_project_path(other_user, m1)
+      end
+      
+      subject{page}
+      
+      it { should have_selector('h3', text: 'Topic page') }
+      it { should have_selector('h1', text: m1.title) }
+      it { should have_selector('p', text: m1.summary) }
+      it { should have_link(other_user.name, href: user_path(other_user)) }
+    end    
   end
 
 end

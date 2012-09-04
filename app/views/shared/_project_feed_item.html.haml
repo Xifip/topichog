@@ -2,7 +2,8 @@
   = link_to gravatar_for(project_feed_item.user), project_feed_item.user
   %span.user
     = link_to project_feed_item.user.name, project_feed_item.user
-  %span.title= project_feed_item.title
+  %span.title
+    = link_to project_feed_item.title, user_project_path(project_feed_item.user.id, project_feed_item.id), id: "project_link_#{project_feed_item.id}"
   %span.summary= project_feed_item.summary
   %span.timestamp
     Posted #{time_ago_in_words(project_feed_item.created_at)} ago.

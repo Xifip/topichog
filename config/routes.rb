@@ -10,8 +10,9 @@ TopicHog::Application.routes.draw do
   devise_for :users #, :controllers => { :registrations => "registrations" } 
   resources :users, :only => [:show, :index] do
     member do
-      get :following, :followers
+      get :following, :followers 
     end
+    resources :projects, :only => [:show] 
   end
 
   resources :projects, only: [:create, :destroy]

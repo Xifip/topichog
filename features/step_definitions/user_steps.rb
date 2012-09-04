@@ -139,6 +139,11 @@ When /^I am on my profile page$/ do
   visit user_path(@user)
 end
 
+When /^I am on the other users profile page$/ do
+  #visit '/'
+  visit user_path(@other_user)
+end
+
 When /^I sign in with a wrong email$/ do
   @visitor = @visitor.merge(:email => "wrong@example.com")
   sign_in

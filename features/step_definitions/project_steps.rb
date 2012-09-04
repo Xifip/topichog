@@ -4,9 +4,12 @@ def create_projects
 end
 
 def create_a_project
-  @m3 = FactoryGirl.create(:project, user: @user, title: "Foo", summary: "football") 
+  @m3 = FactoryGirl.create(:project, user: @user, title: "hand", summary: "ball") 
 end
 
+def create_others_project
+  @m3 = FactoryGirl.create(:project, user: @other_user, title: "table", summary: "tennis") 
+end
 
 Given /^I have projects/ do
   create_projects
@@ -26,6 +29,13 @@ And /^I click save the project should not be saved/ do
     expect { click_button "Submit" }.to_not change(Project, :count)
 end
 
+And /^another user has a project$/ do
+  create_other_user
+  create_others_project
+end
+
+
+
 When /^I input invalid information for a project$/ do
     fill_in 'project_title', with: ""
     fill_in 'project_summary', with: ""
@@ -44,12 +54,29 @@ When /^I click delete the project should be deleted$/ do
     expect { click_link "delete" }.to change(Project, :count).by(-1)
 end
 
+When /^I click title of the project$/ do  
+    click_link "project_link_#{@m3.id}"
+end
+
+Then /^I should see the project details$/ do
+  page.should have_content "Project details page" 
+  page.should have_content "#{@m3.title}"
+  #page.should have_selector("h3", "Project details page") 
+  #page.should have_selector("h1", "#{@m3.title}")
+end
+
 Then /^I should get an error message$/ do
     page.should have_content('error')
 end
 
 Then /^I should see my project feed/ do
     @user.project_feed.each do |item|
+      page.should have_selector("li##{item.id}", text: item.title)
+    end
+end
+
+Then /^I should see their project feed$/ do
+  @other_user.project_feed.each do |item|
       page.should have_selector("li##{item.id}", text: item.title)
     end
 end
