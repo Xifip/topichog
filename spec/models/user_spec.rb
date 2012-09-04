@@ -132,13 +132,16 @@ describe User do
     let!(:newer_project) do
       FactoryGirl.create(:project, user: @user, created_at: 1.hour.ago)
     end
+    #let!(:users_topic) do
+      #FactoryGirl.create(:topic, user: @user, created_at: 1.hour.ago)
+    #end
     it "should have the right projects in the right order" do
       @user.projects.should == [newer_project, older_project]
     end
     
     it "should destroy associated projects" do
-      projects = @user.projects
-      debugger
+      projects = @user.projects   
+      #debugger   
       @user.destroy
       projects.each do |project|
         Project.find_by_id(project.id).should be_nil
