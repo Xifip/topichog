@@ -112,6 +112,8 @@ describe User do
     it { should respond_to(:email) }
     it { should respond_to(:projects) }
     it { should respond_to(:project_feed) }
+    it { should respond_to(:topics) }
+    #it { should respond_to(:topic_feed) }
     it { should respond_to(:relationships) }
     it { should respond_to(:followed_users) }
     it { should respond_to(:following?) }
@@ -123,7 +125,7 @@ describe User do
         @user = User.new(@attr)
         @user.save
       end
-    #before { @user.save }
+    
     let!(:older_project) do
       FactoryGirl.create(:project, user: @user, created_at: 1.day.ago)
     end
@@ -136,6 +138,7 @@ describe User do
     
     it "should destroy associated projects" do
       projects = @user.projects
+      debugger
       @user.destroy
       projects.each do |project|
         Project.find_by_id(project.id).should be_nil
