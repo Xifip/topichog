@@ -82,7 +82,7 @@ describe "User pages" do
       
       subject{page}
       
-      it { should have_selector('h3', text: 'Topic page') }
+      it { should have_selector('h3', text: 'Project details page') }
       it { should have_selector('h1', text: m1.title) }
       it { should have_selector('p', text: m1.summary) }
       it { should have_link(other_user.name, href: user_path(other_user)) }

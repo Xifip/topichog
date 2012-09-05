@@ -5,5 +5,5 @@ class Topic < ActiveRecord::Base
   validates :title, presence: true, length: { maximum: 30 }
   validates :summary, presence: true, length: { maximum: 140 }
   validates :user_id, presence: true
-  default_scope order: 'projects.created_at DESC'
+  default_scope order: 'topics.created_at DESC'
 end

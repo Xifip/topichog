@@ -124,7 +124,7 @@ describe User do
     before do
         @user = User.new(@attr)
         @user.save
-      end
+    end
     
     let!(:older_project) do
       FactoryGirl.create(:project, user: @user, created_at: 1.day.ago)
@@ -177,6 +177,34 @@ describe User do
     end
   end 
   
+  describe "topic associations" do
+    
+    before do
+        @user = User.new(@attr)
+        @user.save
+    end
+    
+    let!(:older_topic) do
+      FactoryGirl.create(:topic, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_topic) do
+      FactoryGirl.create(:topic, user: @user, created_at: 1.hour.ago)
+    end
+    
+    it "should have the right topics in the right order" do
+      @user.topics.should == [newer_topic, older_topic]
+    end
+    
+    it "should destroy associated topics" do
+      topics = @user.topics   
+      #debugger   
+      @user.destroy
+      topics.each do |topic|
+        Topic.find_by_id(topic.id).should be_nil
+      end
+    end
+  end
+
   describe "following" do
     let(:other_user) { FactoryGirl.create(:user) }
     before do
