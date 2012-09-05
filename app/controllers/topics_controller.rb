@@ -8,12 +8,20 @@ class TopicsController < ApplicationController
   end
     
   def create
+    @topic = current_user.topics.build(params[:topic])
+    
+    if @topic.save
+      flash[:success] = "Topic created!"
+      redirect_to root_path
+    else      
+      render 'static_pages/home'
+    end 
   end
   
   def destroy
   end
   
-  def new
-    
-  end
+  #def new
+  #  @topic = Topic.new
+  #end
 end

@@ -1,33 +1,42 @@
 require 'spec_helper'
 describe "Topic pages" do
   
-  subject { page }
+  #subject { page }
   
   #let(:user) { FactoryGirl.create(:user) }
   #before { sign_in user }
   let(:user) { create_logged_in_user } 
   
   describe "topic creation" do
-    before { visit new_user_topic_path(user) }
-  
-    describe "with invalid information" do
-      it "should not create a topic" do
-        expect { click_button "Save" }.should_not change(Topic, :count)
-      end
+    #before { visit new_user_topic_path(user) }
+    before { visit user_path(user) }
+    #before { visit root_path }
+    #before do
+    #  visit user_path(user)
+    #  click_link "Home"
+    #end
     
+    describe "with invalid information" do
+      it {page.should have_content "#{user.name}"}
+      it {page.should have_content "Profile page"}
+     
+      it "should not create a topic" do
+        expect { page.click_button "Submit topic" }.to_not change(Topic, :count)
+      end
+      
       describe "error messages" do
-        before { click_button "Save" }
-        it { should have_content('error') }
+        before { page.click_button "Submit topic" }
+        it { page.should have_content('error') }
       end      
     end
   
     describe "with valid information" do
       before do
-         fill_in 'topic_title', with: "Lorem ipsum"
-         fill_in 'topic_summary', with: "Ipsum lorem"
+         page.fill_in 'topic_title', with: "Lorem ipsum"
+         page.fill_in 'topic_summary', with: "Ipsum lorem"
       end
       it "should create a topic" do
-        expect { click_button "Save" }.should change(Topic, :count).by(1)
+        expect { page.click_button "Submit topic" }.to change(Topic, :count).by(1)
       end
     end
   end

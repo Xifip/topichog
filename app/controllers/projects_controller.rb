@@ -11,7 +11,7 @@ class ProjectsController < ApplicationController
     @project = @project_user.projects.find_by_id(params[:id])
   end  
 
-  def create
+  def create   
     @project = current_user.projects.build(params[:project])
     if @project.save
       flash[:success] = "Project created!"
