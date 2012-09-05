@@ -18,3 +18,9 @@
       %ol.projects
         = render @projects
       = will_paginate @projects
+    - if @user.projects.any?
+      %h3
+        Topics (#{@user.topics.count})
+      %ol.projects
+        = render @topics
+      = will_paginate @topics

@@ -3,6 +3,7 @@ namespace :db do
   task populate: :environment do
     make_users
     make_projects
+    make_topics
     make_relationships
    end
 end
@@ -30,6 +31,15 @@ def make_projects
     title = Faker::Lorem.words(1)
     summary = Faker::Lorem.sentence(2)
     users.each { |user| user.projects.create!(title: title, summary: summary) }
+  end
+end 
+ 
+def make_topics  
+  users = User.all(limit: 6)
+  50.times do
+    title = Faker::Lorem.words(1)
+    summary = Faker::Lorem.sentence(2)
+    users.each { |user| user.topics.create!(title: title, summary: summary) }
   end
 end 
     
