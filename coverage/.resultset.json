@@ -175,13 +175,21 @@
       ],
       "C:/Development/rails_projects/topichog/app/controllers/topics_controller.rb": [
         1,
-        null,
+        1,
         null,
         null,
         1,
         4,
         4,
         null,
+        null,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null,
+        1,
         null,
         null,
         null
@@ -229,6 +237,6 @@
         null
       ]
     },
-    "timestamp": 1346838411
+    "timestamp": 1346846739
   }
 }
