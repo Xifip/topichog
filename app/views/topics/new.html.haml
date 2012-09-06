@@ -1,4 +1,15 @@
-%h2 New Topic
+%h3 New Topic
 .row
-  .span4.offset4
-    = render 'shared/topic_form'
+  %aside.span4
+    %section
+      %h1
+        = gravatar_for @user
+        User: #{@user.name}
+      %p
+        Email: #{@user.email if @user.email}
+      %p= link_to "View all users", users_path
+    %section
+      = render 'shared/stats'
+  .span8
+    = render partial: 'shared/topic_form', locals: {topic: @topic}
+    

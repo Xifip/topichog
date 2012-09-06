@@ -42,7 +42,7 @@ describe "Authentication" do
     
       describe "in the Topics controller" do
         describe "submitting to the create action" do
-          before { post topics_path }
+          before { post user_topics_path(user) }
           specify { response.should redirect_to(new_user_session_path) }
         end
         describe "submitting to the destroy action" do

@@ -8,8 +8,8 @@ describe "Topic pages" do
   let(:user) { create_logged_in_user } 
   
   describe "topic creation" do
-    #before { visit new_user_topic_path(user) }
-    before { visit user_path(user) }
+    before { visit new_user_topic_path(user) }
+    #before { visit user_path(user) }
     #before { visit root_path }
     #before do
     #  visit user_path(user)
@@ -18,7 +18,7 @@ describe "Topic pages" do
     
     describe "with invalid information" do
       it {page.should have_content "#{user.name}"}
-      it {page.should have_content "Profile page"}
+      it {page.should have_content "New Topic"}
      
       it "should not create a topic" do
         expect { page.click_button "Submit topic" }.to_not change(Topic, :count)
