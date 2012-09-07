@@ -158,16 +158,12 @@ describe User do
       
       before do
         @user.follow! followed_user
-        3.times { followed_user.projects.create!(title: "Lorem ipsum", summary: "Ipsum lorem") }
-        #3.times { FactoryGirl.create(:project, user: followed_user) }
+        3.times { followed_user.projects.create!(title: "Lorem ipsum", summary: "Ipsum lorem") }       
       end
-      
-      #let(:followed_project) { FactoryGirl.create(:project, user: @followed_user) }
       
       subject {@user}
       its(:project_feed) { should include(newer_project) }
-      its(:project_feed) { should include(older_project) }
-      #its(:project_feed) { should include(followed_project) }
+      its(:project_feed) { should include(older_project) }     
       its(:project_feed) { should_not include(unfollowed_project) }
       its(:project_feed) do
           followed_user.projects.each do |project|
@@ -202,6 +198,16 @@ describe User do
       topics.each do |topic|
         Topic.find_by_id(topic.id).should be_nil
       end
+    end
+    
+    describe "topic status feed" do
+      let(:unfollowed_topic) do
+        FactoryGirl.create(:topic, user: FactoryGirl.create(:user, name: "unfollowed", email:"unfollowed@user.com"))
+      end
+      subject {@user}
+      its(:topic_feed) { should include(newer_topic) }
+      its(:topic_feed) { should include(older_topic) }
+      its(:topic_feed) { should_not include(unfollowed_topic) }
     end
   end
 

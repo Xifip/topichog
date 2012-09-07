@@ -24,6 +24,11 @@ class User < ActiveRecord::Base
     Project.from_users_followed_by(self)
   end
   
+  def topic_feed    
+    #Topic.from_users_followed_by(self)
+    Topic.where("user_id = ?", id)
+  end
+  
   def following?(other_user)
     relationships.find_by_followed_id(other_user.id)
   end

@@ -1,10 +1,11 @@
 class TopicsController < ApplicationController
   before_filter :authenticate_user!, only: [:create, :destroy] 
-
+  before_filter :correct_user, only: :destroy
   
   def show
     @topic_user = User.find_by_id(params[:user_id]) 
     @topic = @topic_user.topics.find_by_id(params[:id])
+    @user = @topic.user
   end
     
   def create     
@@ -19,6 +20,8 @@ class TopicsController < ApplicationController
   end
   
   def destroy
+    @topic.destroy
+    redirect_to root_path
   end
   
   def new
@@ -33,4 +36,11 @@ class TopicsController < ApplicationController
     end
  
   end
+  
+  private
+  
+    def correct_user
+      @topic = current_user.topics.find_by_id(params[:id])
+      redirect_to root_path if @topic.nil?
+    end
 end

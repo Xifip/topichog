@@ -9,6 +9,7 @@ class ProjectsController < ApplicationController
   def show
     @project_user = User.find_by_id(params[:user_id]) 
     @project = @project_user.projects.find_by_id(params[:id])
+    @user = @project.user
   end  
 
   def create   

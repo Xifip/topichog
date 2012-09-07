@@ -3,18 +3,10 @@ describe "Topic pages" do
   
   #subject { page }
   
-  #let(:user) { FactoryGirl.create(:user) }
-  #before { sign_in user }
   let(:user) { create_logged_in_user } 
   
   describe "topic creation" do
     before { visit new_user_topic_path(user) }
-    #before { visit user_path(user) }
-    #before { visit root_path }
-    #before do
-    #  visit user_path(user)
-    #  click_link "Home"
-    #end
     
     describe "with invalid information" do
       it {page.should have_content "#{user.name}"}
@@ -37,6 +29,16 @@ describe "Topic pages" do
       end
       it "should create a topic" do
         expect { page.click_button "Submit topic" }.to change(Topic, :count).by(1)
+      end
+    end
+  end
+  
+  describe "topic destruction" do
+    before { FactoryGirl.create(:topic, user: user) }
+    describe "as correct user" do
+      before { visit root_path }
+      it "should delete a micropost" do
+        expect { click_link "delete" }.to change(Topic, :count).by(-1)
       end
     end
   end

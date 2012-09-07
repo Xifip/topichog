@@ -9,7 +9,9 @@
         = render 'shared/project_form'
     .span8
       %h3 Project Feed
-      = render 'shared/project_feed'
+      = render partial: 'shared/project_feed'
+      %h3 Topic Feed
+      = render partial: 'shared/topic_feed'
 - else
   .center.hero-unit
     %h1 Welcome to TopicHog Beta
