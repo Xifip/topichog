@@ -9,8 +9,13 @@ FactoryGirl.define do
   
   factory :project do
     title "Lorem ipsum"
-    summary "My rails project"
+    summary "My rails project"    
     user
   end
   
+  factory :topic do
+    title "Lorem ipsum"
+    summary "My rails project"    
+    user
+  end
 end

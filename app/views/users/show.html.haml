@@ -2,14 +2,11 @@
 .row
   %aside.span4
     %section
-      %h1
-        = gravatar_for @user
-        User: #{@user.name}
-      %p
-        Email: #{@user.email if @user.email}
-      %p= link_to "View all users", users_path
+      = render 'shared/user_info'
     %section
       = render 'shared/stats'
+    %section
+      %p= link_to "View all users", users_path      
   .span8
     = render 'follow_form' if user_signed_in?
     - if @user.projects.any?
@@ -18,3 +15,9 @@
       %ol.projects
         = render @projects
       = will_paginate @projects
+    - if @user.projects.any?
+      %h3
+        Topics (#{@user.topics.count})
+      %ol.projects
+        = render @topics
+      = will_paginate @topics

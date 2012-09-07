@@ -1,0 +1,6 @@
+= form_for(topic, :url => user_topics_url(topic.user.id)) do |f|
+  = render partial: 'shared/error_messages', locals: {object: f.object}
+  .field
+    = f.text_area :title, placeholder: "Topic title..."
+    = f.text_area :summary, placeholder: "Topic summary..."
+  = f.submit "Submit topic", class: "btn btn-large btn-primary"

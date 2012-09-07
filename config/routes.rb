@@ -13,9 +13,12 @@ TopicHog::Application.routes.draw do
       get :following, :followers 
     end
     resources :projects, :only => [:show] 
+    resources :topics, :only => [:create, :show, :new]     
   end
 
   resources :projects, only: [:create, :destroy]
+  resources :topics, only: [:destroy]
+  
   resources :relationships, only: [:create, :destroy]
   
   # The priority is based upon order of creation:

@@ -7,16 +7,20 @@ describe "User pages" do
   describe "profile page" do
     #let(:user) { FactoryGirl.create(:user) }
     let(:user) { create_logged_in_user } 
-    let!(:m1) { FactoryGirl.create(:project, user: user, title: "Foo", summary: "football") }
-    let!(:m2) { FactoryGirl.create(:project, user: user, title: "Bar", summary: "barley") }    
-    
+    let!(:p1) { FactoryGirl.create(:project, user: user, title: "Foo", summary: "football") }
+    let!(:p2) { FactoryGirl.create(:project, user: user, title: "Bar", summary: "barley") }    
+    let!(:t1) { FactoryGirl.create(:project, user: user, title: "topic1", summary: "football") }
+    let!(:t2) { FactoryGirl.create(:project, user: user, title: "topic2", summary: "barley") }   
     
     describe "should have a current_user" do
       before {visit user_path(user)}
       it { page.should have_selector('h1', text: user.name) }
-      it { page.should have_content(m1.title) }
-      it { page.should have_content(m2.title) }
+      it { page.should have_content(p1.title) }
+      it { page.should have_content(p2.title) }
       it { page.should have_content(user.projects.count) }
+      it { page.should have_content(t1.title) }
+      it { page.should have_content(t2.title) }
+      it { page.should have_content(user.topics.count) }
     end
     
     describe "follow/unfollow buttons" do
@@ -74,17 +78,40 @@ describe "User pages" do
     describe "users project page" do
       let(:user) { create_logged_in_user } 
       let(:other_user) { FactoryGirl.create(:user, name: "foo_other", email: "other@foo.com", password: "other_foo", password_confirmation: "other_foo") }
-      let!(:m1) { FactoryGirl.create(:project, user: other_user, title: "Foo", summary: "football") }
+      let!(:p1) { FactoryGirl.create(:project, user: other_user, title: "Foo", summary: "football") }
       
       before do        
-        visit user_project_path(other_user, m1)
+        visit user_project_path(other_user, p1)
       end
       
       subject{page}
       
-      it { should have_selector('h3', text: 'Topic page') }
-      it { should have_selector('h1', text: m1.title) }
-      it { should have_selector('p', text: m1.summary) }
+      it { should have_selector('h3', text: 'Project details page') }
+      it { should have_selector('h1', text: p1.title) }
+      it { should have_selector('p', text: p1.summary) }
+      it { should have_link(other_user.name, href: user_path(other_user)) }
+    end    
+  end
+  
+  describe "topic pages" do
+    
+    #let(:user) { FactoryGirl.create(:user) }
+    #before { @project = user.projects.build(title: "Lorem ipsum", summary: "My rails project") }   
+    
+    describe "users topic page" do
+      let(:user) { create_logged_in_user } 
+      let(:other_user) { FactoryGirl.create(:user, name: "foo_other", email: "other@foo.com", password: "other_foo", password_confirmation: "other_foo") }
+      let!(:t3) { FactoryGirl.create(:topic, user: other_user, title: "topic3", summary: "football") }
+      
+      before do        
+        visit user_topic_path(other_user, t3)
+      end
+      
+      subject{page}
+      
+      it { should have_selector('h3', text: 'Topic details page') }
+      it { should have_selector('h1', text: t3.title) }
+      it { should have_selector('p', text: t3.summary) }
       it { should have_link(other_user.name, href: user_path(other_user)) }
     end    
   end

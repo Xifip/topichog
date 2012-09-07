@@ -1,0 +1,10 @@
+%li{:id => topic.id}
+  %span.title
+    = link_to topic.title, user_topic_path(topic.user.id, topic.id), id: "topic_link_#{topic.id}"
+  %span.summary= topic.summary
+  %span.timestamp
+    Posted #{time_ago_in_words(topic.created_at)} ago.
+  - if current_user == topic.user
+    = link_to "delete", topic, method: :delete,   |
+      data: { confirm: "You sure?" },               |
+      title: topic.title                          |

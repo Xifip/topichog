@@ -39,6 +39,19 @@ describe "Authentication" do
           specify { response.should redirect_to(new_user_session_path) }
         end
       end
-    end
+    
+      describe "in the Topics controller" do
+        describe "submitting to the create action" do
+          before { post user_topics_path(user) }
+          specify { response.should redirect_to(new_user_session_path) }
+        end
+        describe "submitting to the destroy action" do
+          before { delete topic_path(FactoryGirl.create(:topic)) }
+          specify { response.should redirect_to(new_user_session_path) }
+        end
+      end
+      
+
+    end    
   end
 end
