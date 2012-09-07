@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
      top_feed = Topic.from_users_followed_by(self)
      total_feed = proj_feed + top_feed
      sorted_total_feed = total_feed.sort {|a, b| b.created_at <=> a.created_at}
-    #feed.followed_user_ids = "SELECT followed_id FROM relationships
+    #Feed.followed_user_ids = "SELECT followed_id FROM relationships
     #                      WHERE follower_id = :user_id"
     #where("user_id IN (#{followed_user_ids}) OR user_id = :user_id",
     #      user_id: user.id)

@@ -1,6 +1,7 @@
 class Topic < ActiveRecord::Base
   attr_accessible :summary, :title
   belongs_to :user
+  belongs_to :combined_feed, :polymorphic => true
   
   validates :title, presence: true, length: { maximum: 30 }
   validates :summary, presence: true, length: { maximum: 140 }
