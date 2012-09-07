@@ -132,9 +132,7 @@ describe User do
     let!(:newer_project) do
       FactoryGirl.create(:project, user: @user, created_at: 1.hour.ago)
     end
-    #let!(:users_topic) do
-      #FactoryGirl.create(:topic, user: @user, created_at: 1.hour.ago)
-    #end
+
     it "should have the right projects in the right order" do
       @user.projects.should == [newer_project, older_project]
     end
@@ -204,10 +202,105 @@ describe User do
       let(:unfollowed_topic) do
         FactoryGirl.create(:topic, user: FactoryGirl.create(:user, name: "unfollowed", email:"unfollowed@user.com"))
       end
+      
+      let(:followed_user) { FactoryGirl.create(:user) }
+      
+      before do
+        @user.follow! followed_user
+        3.times { followed_user.topics.create!(title: "Lorem ipsum", summary: "Ipsum lorem") }       
+      end
+      
       subject {@user}
       its(:topic_feed) { should include(newer_topic) }
       its(:topic_feed) { should include(older_topic) }
       its(:topic_feed) { should_not include(unfollowed_topic) }
+      its(:topic_feed) do
+          followed_user.topics.each do |topic|
+          should include(topic)
+        end
+      end
+    end
+  end
+  
+  describe "mixed topic and project feed" do
+    
+    before do
+      @user = User.new(@attr)
+      @user.save
+    end
+    
+    let!(:older_topic) do
+      FactoryGirl.create(:topic, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_topic) do
+      FactoryGirl.create(:topic, user: @user, created_at: 3.hours.ago)
+    end
+    
+    let!(:older_project) do
+      FactoryGirl.create(:project, user: @user, created_at: 3.days.ago)
+    end
+    let!(:newer_project) do
+      FactoryGirl.create(:project, user: @user, created_at: 1.hour.ago)
+    end
+    
+    let(:unfollowed_user) { FactoryGirl.create(:user, name: "unfollowed", email:"unfollowed@user.com") }
+    
+    let(:unfollowed_topic) do
+      FactoryGirl.create(:topic, user: unfollowed_user)
+    end
+    
+    let(:unfollowed_project) do
+      FactoryGirl.create(:project, user: unfollowed_user)
+    end    
+      
+    let(:followed_user) { FactoryGirl.create(:user) }
+    
+    
+    before do
+      @user.follow! followed_user
+      #followed_user.topics.create!(title: "Lorem ipsum", summary: "Ipsum lorem", created_at: 2.hours.ago) 
+    end
+    
+    let!(:followed_user_newer_topic) do
+      FactoryGirl.create(:project, user: followed_user, created_at: 2.hours.ago)
+    end
+    let!(:followed_user_newer_project) do
+      FactoryGirl.create(:project, user: followed_user, created_at: 4.hours.ago)
+    end
+    let!(:followed_user_older_topic) do
+      FactoryGirl.create(:project, user: followed_user, created_at: 4.days.ago)
+    end
+    let!(:followed_user_older_project) do
+      FactoryGirl.create(:project, user: followed_user, created_at: 2.days.ago)
+    end
+    #let(:followed_user_newer_topic) { followed_user.topics.create!(title: "Lorem ipsum", summary: "Ipsum lorem", created_at: 2.hours.ago) }
+    #let(:followed_user_newer_project) { followed_user.projects.create!(title: "Lorem ipsum", summary: "Ipsum lorem", created_at: 4.hours.ago) }     
+    #let(:followed_user_older_topic) { followed_user.topics.create!(title: "Lorem ipsum", summary: "Ipsum lorem", created_at: 4.days.ago) }
+    #let(:followed_user_older_project) { followed_user.projects.create!(title: "Lorem ipsum", summary: "Ipsum lorem", created_at: 2.days.ago) }   
+    
+    
+    
+    it "should have the right projects in the right order" do
+      @user.feed.should == [newer_project, followed_user_newer_topic, newer_topic, followed_user_newer_project, older_topic, followed_user_older_project, older_project, followed_user_older_topic ]
+    end
+     
+    subject {@user}
+    
+    its(:feed) { should include(newer_topic) }
+    its(:feed) { should include(older_topic) }
+    its(:feed) { should include(followed_user_newer_topic) }
+    its(:feed) { should include(followed_user_newer_project) }
+    its(:feed) { should_not include(unfollowed_topic) }
+    its(:feed) { should_not include(unfollowed_project) }
+    its(:feed) do
+      followed_user.topics.each do |topic|
+        should include(topic)
+      end
+    end
+    its(:feed) do
+      followed_user.projects.each do |project|
+        should include(project)
+      end
     end
   end
 

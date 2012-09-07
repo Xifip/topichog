@@ -37,7 +37,7 @@ describe "Topic pages" do
     before { FactoryGirl.create(:topic, user: user) }
     describe "as correct user" do
       before { visit root_path }
-      it "should delete a micropost" do
+      it "should delete a topic" do
         expect { click_link "delete" }.to change(Topic, :count).by(-1)
       end
     end
