@@ -11,14 +11,34 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120904170527) do
+ActiveRecord::Schema.define(:version => 20120909140305) do
+
+  create_table "posts", :force => true do |t|
+    t.integer  "postable_id"
+    t.string   "postable_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "user_id"
+  end
+
+  add_index "posts", ["postable_id", "postable_type"], :name => "index_posts_on_postable_id_and_postable_type"
+  add_index "posts", ["user_id", "created_at"], :name => "index_posts_on_user_id_and_created_at"
+
+  create_table "pposts", :force => true do |t|
+    t.string   "title"
+    t.string   "summary"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "projects", :force => true do |t|
     t.string   "title"
     t.string   "summary"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "feedable_id"
+    t.string   "feedable_type"
   end
 
   add_index "projects", ["user_id", "created_at"], :name => "index_projects_on_user_id_and_created_at"
@@ -37,12 +57,21 @@ ActiveRecord::Schema.define(:version => 20120904170527) do
   create_table "topics", :force => true do |t|
     t.string   "title"
     t.string   "summary"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "feedable_id"
+    t.string   "feedable_type"
     t.integer  "user_id"
+  end
+
+  add_index "topics", ["created_at"], :name => "index_topics_on_user_id_and_created_at"
+
+  create_table "tposts", :force => true do |t|
+    t.string   "name"
+    t.string   "summary"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
-
-  add_index "topics", ["user_id", "created_at"], :name => "index_topics_on_user_id_and_created_at"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
