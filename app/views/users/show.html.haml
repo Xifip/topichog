@@ -21,3 +21,15 @@
       %ol.projects
         = render @topics
       = will_paginate @topics
+    - if @pposts.any?
+      %h3
+        Posts (#{@pposts.count})
+      %ol.projects
+        = render @pposts
+      = will_paginate @pposts
+    - if @tposts.any?
+      %h3
+        Posts (#{@tposts.count})
+      %ol.projects
+        = render @tposts
+      = will_paginate @tposts

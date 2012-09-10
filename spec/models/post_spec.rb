@@ -47,7 +47,6 @@ describe Post do
   describe "accessible attributes" do
     it "should not allow access to user_id" do
       expect do
-        #debugger
         Post.new(user_id: user.id)
       end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
     end

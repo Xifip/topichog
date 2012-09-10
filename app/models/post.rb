@@ -1,5 +1,5 @@
 class Post < ActiveRecord::Base
-  # attr_accessible :title, :body
+   attr_accessible :postable_id, :postable_type
   belongs_to :user
   belongs_to :postable, polymorphic: true
   

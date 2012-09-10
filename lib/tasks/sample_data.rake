@@ -4,6 +4,7 @@ namespace :db do
     make_users
     make_projects
     make_topics
+    make_posts
     make_relationships
    end
 end
@@ -24,6 +25,20 @@ def make_users
                     password_confirmation: password)
     end
 end      
+
+def make_posts  
+  users = User.all(limit: 6)
+  users.each do |user|
+    10.times do
+      title = Faker::Lorem.words(1)
+      summary = Faker::Lorem.sentence(2)
+      p1 = Ppost.create!(title: title, summary: summary)   
+      user.posts.create!(postable_id: p1.id, postable_type: "Ppost")
+      t1 = Tpost.create!(title: title, summary: summary)   
+      user.posts.create!(postable_id: t1.id, postable_type: "Tpost")     
+    end     
+  end  
+end 
     
 def make_projects  
   users = User.all(limit: 6)

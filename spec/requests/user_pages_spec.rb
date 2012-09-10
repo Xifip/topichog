@@ -3,9 +3,35 @@ require "debugger"
 
 
 describe "User pages" do
+  describe "profile page with posts" do 
+    
+    let(:user) { create_logged_in_user } 
+    let!(:p1) { FactoryGirl.create(:ppost, title: "Foo", summary: "football") }
+    let!(:post1) { FactoryGirl.create(:post, user: user, postable: p1) }
+    
+    let!(:p2) { FactoryGirl.create(:ppost, title: "Bar", summary: "barley") }
+    let!(:post2) { FactoryGirl.create(:post, user: user, postable: p2) }
+    
+    let!(:t1) { FactoryGirl.create(:tpost, title: "topic1", summary: "football") }
+    let!(:post3) { FactoryGirl.create(:post, user: user, postable: t1) }
+    
+    let!(:t2) { FactoryGirl.create(:tpost, title: "topic2", summary: "barley") }
+    let!(:post4) { FactoryGirl.create(:post, user: user, postable: t2) }
 
+    describe "should have a current_user" do
+      before {visit user_path(user)}
+      it { page.should have_selector('h1', text: user.name) }
+      it { page.should have_content(p1.title) }
+      it { page.should have_content(p2.title) }
+      it { page.should have_content(user.posts.find_all_by_postable_type("Ppost").count) }
+      it { page.should have_content(t1.title) }
+      it { page.should have_content(t2.title) }
+      it { page.should have_content(user.posts.find_all_by_postable_type("Ppost").count) }
+    end
+  end
+  
   describe "profile page" do
-    #let(:user) { FactoryGirl.create(:user) }
+
     let(:user) { create_logged_in_user } 
     let!(:p1) { FactoryGirl.create(:project, user: user, title: "Foo", summary: "football") }
     let!(:p2) { FactoryGirl.create(:project, user: user, title: "Bar", summary: "barley") }    

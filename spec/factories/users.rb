@@ -19,8 +19,20 @@ FactoryGirl.define do
     user
   end
   
+  
+  
   factory :tpost do
-    name "Lorem ipsum"
+    title "Lorem ipsum"
     summary "My rails project"    
+  end
+  
+  factory :ppost do
+    title "Lorem ipsum"
+    summary "My rails project"    
+  end
+  
+  factory :post do
+    user 
+
   end
 end

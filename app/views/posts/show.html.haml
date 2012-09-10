@@ -1,0 +1,14 @@
+%h3 Topic details page
+.row
+  %aside.span4
+    %section  
+      %h1
+        = @user.name
+    %section
+      %p= link_to "View all users", users_path      
+  .span8 
+    %h1        
+      Title: #{@topic.title}
+    %p
+      summary: #{@topic.summary}
+  %p= link_to "Back to #{@topic_user.name}", user_path(@topic_user)

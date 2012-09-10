@@ -51,6 +51,34 @@ describe "Authentication" do
         end
       end
       
+      describe "in the Posts controller" do
+        describe "submitting to the destroy action" do
+          before { delete post_path(FactoryGirl.create(:post, postable: FactoryGirl.create(:ppost))) }
+          specify { response.should redirect_to(new_user_session_path) }
+        end
+      end
+      
+      describe "in the Tposts controller" do
+        describe "submitting to the create action" do
+          before { post user_tposts_path(user) }
+          specify { response.should redirect_to(new_user_session_path) }
+        end
+        describe "submitting to the destroy action" do
+          before { delete tpost_path(FactoryGirl.create(:tpost)) }
+          specify { response.should redirect_to(new_user_session_path) }
+        end
+      end
+      
+      describe "in the Pposts controller" do
+        describe "submitting to the create action" do
+          before { post user_pposts_path(user) }
+          specify { response.should redirect_to(new_user_session_path) }
+        end
+        describe "submitting to the destroy action" do
+          before { delete ppost_path(FactoryGirl.create(:ppost)) }
+          specify { response.should redirect_to(new_user_session_path) }
+        end
+      end
 
     end    
   end
