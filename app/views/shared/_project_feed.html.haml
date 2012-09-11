@@ -1,4 +1,4 @@
 - if @project_feed_items.any?
   %ol.projects
     = render partial: 'shared/project_feed_item', collection: @project_feed_items
-  = will_paginate @project_feed_items
+  = will_paginate @project_feed_items, :param_name => 'project_page'
