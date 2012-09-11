@@ -7,7 +7,7 @@
   %span.summary= post.postable.summary
   %span.timestamp
     Posted #{time_ago_in_words(post.created_at)} ago.
-  - if current_user == post.user
-    = link_to "delete post", post, method: :delete,   |
+  - if current_user == post.user 
+    = link_to "delete post", post, method: :delete, |
       data: { confirm: "You sure?" },               |
-      title: post.postable.title                          |
+      title: post.postable.title                    | 

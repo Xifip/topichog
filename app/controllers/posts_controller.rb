@@ -3,7 +3,16 @@ class PostsController < ApplicationController
   before_filter :correct_user, only: :destroy
   
   def destroy
-    @post.destroy
+    
+    if @post.postable_type == "Ppost"
+      ppost = Ppost.find_by_id(@post.postable_id)
+      ppost.destroy
+    end
+    if @post.postable_type == "Tpost"
+      tpost = Tpost.find_by_id(@post.postable_id)
+      tpost.destroy
+    end
+    
     redirect_to root_path
   end
   

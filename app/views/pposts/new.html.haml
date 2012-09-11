@@ -1,0 +1,12 @@
+%h3 New Project ppost
+.row
+  %aside.span4
+    %section
+      = render 'shared/user_info'
+    %section
+      = render 'shared/stats'
+    %section
+      %p= link_to "View all users", users_path      
+  .span8
+    = render partial: 'shared/ppost_form', locals: {ppost: @ppost}
+    

@@ -1,12 +1,11 @@
 class TpostsController < ApplicationController
   before_filter :authenticate_user!, only: [:create, :destroy] 
-  before_filter :correct_user, only: :destroy
   
   def create
-    @tpost = Tpost.new(params[:topic])
-    @post = current_user.posts.build
-    @post.postable = @tpost
+    @tpost = Tpost.new(params[:tpost])
+    @post = current_user.posts.build    
     if @tpost.save
+      @post.postable = @tpost
       if @post.save
         flash[:success] = "Topic created!"
         redirect_to user_path(@post.user)
@@ -34,18 +33,15 @@ class TpostsController < ApplicationController
   end
   
   def show    
-    
+    @topic_user = User.find_by_id(params[:user_id]) 
+    @post = @topic_user.posts.find_by_id(params[:id])
+    @tpost = @post.postable
+    @user = @post.user
   end
   
   def destroy
-    @topic.destroy
-    redirect_to root_path
+
   end
   
-  private
-  
-  def correct_user
-    #@topic = current_user.topics.find_by_id(params[:id])
-    #redirect_to root_path if @topic.nil?
-  end
+
 end

@@ -1,0 +1,14 @@
+%h3 Project details page
+.row
+  %aside.span4
+    %section  
+      %h1
+        = @user.name
+    %section
+      %p= link_to "View all users", users_path      
+  .span8
+    %h1        
+      Title: #{@ppost.title}
+    %p
+      summary: #{@ppost.summary}
+  %p= link_to "Back to #{@project_user.name}", user_path(@project_user)

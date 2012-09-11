@@ -95,11 +95,49 @@ describe "User pages" do
       end
     end
   end
+ 
+  describe "project pages ppost" do
+    
+    describe "users project page" do
+      let(:user) { create_logged_in_user } 
+      let(:other_user) { FactoryGirl.create(:user, name: "foo_other", email: "other@foo.com", password: "other_foo", password_confirmation: "other_foo") }
+      let!(:p1) { FactoryGirl.create(:ppost, title: "Foo", summary: "football") }
+      let!(:post1) { FactoryGirl.create(:post, user: other_user, postable: p1) }
+      before do        
+        visit user_ppost_path(other_user, p1)
+      end
+      
+      subject{page}
+      
+      it { should have_selector('h3', text: 'Project details page') }
+      it { should have_selector('h1', text: p1.title) }
+      it { should have_selector('p', text: p1.summary) }
+      it { should have_link(other_user.name, href: user_path(other_user)) }
+    end    
+  end
+  
+  describe "topic pages tpost" do   
+    
+    describe "users topic page" do
+      let(:user) { create_logged_in_user } 
+      let(:other_user) { FactoryGirl.create(:user, name: "foo_other", email: "other@foo.com", password: "other_foo", password_confirmation: "other_foo") }
+      let!(:t3) { FactoryGirl.create(:tpost, title: "topic3", summary: "football") }
+      let!(:post2) { FactoryGirl.create(:post, user: other_user, postable: t3) }
+      
+      before do        
+        visit user_tpost_path(other_user, t3)
+      end
+      
+      subject{page}
+      
+      it { should have_selector('h3', text: 'Topic details page') }
+      it { should have_selector('h1', text: t3.title) }
+      it { should have_selector('p', text: t3.summary) }
+      it { should have_link(other_user.name, href: user_path(other_user)) }
+    end    
+  end
   
   describe "project pages" do
-    
-    #let(:user) { FactoryGirl.create(:user) }
-    #before { @project = user.projects.build(title: "Lorem ipsum", summary: "My rails project") }   
     
     describe "users project page" do
       let(:user) { create_logged_in_user } 
@@ -119,10 +157,7 @@ describe "User pages" do
     end    
   end
   
-  describe "topic pages" do
-    
-    #let(:user) { FactoryGirl.create(:user) }
-    #before { @project = user.projects.build(title: "Lorem ipsum", summary: "My rails project") }   
+  describe "topic pages" do 
     
     describe "users topic page" do
       let(:user) { create_logged_in_user } 

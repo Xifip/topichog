@@ -13,8 +13,8 @@ TopicHog::Application.routes.draw do
       get :following, :followers 
     end
     resources :projects, :only => [:show] 
-    resources :pposts, :only => [:create, :show, :show, :new] 
-    resources :tposts, :only => [:create, :show, :show, :new] 
+    resources :pposts, :only => [:create, :show, :new] 
+    resources :tposts, :only => [:create, :show, :new] 
     resources :topics, :only => [:create, :show, :new]     
   end
 

@@ -1,0 +1,6 @@
+= form_for(ppost, :url => user_pposts_url(@post.user.id)) do |f|
+  = render partial: 'shared/error_messages', locals: {object: f.object}
+  .field
+    = f.text_area :title, placeholder: "Project title..."
+    = f.text_area :summary, placeholder: "Project summary..."
+  = f.submit "Submit project", class: "btn btn-large btn-primary"
