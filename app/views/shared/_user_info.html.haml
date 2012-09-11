@@ -5,4 +5,4 @@
 %span
   = link_to "view my profile", current_user
 %span
-  = pluralize(current_user.projects.count, "project")
+  = pluralize(current_user.posts.count, "post")

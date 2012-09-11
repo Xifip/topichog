@@ -9,13 +9,10 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @projects = @user.projects.paginate(page: params[:page], per_page: 5)
-    @topics = @user.topics.paginate(page: params[:page], per_page: 5)
-    @posttype =  @user.posts.find_all_by_postable_type("Ppost")
     @pposts = @user.posts.find_all_by_postable_type("Ppost").paginate(page: params[:page], per_page: 5)
-    @tposts = @user.posts.find_all_by_postable_type("Tpost").paginate(page: params[:page], per_page: 5)    
-    #debugger
-    #t = 5
+    @tposts = @user.posts.find_all_by_postable_type("Tpost").paginate(page: params[:page], per_page: 5) 
+    @projects = @user.posts.find_all_by_postable_type("Project").paginate(page: params[:page], per_page: 5)
+    @topics = @user.posts.find_all_by_postable_type("Topic").paginate(page: params[:page], per_page: 5)    
   end
 
   def following

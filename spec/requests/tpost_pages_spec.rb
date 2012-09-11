@@ -47,11 +47,11 @@ describe "Topic pages" do
         visit user_path(user)
       end
       it "should delete a post" do
-        expect { click_link "delete post" }.to change(Post, :count).by(-1)        
+        expect { click_link "delete" }.to change(Post, :count).by(-1)        
       end
       
       it "should delete a topic" do        
-        expect { click_link "delete post" }.to change(Tpost, :count).by(-1)
+        expect { click_link "delete" }.to change(Tpost, :count).by(-1)
       end
     end
   end

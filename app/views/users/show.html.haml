@@ -9,27 +9,27 @@
       %p= link_to "View all users", users_path      
   .span8
     = render 'follow_form' if user_signed_in?
-    - if @user.projects.any?
+    - if @projects.any?
       %h3
-        Projects (#{@user.projects.count})
+        Projects (#{@projects.count})
       %ol.projects
         = render @projects
       = will_paginate @projects
-    - if @user.projects.any?
+    - if @topics.any?
       %h3
-        Topics (#{@user.topics.count})
+        Topics (#{@topics.count})
       %ol.projects
         = render @topics
       = will_paginate @topics
     - if @pposts.any?
       %h3
-        Posts (#{@pposts.count})
+        Pposts (#{@pposts.count})
       %ol.projects
         = render @pposts
       = will_paginate @pposts
     - if @tposts.any?
       %h3
-        Posts (#{@tposts.count})
+        Tposts (#{@tposts.count})
       %ol.projects
         = render @tposts
       = will_paginate @tposts

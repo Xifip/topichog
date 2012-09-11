@@ -13,6 +13,7 @@ describe "Topic pages" do
       it {page.should have_content "New Topic"}
      
       it "should not create a topic" do
+        expect { page.click_button "Submit topic" }.to_not change(Post, :count)
         expect { page.click_button "Submit topic" }.to_not change(Topic, :count)
       end
       
@@ -28,16 +29,28 @@ describe "Topic pages" do
          page.fill_in 'topic_summary', with: "Ipsum lorem"
       end
       it "should create a topic" do
+        
         expect { page.click_button "Submit topic" }.to change(Topic, :count).by(1)
+      end
+      it "should create a post" do
+        expect { page.click_button "Submit topic" }.to change(Post, :count).by(1)
+        
       end
     end
   end
   
   describe "topic destruction" do
-    before { FactoryGirl.create(:topic, user: user) }
+
     describe "as correct user" do
-      before { visit root_path }
-      it "should delete a topic" do
+      before do
+        FactoryGirl.create(:post, user: user, postable: FactoryGirl.create(:topic, title: "Foo", summary: "football")) 
+        visit user_path(user)
+      end
+      it "should delete a post" do
+        expect { click_link "delete" }.to change(Post, :count).by(-1)        
+      end
+      
+      it "should delete a topic" do        
         expect { click_link "delete" }.to change(Topic, :count).by(-1)
       end
     end

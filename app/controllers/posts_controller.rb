@@ -12,7 +12,14 @@ class PostsController < ApplicationController
       tpost = Tpost.find_by_id(@post.postable_id)
       tpost.destroy
     end
-    
+     if @post.postable_type == "Project"
+      project = Project.find_by_id(@post.postable_id)
+      project.destroy
+    end
+    if @post.postable_type == "Topic"
+      topic = Topic.find_by_id(@post.postable_id)
+      topic.destroy
+    end
     redirect_to root_path
   end
   

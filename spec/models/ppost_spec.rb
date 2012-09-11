@@ -17,7 +17,6 @@ describe Ppost do
   it { should == @post.postable }
   
   it "should be valid" do
-    #debugger
     should be_valid
    end
   

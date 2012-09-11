@@ -4,10 +4,14 @@
     = link_to post.postable.title, user_ppost_path(post.user.id, post.id), id: "ppost_link_#{post.id}"
   - if post.postable_type == "Tpost"   
     = link_to post.postable.title, user_tpost_path(post.user.id, post.id), id: "tpost_link_#{post.id}"
+  - if post.postable_type == "Project"
+    = link_to post.postable.title, user_project_path(post.user.id, post.id), id: "project_link_#{post.id}"
+  - if post.postable_type == "Topic"   
+    = link_to post.postable.title, user_topic_path(post.user.id, post.id), id: "topic_link_#{post.id}"  
   %span.summary= post.postable.summary
   %span.timestamp
     Posted #{time_ago_in_words(post.created_at)} ago.
   - if current_user == post.user 
-    = link_to "delete post", post, method: :delete, |
+    = link_to "delete", post, method: :delete, |
       data: { confirm: "You sure?" },               |
       title: post.postable.title                    | 

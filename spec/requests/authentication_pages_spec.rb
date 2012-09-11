@@ -16,18 +16,7 @@ describe "Authentication" do
           before { visit followers_user_path(user) }          
           it { page.should have_selector('h2', text: 'Sign in') }
         end
-      end
-      
-      describe "in the Projects controller" do
-        describe "submitting to the create action" do
-          before { post projects_path }
-          specify { response.should redirect_to(new_user_session_path) }
-        end
-        describe "submitting to the destroy action" do
-          before { delete project_path(FactoryGirl.create(:project)) }
-          specify { response.should redirect_to(new_user_session_path) }
-        end
-      end
+      end   
       
       describe "in the Relationships controller" do
         describe "submitting to the create action" do
@@ -40,6 +29,13 @@ describe "Authentication" do
         end
       end
     
+      describe "in the Posts controller" do
+        describe "submitting to the destroy action" do
+          before { delete post_path(FactoryGirl.create(:post, postable: FactoryGirl.create(:ppost))) }
+          specify { response.should redirect_to(new_user_session_path) }
+        end
+      end
+      
       describe "in the Topics controller" do
         describe "submitting to the create action" do
           before { post user_topics_path(user) }
@@ -51,9 +47,13 @@ describe "Authentication" do
         end
       end
       
-      describe "in the Posts controller" do
+      describe "in the Projects controller" do
+        describe "submitting to the create action" do
+          before { post user_projects_path(user) }
+          specify { response.should redirect_to(new_user_session_path) }
+        end
         describe "submitting to the destroy action" do
-          before { delete post_path(FactoryGirl.create(:post, postable: FactoryGirl.create(:ppost))) }
+          before { delete project_path(FactoryGirl.create(:project)) }
           specify { response.should redirect_to(new_user_session_path) }
         end
       end

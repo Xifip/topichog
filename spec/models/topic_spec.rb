@@ -5,24 +5,20 @@ describe Topic do
   
   let(:user) { FactoryGirl.create(:user) }
   
-  before { @topic = user.topics.build(title: "Lorem ipsum", summary: "My rails topic") }
+  before do
+    @post = user.posts.build
+    @topic = Topic.create!(title: "Lorem ipsum", summary: "My rails project") 
+    @post.postable = @topic
+  end
   
   subject { @topic }
   it { should respond_to(:title) }
-  it { should respond_to(:user_id) }
-  it { should respond_to(:user) }
-  its(:user) { should == user }
+  it { should respond_to(:posts) }
+  it { should == @post.postable }
   
   it "should be valid" do
-    #debugger
     should be_valid
    end
-  
-  describe "when user_id is not present" do
-    
-    before { @topic.user_id = nil }
-    it { should_not be_valid }
-  end
   
   describe "with blank title" do
     before { @topic.title = " " }
@@ -43,14 +39,5 @@ describe Topic do
     before { @topic.summary = "a" * 141 }
     it { should_not be_valid }
   end
-
-  describe "accessible attributes" do
-    it "should not allow access to user_id" do
-      expect do
-        #debugger
-        Topic.new(user_id: user.id)
-      end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
-    end
-  end  
-
+  
 end

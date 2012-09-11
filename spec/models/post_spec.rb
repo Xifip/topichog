@@ -4,7 +4,7 @@ require 'debugger'
 describe Post do
   
   let(:user) { FactoryGirl.create(:user) }
-  let(:topic) {FactoryGirl.create(:tpost)}
+  let(:topic) {FactoryGirl.create(:topic)}
   
   before do
      @post = user.posts.build 

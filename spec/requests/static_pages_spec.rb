@@ -24,15 +24,13 @@ describe "StaticPages" do
   describe "for signed-in users" do
     let(:user) { create_logged_in_user } 
     before do
-      FactoryGirl.create(:topic, user: user, title: "Lorem ipsum", summary:"Dolor sit amet")
-      FactoryGirl.create(:topic, user: user, title: "Dolor sit amet", summary: "Lorem ipsum")
-      #sign_in user
+      FactoryGirl.create(:post, user: user, postable: (FactoryGirl.create(:ppost, title: "Foo", summary: "football"))) 
       visit root_path
     end
     
-    it "should render the user's topic feed" do
-      user.topic_feed.each do |item|
-        page.should have_selector("li##{item.id}", text: item.title)
+    it "should render the user's post feed" do
+      user.feed.each do |item|
+        page.should have_selector("li##{item.id}", text: item.postable.title)
       end
     end
   end

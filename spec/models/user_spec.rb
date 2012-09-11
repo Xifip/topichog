@@ -110,16 +110,15 @@ describe User do
     
     it { should respond_to(:name) }
     it { should respond_to(:email) }
-    it { should respond_to(:projects) }
     it { should respond_to(:project_feed) }
-    it { should respond_to(:topics) }
     it { should respond_to(:posts) }
     it { should respond_to(:relationships) }
     it { should respond_to(:followed_users) }
     it { should respond_to(:following?) }
     it { should respond_to(:follow!) }
   end
-  
+
+=begin  
   describe "project associations" do
     before do
         @user = User.new(@attr)
@@ -221,7 +220,7 @@ describe User do
       end
     end
   end
-  
+=end  
  describe "posts assosications" do
     
     before do

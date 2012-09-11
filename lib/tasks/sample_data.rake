@@ -2,8 +2,8 @@ namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
     make_users
-    make_projects
-    make_topics
+    #make_projects
+    #make_topics
     make_posts
     make_relationships
    end
@@ -30,12 +30,22 @@ def make_posts
   users = User.all(limit: 6)
   users.each do |user|
     10.times do
-      title = Faker::Lorem.words(1)
-      summary = Faker::Lorem.sentence(2)
-      p1 = Ppost.create!(title: title, summary: summary)   
-      user.posts.create!(postable_id: p1.id, postable_type: "Ppost")
-      t1 = Tpost.create!(title: title, summary: summary)   
-      user.posts.create!(postable_id: t1.id, postable_type: "Tpost")     
+      #title1 = Faker::Lorem.words(1)
+      #summary1 = Faker::Lorem.sentence(2)
+      #title2 = Faker::Lorem.words(1)
+      #summary2 = Faker::Lorem.sentence(2)
+      title3 = Faker::Lorem.words(1)
+      summary3 = Faker::Lorem.sentence(2)
+      title4 = Faker::Lorem.words(1)
+      summary4 = Faker::Lorem.sentence(2)
+      #p1 = Ppost.create!(title: title1, summary: summary1)   
+      #user.posts.create!(postable_id: p1.id, postable_type: "Ppost")
+      #t1 = Tpost.create!(title: title2, summary: summary2)   
+      #user.posts.create!(postable_id: t1.id, postable_type: "Tpost") 
+      p2 = Ppost.create!(title: title3, summary: summary3)   
+      user.posts.create!(postable_id: p2.id, postable_type: "Ppost")
+      t2 = Tpost.create!(title: title4, summary: summary4)   
+      user.posts.create!(postable_id: t2.id, postable_type: "Tpost")       
     end     
   end  
 end 

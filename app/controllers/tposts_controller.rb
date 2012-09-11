@@ -41,7 +41,6 @@ class TpostsController < ApplicationController
   
   def destroy
 
-  end
-  
+  end  
 
 end
