@@ -42,10 +42,10 @@ def make_posts
       #user.posts.create!(postable_id: p1.id, postable_type: "Ppost")
       #t1 = Tpost.create!(title: title2, summary: summary2)   
       #user.posts.create!(postable_id: t1.id, postable_type: "Tpost") 
-      p2 = Ppost.create!(title: title3, summary: summary3)   
-      user.posts.create!(postable_id: p2.id, postable_type: "Ppost")
-      t2 = Tpost.create!(title: title4, summary: summary4)   
-      user.posts.create!(postable_id: t2.id, postable_type: "Tpost")       
+      p2 = Project.create!(title: title3, summary: summary3)   
+      user.posts.create!(postable_id: p2.id, postable_type: "Project")
+      t2 = Topic.create!(title: title4, summary: summary4)   
+      user.posts.create!(postable_id: t2.id, postable_type: "Topic")       
     end     
   end  
 end 

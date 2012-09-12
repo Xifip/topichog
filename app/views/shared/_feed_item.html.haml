@@ -7,6 +7,10 @@
       = link_to feed_item.postable.title, user_tpost_path(feed_item.user.id, feed_item.id), id: "feed_topic_link_#{feed_item.id}"
     - if feed_item.postable_type == "Ppost"
       = link_to feed_item.postable.title, user_ppost_path(feed_item.user.id, feed_item.id), id: "feed_project_link_#{feed_item.id}"
+    - if feed_item.postable_type == "Topic"
+      = link_to feed_item.postable.title, user_topic_path(feed_item.user.id, feed_item.id), id: "feed_topic_link_#{feed_item.id}"
+    - if feed_item.postable_type == "Project"
+      = link_to feed_item.postable.title, user_project_path(feed_item.user.id, feed_item.id), id: "feed_project_link_#{feed_item.id}"
   %span.summary= feed_item.postable.summary
   %span.timestamp
     Posted #{time_ago_in_words(feed_item.created_at)} ago.

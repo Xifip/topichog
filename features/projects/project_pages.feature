@@ -5,13 +5,13 @@ Feature: project creation
 	
 	Scenario: A signed-in user cannot create a project with invalid information
 		Given I am logged in
-		And I am on the home page
+		And I visit the new_user_project page
 		When I input invalid information for a project
 		When I click save the project should not be saved		
 		And I should get an error message
 		
 	Scenario: A signed-in user can create a project with valid information
 		Given I am logged in
-		And I am on the home page
+		And I visit the new_user_project page
 		When I input valid information for a project
 		When I click save the project should be saved

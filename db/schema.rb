@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120910150722) do
+ActiveRecord::Schema.define(:version => 20120912082604) do
 
   create_table "posts", :force => true do |t|
     t.integer  "postable_id"
@@ -34,14 +34,9 @@ ActiveRecord::Schema.define(:version => 20120910150722) do
   create_table "projects", :force => true do |t|
     t.string   "title"
     t.string   "summary"
-    t.integer  "user_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-    t.integer  "feedable_id"
-    t.string   "feedable_type"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
-
-  add_index "projects", ["user_id", "created_at"], :name => "index_projects_on_user_id_and_created_at"
 
   create_table "relationships", :force => true do |t|
     t.integer  "follower_id"
@@ -57,14 +52,9 @@ ActiveRecord::Schema.define(:version => 20120910150722) do
   create_table "topics", :force => true do |t|
     t.string   "title"
     t.string   "summary"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-    t.integer  "feedable_id"
-    t.string   "feedable_type"
-    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
-
-  add_index "topics", ["created_at"], :name => "index_topics_on_user_id_and_created_at"
 
   create_table "tposts", :force => true do |t|
     t.string   "title"
