@@ -22,19 +22,23 @@
                   %li= link_to "Home", root_path
                   %li= link_to "Help", help_path
                   - if user_signed_in?
-                    %li.dropdown
-                      %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                        = succeed "." do
-                          %strong= current_user.name
-                        %b.caret
-                      %ul.dropdown-menu
-                        %li
-                          = link_to 'Edit account', edit_user_registration_path
-                          \#{link_to "Logout", destroy_user_session_path, method: :delete}             
+                    %li= link_to "new topic", new_user_topic_path(current_user)
+                    %li= link_to "new project", new_user_project_path(current_user)
+                    %li
+                      .btn-group
+                        = link_to current_user.name, user_path(current_user), class: "btn btn-info"
+                        %button.btn.btn-info.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                          %span.caret
+                        %ul.dropdown-menu
+                          %li
+                            = link_to 'Edit account', edit_user_registration_path
+                          %li
+                            = link_to "Logout", destroy_user_session_path, method: :delete                    
                   - else
                     %li
                       = link_to "Sign up", new_user_registration_path
-                      \#{link_to "Login", new_user_session_path}
+                    %li
+                      = link_to "Login", new_user_session_path
                             
     .container
       - flash.each do |key, value|
