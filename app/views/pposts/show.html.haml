@@ -5,6 +5,8 @@
       %h1
         = @user.name
     %section
+      = render 'shared/user_link'
+    %section
       %p= link_to "View all users", users_path      
   .span8
     %h1        

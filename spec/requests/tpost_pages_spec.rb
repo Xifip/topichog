@@ -5,8 +5,29 @@ describe "Topic pages" do
   
   let(:user) { create_logged_in_user } 
   
+  describe "topic viewing" do
+   
+    let(:post ) { FactoryGirl.create(:post, user: user, postable: FactoryGirl.create(:tpost, title: "Foo", summary: "football"))  }
+    before { visit user_tpost_path(user, post.postable) }    
+    
+    subject {page} 
+    
+    describe "shows user info" do
+      it { should have_selector('h1', text: user.name) }
+      it { should have_content ( post.postable.title) }
+      it { should have_content ( post.postable.summary) }
+      it { should have_link('view my profile', href: user_path(user)) }
+    end
+  end
+  
   describe "topic creation" do
     before { visit new_user_tpost_path(user) }
+    
+    subject {page}
+    
+    describe "shows user info" do
+      it { should have_selector('h1', text: user.name) }
+    end
     
     describe "with invalid information" do
       it {page.should have_content "#{user.name}"}

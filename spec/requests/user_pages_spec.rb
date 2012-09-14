@@ -21,17 +21,20 @@ describe "User pages" do
     
   
 
-    describe "should have a current_user" do
+    describe "should show the correct user profile and posts" do
       before {visit user_path(user)}
-      it { page.should have_selector('h1', text: user.name) }
-      it { page.should have_content(p1.title) }
-      it { page.should have_content(p2.title) }    
-      it { page.should have_content(t1.title) }
-      it { page.should have_content(t2.title) }
-      it { page.should have_content(user.posts.find_all_by_postable_type("Tpost").count) }
-      it { page.should have_content(user.posts.find_all_by_postable_type("Ppost").count) }
+      subject {page}
+      it { should have_selector('title', text: full_title(user.name)) }
+      it { should have_selector('h1', text: user.name) }
+      it { should_not have_link('view my profile', href: user_path(user)) }
+      it { should have_content(p1.title) }
+      it { should have_content(p2.title) }    
+      it { should have_content(t1.title) }
+      it { should have_content(t2.title) }
+      it { should have_content(user.posts.find_all_by_postable_type("Tpost").count) }
+      it { should have_content(user.posts.find_all_by_postable_type("Ppost").count) }
     end
- 
+    
     describe "follow/unfollow buttons" do
       let(:other_user) { FactoryGirl.create(:user, name: "foo_other", email: "other@foo.com", password: "other_foo", password_confirmation: "other_foo") }
       
