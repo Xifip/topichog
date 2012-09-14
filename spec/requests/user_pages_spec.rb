@@ -3,6 +3,31 @@ require "debugger"
 
 
 describe "User pages" do
+  
+  subject {page}
+ 
+  describe "index" do
+    let(:user) { FactoryGirl.create(:user) }
+    before(:all) { 30.times { FactoryGirl.create(:user) } }
+    after(:all) { User.delete_all }
+    before(:each) do
+      create_logged_in_user
+      visit users_path
+    end
+    it { should have_selector('title', text: full_title('All users')) }
+    it { should have_selector('h1',
+    text: 'All users') }
+    describe "pagination" do
+      it { should have_selector('div.pagination') }
+      it "should list each user" do
+        User.paginate(page: 1).each do |user|
+          page.should have_selector('li', text: user.name)
+       end
+      end
+    end
+  end
+
+  
   describe "profile page with posts" do 
     
     let(:user) { create_logged_in_user } 
@@ -31,8 +56,30 @@ describe "User pages" do
       it { should have_content(p2.title) }    
       it { should have_content(t1.title) }
       it { should have_content(t2.title) }
-      it { should have_content(user.posts.find_all_by_postable_type("Tpost").count) }
-      it { should have_content(user.posts.find_all_by_postable_type("Ppost").count) }
+      it { should have_content(user.posts.find_all_by_postable_type("Topic").count) }
+      it { should have_content(user.posts.find_all_by_postable_type("Project").count) }
+    end   
+    
+    describe "vist another user's profile" do
+      let(:user) { create_logged_in_user } 
+      let(:other_user) { FactoryGirl.create(:user, name: "foo_other", email: "other@foo.com", password: "other_foo", password_confirmation: "other_foo") }
+      let(:p1) { FactoryGirl.create(:project, title: "Foo", summary: "football") }
+      let(:post1) { FactoryGirl.create(:post, user: other_user, postable: p1) }
+      
+      describe "shows the correct user profile and posts" do
+        before do
+         visit user_path(other_user) 
+        end
+        subject {page}
+        it { should_not have_selector('h1', text: user.name) }
+        it { should_not have_link('view my profile', href: user_path(other_user))}
+        
+        it { should have_selector('title', text: full_title(other_user.name)) }      
+        it { should have_selector('h1', text: other_user.name) }      
+        it { should have_content(p1.title) }
+        it { should have_content(other_user.posts.find_all_by_postable_type("Topic").count) }
+        it { should have_content(other_user.posts.find_all_by_postable_type("Project").count) }
+      end
     end
     
     describe "follow/unfollow buttons" do
@@ -40,8 +87,8 @@ describe "User pages" do
       
       describe "following a user" do
         before { visit user_path(other_user) }
-        
-        
+       
+        it { page.should have_selector('title', text: full_title(other_user.name)) }  
         it "should increment the followed user count" do
           page.should have_selector('input', value: 'Follow')
           #debugger
@@ -80,8 +127,8 @@ describe "User pages" do
         end
       end
     end
-  end
- 
+  end 
+  
   describe "project pages ppost" do
     
     describe "users project page" do
@@ -94,11 +141,11 @@ describe "User pages" do
       end
       
       subject{page}
+      it { page.should have_selector('title', text: full_title(other_user.name + ' | ' + p1.title)) } 
+      it { should have_content(p1.title) }
+      it { should have_content(p1.summary) }
+      it { should have_link('view my profile', href: user_path(other_user)) }
       
-      it { should have_selector('h3', text: 'Project details page') }
-      it { should have_selector('h1', text: p1.title) }
-      it { should have_selector('p', text: p1.summary) }
-      it { should have_link(other_user.name, href: user_path(other_user)) }
     end    
   end
   
@@ -116,10 +163,10 @@ describe "User pages" do
       
       subject{page}
       
-      it { should have_selector('h3', text: 'Topic details page') }
-      it { should have_selector('h1', text: t3.title) }
-      it { should have_selector('p', text: t3.summary) }
-      it { should have_link(other_user.name, href: user_path(other_user)) }
+      it { page.should have_selector('title', text: full_title(other_user.name + ' | ' + t3.title)) } 
+      it { should have_content(t3.title) }
+      it { should have_content(t3.summary) }
+      it { should have_link('view my profile', href: user_path(other_user)) }
     end    
   end
   
@@ -137,10 +184,10 @@ describe "User pages" do
       
       subject{page}
       
-      it { should have_selector('h3', text: 'Project details page') }
-      it { should have_selector('h1', text: p2.title) }
-      it { should have_selector('p', text: p2.summary) }
-      it { should have_link(other_user.name, href: user_path(other_user)) }
+      it { page.should have_selector('title', text: full_title(other_user.name + ' | ' + p2.title)) } 
+      it { should have_content(p2.title) }
+      it { should have_content(p2.summary) }
+      it { should have_link('view my profile', href: user_path(other_user)) }
     end    
   end
   
@@ -158,10 +205,10 @@ describe "User pages" do
       
       subject{page}
       
-      it { should have_selector('h3', text: 'Topic details page') }
-      it { should have_selector('h1', text: t2.title) }
-      it { should have_selector('p', text: t2.summary) }
-      it { should have_link(other_user.name, href: user_path(other_user)) }
+      it { page.should have_selector('title', text: full_title(other_user.name + ' | ' + t2.title)) } 
+      it { should have_content(t2.title) }
+      it { should have_content(t2.summary) }
+      it { should have_link('view my profile', href: user_path(other_user)) }
     end    
   end
 

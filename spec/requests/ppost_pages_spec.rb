@@ -25,6 +25,11 @@ describe "Project pages" do
     
     subject {page} 
     
+    describe "shows user info" do
+      it { should have_selector('title', text: full_title(user.name + ' | new project')) }
+      it { should have_selector('h1', text: user.name) }
+    end
+    
     describe "with invalid information" do
       it {page.should have_content "#{user.name}"}
       it {page.should have_content "New Project"}

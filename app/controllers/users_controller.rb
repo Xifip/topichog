@@ -1,7 +1,7 @@
 require 'will_paginate/array' 
 
 class UsersController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!#, only: [:create, :destroy, :following, :followers]
 
   def index
     @users = User.paginate(page: params[:page])

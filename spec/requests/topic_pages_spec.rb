@@ -26,6 +26,7 @@ describe "Topic pages" do
     subject {page}
     
     describe "shows user info" do
+      it { should have_selector('title', text: full_title(user.name + ' | new topic')) }
       it { should have_selector('h1', text: user.name) }      
     end
     

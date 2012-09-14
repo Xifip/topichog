@@ -7,6 +7,11 @@ describe "Authentication" do
       
       describe "in the Users controller" do
 
+        describe "visiting the user index" do
+          before { visit users_path }
+          it { page.should have_selector('h2', text: 'Sign in') }
+        end
+
         describe "visiting the following page" do
           before { visit following_user_path(user) }          
           it { page.should have_selector('h2', text: 'Sign in') }
