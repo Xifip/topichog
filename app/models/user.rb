@@ -17,6 +17,11 @@ class User < ActiveRecord::Base
                                     dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
   
+ #likes
+  has_many :likes, foreign_key: "liker_id", dependent: :destroy
+  has_many :liked_posts, :through => :likes, :source => :liked, 
+          :class_name => "Post"
+    
   validates_presence_of :name
   validates_uniqueness_of :name, :email, :case_sensitive => false
 
@@ -45,4 +50,15 @@ class User < ActiveRecord::Base
     relationships.find_by_followed_id(other_user.id).destroy
   end
   
+  def liking?(post)
+    likes.find_by_liked_id(post.id)
+  end
+  
+  def like!(post)
+    likes.create!(liked_id: post.id)
+  end
+  
+  def unlike!(post)
+    likes.find_by_liked_id(post.id).destroy
+  end
 end

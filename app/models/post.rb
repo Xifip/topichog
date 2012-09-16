@@ -3,10 +3,19 @@ class Post < ActiveRecord::Base
   belongs_to :user
   belongs_to :postable, polymorphic: true
   
+  #likes
+  has_many :likes, :foreign_key => "liked_id", :dependent => :destroy
+  has_many :likers, :through => :likes, :source => :liker, 
+    :class_name => "User"
+    
   validates :user_id, presence: true
   validates :postable_id, presence: true
   validates :postable_type, presence: true
   default_scope order: 'posts.created_at DESC'
+    
+  def likes_count 
+    likes.count
+  end
   
   def self.from_users_followed_by(user)
     followed_user_ids = "SELECT followed_id FROM relationships

@@ -116,111 +116,13 @@ describe User do
     it { should respond_to(:followed_users) }
     it { should respond_to(:following?) }
     it { should respond_to(:follow!) }
+    it { should respond_to(:likes) }
+    it { should respond_to(:liked_posts) }
+    it { should respond_to(:liking?) }
+    it { should respond_to(:like!) }
   end
 
-=begin  
-  describe "project associations" do
-    before do
-        @user = User.new(@attr)
-        @user.save
-    end
-    
-    let!(:older_project) do
-      FactoryGirl.create(:project, user: @user, created_at: 1.day.ago)
-    end
-    let!(:newer_project) do
-      FactoryGirl.create(:project, user: @user, created_at: 1.hour.ago)
-    end
 
-    it "should have the right projects in the right order" do
-      @user.projects.should == [newer_project, older_project]
-    end
-    
-    it "should destroy associated projects" do
-      projects = @user.projects   
-      #debugger   
-      @user.destroy
-      projects.each do |project|
-        Project.find_by_id(project.id).should be_nil
-      end
-    end
-  
-    describe "status feed" do
-      #DatabaseCleaner.clean
-      let(:unfollowed_project) do
-        FactoryGirl.create(:project, user: FactoryGirl.create(:user, name: "unfollowed", email:"unfollowed@user.com"))
-      end      
-      
-      let(:followed_user) { FactoryGirl.create(:user) }
-      
-      before do
-        @user.follow! followed_user
-        3.times { followed_user.projects.create!(title: "Lorem ipsum", summary: "Ipsum lorem") }       
-      end
-      
-      subject {@user}
-      its(:project_feed) { should include(newer_project) }
-      its(:project_feed) { should include(older_project) }     
-      its(:project_feed) { should_not include(unfollowed_project) }
-      its(:project_feed) do
-          followed_user.projects.each do |project|
-          should include(project)
-        end
-      end
-    end
-  end 
-  
-  describe "topic associations" do
-    
-    before do
-        @user = User.new(@attr)
-        @user.save
-    end
-    
-    let!(:older_topic) do
-      FactoryGirl.create(:topic, user: @user, created_at: 1.day.ago)
-    end
-    let!(:newer_topic) do
-      FactoryGirl.create(:topic, user: @user, created_at: 1.hour.ago)
-    end
-    
-    it "should have the right topics in the right order" do
-      @user.topics.should == [newer_topic, older_topic]
-    end
-    
-    it "should destroy associated topics" do
-      topics = @user.topics   
-      #debugger   
-      @user.destroy
-      topics.each do |topic|
-        Topic.find_by_id(topic.id).should be_nil
-      end
-    end
-    
-    describe "topic status feed" do
-      let(:unfollowed_topic) do
-        FactoryGirl.create(:topic, user: FactoryGirl.create(:user, name: "unfollowed", email:"unfollowed@user.com"))
-      end
-      
-      let(:followed_user) { FactoryGirl.create(:user) }
-      
-      before do
-        @user.follow! followed_user
-        3.times { followed_user.topics.create!(title: "Lorem ipsum", summary: "Ipsum lorem") }       
-      end
-      
-      subject {@user}
-      its(:topic_feed) { should include(newer_topic) }
-      its(:topic_feed) { should include(older_topic) }
-      its(:topic_feed) { should_not include(unfollowed_topic) }
-      its(:topic_feed) do
-          followed_user.topics.each do |topic|
-          should include(topic)
-        end
-      end
-    end
-  end
-=end  
  describe "posts assosications" do
     
     before do
@@ -376,14 +278,46 @@ describe User do
     end
   end
 
+  describe "liking" do
+    let(:post) { FactoryGirl.create(:post, postable: FactoryGirl.create(:topic)) }
+    before do
+      @user = User.new(@attr)
+      @user.save
+      @user.like!(post)
+    end
+    subject {@user}
+    it { should be_liking(post) }
+    its(:liked_posts) { should include(post) }
+    
+    describe "and unliking" do
+      before { @user.unlike!(post) }
+      it { should_not be_liking(post) }
+      its(:liked_posts) { should_not include(post) }
+    end
+     
+    describe "the post's likers include user" do
+      subject { post }
+      its(:likers) { should include(@user) }
+    end
+    
+    describe "when a user is deleted" do      
+      it "should destroy associated likes" do
+        @likes_by_user = Like.find_all_by_liker_id(@user.id)
+        @user.destroy  
+        
+        @likes_by_user.each do |like_instance|
+          Like.find_by_id(like_instance.id).should be_nil 
+        end
+      end
+    end
+  end
+
   describe "following" do
     let(:other_user) { FactoryGirl.create(:user) }
     before do
       @user = User.new(@attr)
       @user.save
       @user.follow!(other_user)
-      #debugger
-      #t = 6
     end
     subject {@user}
 

@@ -18,6 +18,9 @@ describe Post do
   it { should respond_to(:postable_type) }
   it { should respond_to(:user_id) }
   it { should respond_to(:user) }
+  it { should respond_to(:likes) }
+  it { should respond_to(:likers) }
+  it { should respond_to(:likes_count) }
   its(:user) { should == user }  
   its(:postable) { should == topic }
   
@@ -51,5 +54,36 @@ describe Post do
       end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
     end
   end  
+  
+  describe "likes" do
+    
+    before(:each) do
+      #@post = @user.posts.create(@attr)
+      @user2 = Factory(:user, :email => Factory.next(:email))
+      @user3 = Factory(:user, :email => Factory.next(:email))
+    end
+    
+    it "should respond to a call to likes method" do
+      @micropost.should respond_to(:likes)
+    end
+    
+    it "should respond to a call to the likers method" do
+      @micropost.should respond_to(:likers)
+    end
+    
+    it "should respond to a call to a likes_count method" do
+      @micropost.should respond_to(:likes_count)
+    end
+    
+    it "should have the right number of likes" do
+      @user2.like!(@micropost)
+      @micropost.likes_count.should == 1
+      @user3.like!(@micropost)
+      @micropost.likes_count.should == 2
+      @user2.unlike!(@micropost)
+      @micropost.likes_count.should == 1
+    end    
+    
+  end
 
 end
