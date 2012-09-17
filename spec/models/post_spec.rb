@@ -9,6 +9,7 @@ describe Post do
   before do
      @post = user.posts.build 
      @post.postable = topic
+     @post.save!
   end
   
   subject { @post }
@@ -57,31 +58,33 @@ describe Post do
   
   describe "likes" do
     
-    before(:each) do
+    let(:user2) { FactoryGirl.create(:user) }
+    let(:user3) { FactoryGirl.create(:user) }
+   # before(:each) do
       #@post = @user.posts.create(@attr)
-      @user2 = Factory(:user, :email => Factory.next(:email))
-      @user3 = Factory(:user, :email => Factory.next(:email))
-    end
+      #@user2 = Factory(:user, :email => Factory.next(:email))
+      #@user3 = Factory(:user, :email => Factory.next(:email))
+    #end
     
     it "should respond to a call to likes method" do
-      @micropost.should respond_to(:likes)
+      @post.should respond_to(:likes)
     end
     
     it "should respond to a call to the likers method" do
-      @micropost.should respond_to(:likers)
+      @post.should respond_to(:likers)
     end
     
     it "should respond to a call to a likes_count method" do
-      @micropost.should respond_to(:likes_count)
+      @post.should respond_to(:likes_count)
     end
     
     it "should have the right number of likes" do
-      @user2.like!(@micropost)
-      @micropost.likes_count.should == 1
-      @user3.like!(@micropost)
-      @micropost.likes_count.should == 2
-      @user2.unlike!(@micropost)
-      @micropost.likes_count.should == 1
+      user2.like!(@post)
+      @post.likes_count.should == 1
+      user3.like!(@post)
+      @post.likes_count.should == 2
+      user2.unlike!(@post)
+      @post.likes_count.should == 1
     end    
     
   end
