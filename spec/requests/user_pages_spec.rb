@@ -15,8 +15,8 @@ describe "User pages" do
       visit users_path
     end
     it { should have_selector('title', text: full_title('All users')) }
-    it { should have_selector('h1',
-    text: 'All users') }
+    it { should have_selector('h3',
+    text: 'Users list') }
     describe "pagination" do
       it { should have_selector('div.pagination') }
       it "should list each user" do
