@@ -1,0 +1,6 @@
+- unless current_user == @user
+  #like_form
+    - if current_user.liking?(@post)
+      = render 'posts/unlike'
+    - else
+      = render 'posts/like'

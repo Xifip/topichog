@@ -12,24 +12,28 @@
     - if @projects.any?
       %h3
         Projects (#{@projects.count})
-      %ol.projects
+      %ol.posts
         = render @projects
-      = will_paginate @projects
+      = will_paginate @projects, :param_name => 'project_page'
     - if @topics.any?
       %h3
         Topics (#{@topics.count})
-      %ol.projects
+      %ol.posts
         = render @topics
-      = will_paginate @topics
+      = will_paginate @topics, :param_name => 'topic_page'
     - if @pposts.any?
       %h3
         Pposts (#{@pposts.count})
-      %ol.projects
+      %ol.posts
         = render @pposts
-      = will_paginate @pposts
+      = will_paginate @pposts, :param_name => 'ppost_page'
     - if @tposts.any?
       %h3
         Tposts (#{@tposts.count})
-      %ol.projects
+      %ol.posts
         = render @tposts
-      = will_paginate @tposts
+      = will_paginate @tposts, :param_name => 'tpost_page'
+    - if @liked_posts.any?
+      %h3
+        Favorited items (#{@liked_posts.count})
+      = render partial: 'shared/liked_feed'  

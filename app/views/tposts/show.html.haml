@@ -14,4 +14,8 @@
       Title: #{@tpost.title}
     %p
       summary: #{@tpost.summary}
+  .span8
+    =render 'shared/post_stats'
+  .span8
+    =render 'shared/likers_list'
   %p= link_to "Back to #{@topic_user.name}", user_path(@topic_user)

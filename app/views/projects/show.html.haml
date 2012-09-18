@@ -1,5 +1,4 @@
 = provide(:title, @user.name + ' | ' + @project.title)
-%h3 Project details page
 .row
   %aside.span4
     %section  
@@ -9,9 +8,15 @@
       = render 'shared/user_link'
     %section
       %p= link_to "View all users", users_path      
-  .span8
-    %h1        
-      Title: #{@project.title}
+  .span8 
+    %span.span5
+      %h1        
+        Title: #{@project.title}
+    %span.span2
+      =render 'posts/like_form' if user_signed_in?
     %p
       summary: #{@project.summary}
-  %p= link_to "Back to #{@project_user.name}", user_path(@project_user)
+    .span8
+      =render 'shared/post_stats'
+    .span8
+      =render 'shared/likers_list'

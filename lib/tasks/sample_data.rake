@@ -6,6 +6,7 @@ namespace :db do
     #make_topics
     make_posts
     make_relationships
+    make_likes
    end
 end
 
@@ -66,6 +67,17 @@ def make_topics
     summary = Faker::Lorem.sentence(2)
     users.each { |user| user.topics.create!(title: title, summary: summary) }
   end
+end
+
+def make_likes
+  posts = Post.all
+  post = posts.first
+  users = User.all
+  user = users.first
+  liked_posts = posts[2..50]
+  likers = users[3..40]
+  liked_posts.each { |liked_post| user.like!(liked_post) }
+  likers.each { |liker| liker.like!(post) }
 end 
     
 def make_relationships

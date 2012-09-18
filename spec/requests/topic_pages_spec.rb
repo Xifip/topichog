@@ -7,7 +7,8 @@ describe "Topic pages" do
   
   describe "topic viewing" do
    
-    let(:post ) { FactoryGirl.create(:post, user: user, postable: FactoryGirl.create(:topic, title: "Foo", summary: "football"))  }
+    let(:post ) { FactoryGirl.create(:post, user: user, postable: 
+      FactoryGirl.create(:topic, title: "Foo", summary: "football"))  }
     before { visit user_topic_path(user, post.postable) }    
     
     subject {page} 
@@ -20,13 +21,42 @@ describe "Topic pages" do
     end
   end
   
+  describe "shows likers and liker count" do
+    let(:other_user) { FactoryGirl.create(:user) }
+    let(:liked_post) { FactoryGirl.create(:post, user: other_user, postable: 
+            (FactoryGirl.create(:topic, title: "Foo", summary: "football"))) }
+              
+    before do
+      user.like!(liked_post)
+      visit user_topic_path(other_user, liked_post.postable)
+    end
+    
+    subject {page}     
+
+    it { should have_selector('div.post_stats', 
+                              text: liked_post.likes_count.to_s)}
+    it "should render the list of users who like the post" do
+      liked_post.likers.each do |item|
+        should have_link('', href: user_path(item))
+      end
+    end   
+    
+    describe "shows user and topic info" do
+      it { should have_selector('h1', text: other_user.name) }
+      it { should have_content ( liked_post.postable.title) }
+      it { should have_content ( liked_post.postable.summary) }
+      it { should have_link('view my profile', href: user_path(other_user)) }
+    end 
+  end
+  
   describe "topic creation" do
     before { visit new_user_topic_path(user) }
     
     subject {page}
     
     describe "shows user info" do
-      it { should have_selector('title', text: full_title(user.name + ' | new topic')) }
+      it { should have_selector('title', 
+                                text: full_title(user.name + ' | new topic')) }
       it { should have_selector('h1', text: user.name) }      
     end
     
@@ -65,7 +95,8 @@ describe "Topic pages" do
 
     describe "as correct user" do
       before do
-        FactoryGirl.create(:post, user: user, postable: FactoryGirl.create(:topic, title: "Foo", summary: "football")) 
+        FactoryGirl.create(:post, user: user, postable: 
+          FactoryGirl.create(:topic, title: "Foo", summary: "football")) 
         visit user_path(user)
       end
       it "should delete a post" do
@@ -77,4 +108,6 @@ describe "Topic pages" do
       end
     end
   end
+  
+  
 end

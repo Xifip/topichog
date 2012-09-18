@@ -195,8 +195,11 @@ describe "User pages" do
     
     describe "users topic page" do
       let(:user) { create_logged_in_user } 
-      let(:other_user) { FactoryGirl.create(:user, name: "foo_other", email: "other@foo.com", password: "other_foo", password_confirmation: "other_foo") }
-      let!(:t2) { FactoryGirl.create(:topic, title: "topic2", summary: "football") }
+      let(:other_user) { FactoryGirl.create(:user, name: "foo_other", 
+                        email: "other@foo.com", password: "other_foo", 
+                        password_confirmation: "other_foo") }
+      let!(:t2) { FactoryGirl.create(:topic, title: "topic2", 
+                  summary: "football") }
       let!(:post4) { FactoryGirl.create(:post, user: other_user, postable: t2) }
       
       before do        
@@ -205,11 +208,31 @@ describe "User pages" do
       
       subject{page}
       
-      it { page.should have_selector('title', text: full_title(other_user.name + ' | ' + t2.title)) } 
+      it { page.should have_selector('title', 
+                      text: full_title(other_user.name + ' | ' + t2.title)) } 
       it { should have_content(t2.title) }
       it { should have_content(t2.summary) }
       it { should have_link('view my profile', href: user_path(other_user)) }
     end    
   end
 
+  describe "like counts and feed" do
+    let(:user) { create_logged_in_user } 
+    let(:other_user) { FactoryGirl.create(:user) }
+    let(:liked_post) { FactoryGirl.create(:post, user: other_user, postable: 
+              (FactoryGirl.create(:topic, title: "Foo", summary: "football"))) }
+    before do
+      user.like!(liked_post)
+      visit user_path(user)
+    end
+
+    subject{page}    
+
+    it { should have_selector("h3", text: "Favorited items") }
+    it "should render the user's liked posts feed" do
+      user.liked_posts.each do |item|
+        page.should have_selector("li##{item.id}", text: item.postable.title)
+      end
+    end      
+  end
 end

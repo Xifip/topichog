@@ -1,0 +1,3 @@
+= form_for(current_user.likes.build(liked_id: @post.id), remote: true) do |f|
+  %div= f.hidden_field :liked_id
+  = f.submit "Favorite", class: "btn btn-large btn-primary"

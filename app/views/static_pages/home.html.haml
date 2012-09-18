@@ -8,12 +8,18 @@
       %section
         = render 'shared/stats'
     .span8
-      %h3 Feed
-      = render partial: 'shared/feed'
-      %h3 Project Feed
-      = render partial: 'shared/project_feed'
-      %h3 Topic Feed
-      = render partial: 'shared/topic_feed'
+      - if @feed_items.any?
+        %h3 Feed
+        = render partial: 'shared/feed'
+      - if @project_feed_items.any?
+        %h3 Project Feed
+        = render partial: 'shared/project_feed'
+      - if @topic_feed_items.any?
+        %h3 Topic Feed
+        = render partial: 'shared/topic_feed'
+      - if @liked_posts.any?
+        %h3 Favorited items (#{@liked_posts.count})
+        = render partial: 'shared/liked_feed'
 - else
   .center.hero-unit
     %h1 Welcome to TopicHog Beta

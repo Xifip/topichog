@@ -1,5 +1,4 @@
 = provide(:title, @user.name + ' | ' + @topic.title)
-%h3 Topic details page
 .row
   %aside.span4
     %section  
@@ -10,8 +9,14 @@
     %section
       %p= link_to "View all users", users_path      
   .span8 
-    %h1        
-      Title: #{@topic.title}
+    %span.span5
+      %h1        
+        Title: #{@topic.title}
+    %span.span2
+      =render 'posts/like_form' if user_signed_in?
     %p
       summary: #{@topic.summary}
-  %p= link_to "Back to #{@topic_user.name}", user_path(@topic_user)
+    .span8
+      =render 'shared/post_stats'
+    .span8
+      =render 'shared/likers_list'

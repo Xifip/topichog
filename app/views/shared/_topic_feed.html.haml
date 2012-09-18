@@ -1,4 +1,3 @@
-- if @topic_feed_items.any?
-  %ol.topics
-    = render partial: 'shared/topic_feed_item', collection: @topic_feed_items
-  = will_paginate @topic_feed_items, :param_name => 'topic_page'
+%ol.feed
+  = render partial: 'shared/topic_feed_item', collection: @topic_feed_items
+= will_paginate @topic_feed_items, :param_name => 'topic_page'

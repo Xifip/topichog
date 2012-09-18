@@ -37,6 +37,8 @@ class PpostsController < ApplicationController
     @post = @project_user.posts.find_by_id(params[:id])
     @ppost = @post.postable
     @user = @post.user
+    @likers = @post.likers.paginate(page: params[:page])
+    @likes_count =  @post.likes_count
   end
   
   def destroy

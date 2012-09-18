@@ -1,11 +1,8 @@
 .row
   %aside.span4
     %section
-      = gravatar_for @user
-      %h1= @user.name
-      %span= link_to "view my profile", @user
-    %section
-      = render 'shared/user_info'  
+      = render 'shared/user_info' 
+      %span= link_to "view my profile", @user 
     %section
       = render 'shared/stats'
       - if @users.any?

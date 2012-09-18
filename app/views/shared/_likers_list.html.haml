@@ -1,0 +1,4 @@
+- if @likers.any?
+  .user_avatars
+    - @likers.each do |liker|
+      = link_to gravatar_for(liker, size: 30), liker

@@ -33,6 +33,17 @@ describe "Authentication" do
           specify { response.should redirect_to(new_user_session_path) }
         end
       end
+      
+      describe "in the Likes controller" do
+        describe "submitting to the create action" do
+          before { post likes_path }
+          specify { response.should redirect_to(new_user_session_path) }
+        end
+        describe "submitting to the destroy action" do
+          before { delete like_path(1) }
+          specify { response.should redirect_to(new_user_session_path) }
+        end
+      end
     
       describe "in the Posts controller" do
         describe "submitting to the destroy action" do

@@ -19,6 +19,33 @@ describe "Topic pages" do
       it { should have_link('view my profile', href: user_path(user)) }
     end
   end
+
+  describe "shows likers and liker count" do
+    let(:other_user) { FactoryGirl.create(:user) }
+    let(:liked_post) { FactoryGirl.create(:post, user: other_user, postable: 
+            (FactoryGirl.create(:tpost, title: "Foo", summary: "football"))) }
+              
+    before do
+      user.like!(liked_post)
+      visit user_tpost_path(other_user, liked_post.postable)
+    end
+    
+    subject {page} 
+    
+    it { should have_selector('div.post_stats', text: liked_post.likes_count.to_s)}
+    it "should render the list of users who like the post" do
+      liked_post.likers.each do |item|
+        should have_link('', href: user_path(item))
+      end
+    end      
+    
+    describe "shows user and topic info" do
+      it { should have_selector('h1', text: other_user.name) }
+      it { should have_content ( liked_post.postable.title) }
+      it { should have_content ( liked_post.postable.summary) }
+      it { should have_link('view my profile', href: user_path(other_user)) }
+    end 
+  end
   
   describe "topic creation" do
     before { visit new_user_tpost_path(user) }

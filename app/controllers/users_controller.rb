@@ -9,10 +9,12 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @pposts = @user.posts.find_all_by_postable_type("Ppost").paginate(page: params[:page], per_page: 5)
-    @tposts = @user.posts.find_all_by_postable_type("Tpost").paginate(page: params[:page], per_page: 5) 
-    @projects = @user.posts.find_all_by_postable_type("Project").paginate(page: params[:page], per_page: 5)
-    @topics = @user.posts.find_all_by_postable_type("Topic").paginate(page: params[:page], per_page: 5)    
+    @pposts = @user.posts.find_all_by_postable_type("Ppost").paginate(page: params[:ppost_page], per_page: 5)
+    @tposts = @user.posts.find_all_by_postable_type("Tpost").paginate(page: params[:tpost_page], per_page: 5) 
+    @projects = @user.posts.find_all_by_postable_type("Project").paginate(page: params[:project_page], per_page: 5)
+    @topics = @user.posts.find_all_by_postable_type("Topic").paginate(page: params[:topic_page], per_page: 5)   
+    @liked_posts = @user.liked_posts.paginate(page: params[:liked_page], per_page: 5) 
+    
   end
 
   def following

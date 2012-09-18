@@ -12,6 +12,14 @@ TopicHog::Application.routes.draw do
     member do
       get :following, :followers 
     end
+    member do
+      get :liked
+    end
+    resources :posts, only: [:index] do
+      member do
+        get :likers
+      end
+    end
     resources :projects, :only => [:create, :show, :new] 
     resources :pposts, :only => [:create, :show, :new] 
     resources :tposts, :only => [:create, :show, :new] 
@@ -25,7 +33,7 @@ TopicHog::Application.routes.draw do
   resources :posts, only: [:destroy]
   
   resources :relationships, only: [:create, :destroy]
-  
+  resources :likes, only: [:create, :destroy]
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
