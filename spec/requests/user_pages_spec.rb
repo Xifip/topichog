@@ -144,7 +144,7 @@ describe "User pages" do
       it { page.should have_selector('title', text: full_title(other_user.name + ' | ' + p1.title)) } 
       it { should have_content(p1.title) }
       it { should have_content(p1.summary) }
-      it { should have_link('view my profile', href: user_path(other_user)) }
+      it { should have_link('view profile', href: user_path(other_user)) }
       
     end    
   end
@@ -166,7 +166,7 @@ describe "User pages" do
       it { page.should have_selector('title', text: full_title(other_user.name + ' | ' + t3.title)) } 
       it { should have_content(t3.title) }
       it { should have_content(t3.summary) }
-      it { should have_link('view my profile', href: user_path(other_user)) }
+      it { should have_link('view profile', href: user_path(other_user)) }
     end    
   end
   
@@ -187,7 +187,7 @@ describe "User pages" do
       it { page.should have_selector('title', text: full_title(other_user.name + ' | ' + p2.title)) } 
       it { should have_content(p2.title) }
       it { should have_content(p2.summary) }
-      it { should have_link('view my profile', href: user_path(other_user)) }
+      it { should have_link('view profile', href: user_path(other_user)) }
     end    
   end
   
@@ -212,7 +212,7 @@ describe "User pages" do
                       text: full_title(other_user.name + ' | ' + t2.title)) } 
       it { should have_content(t2.title) }
       it { should have_content(t2.summary) }
-      it { should have_link('view my profile', href: user_path(other_user)) }
+      it { should have_link('view profile', href: user_path(other_user)) }
     end    
   end
 

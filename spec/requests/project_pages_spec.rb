@@ -16,7 +16,7 @@ describe "Project pages" do
       it { should have_selector('h1', text: user.name) }
       it { should have_content ( post.postable.title) }
       it { should have_content ( post.postable.summary) }
-      it { should have_link('view my profile', href: user_path(user)) }
+      it { should have_link('view profile', href: user_path(user)) }
     end
     
     
@@ -41,11 +41,63 @@ describe "Project pages" do
       end
     end    
     
+    describe "like/unlike buttons" do
+      describe "unliking a post" do  
+        it "should decrement the user's liked posts count" do
+          expect do
+            click_button "Unfavorite"
+          end.to change(user.liked_posts, :count).by(-1)
+        end
+        
+        it "should decrement the post's likes count" do
+          expect do
+            click_button "Unfavorite"
+          end.to change(liked_post.likes, :count).by(-1)
+        end    
+        
+        describe "toggling the button" do
+          before do 
+            click_button "Unfavorite"           
+          end          
+          it { should have_selector('input', value: 'Favorite') }
+          it { should have_selector('strong#liking', 
+               text: liked_post.likes_count.to_s) } 
+          it { should_not have_selector('a#liker_id_' + user.id.to_s) }
+        end
+      end  
+      
+      describe "liking a project" do
+        before do
+          user.unlike!(liked_post)
+          visit user_project_path(other_user, liked_post.postable)
+        end
+        it "should increment the user's liked posts count" do
+          expect do
+            click_button "Favorite"
+          end.to change(user.likes, :count).by(1)
+        end
+      
+        it "should increment the post's likes count" do
+          expect do
+            click_button "Favorite"
+          end.to change(liked_post.likes, :count).by(1)
+        end    
+        
+        describe "toggling the button" do
+          before { click_button "Favorite" }
+          it { should have_selector('input', value: 'Unfavorite') }
+          it { should have_selector('strong#liking', 
+               text: liked_post.likes_count.to_s) } 
+          it { page.should have_selector('a#liker_id_' + user.id.to_s) }          
+        end
+      end
+    end
+    
     describe "shows user and project info" do
       it { should have_selector('h1', text: other_user.name) }
       it { should have_content ( liked_post.postable.title) }
       it { should have_content ( liked_post.postable.summary) }
-      it { should have_link('view my profile', href: user_path(other_user)) }
+      it { should have_link('view profile', href: user_path(other_user)) }
     end 
   end
     
@@ -106,64 +158,5 @@ describe "Project pages" do
       end
     end
   end
-  
-  describe "like/unlike buttons" do
-    
-    let(:other_user) { FactoryGirl.create(:user) }
-    
-    let(:liked_project_post) { FactoryGirl.create(:post, user: other_user, postable: FactoryGirl.create(:project, title: "Foo", summary: "football")) }
-    
-    before { create_logged_in_user }
-    
-    describe "liking a project" do
-    
-      before do
-       visit user_project_path(other_user, liked_project_post) 
-      end
-      
-      subject {page}
-      
-      it "should increment the user's liked posts count" do
-        expect do
-          click_button "Favorite"
-        end.to change(user.likes, :count).by(1)
-      end
-    
-      it "should increment the post's likes count" do
-        expect do
-          click_button "Favorite"
-        end.to change(liked_project_post.likes, :count).by(1)
-      end
-    
-      describe "toggling the button" do
-        before { click_button "Favorite" }
-          it { should have_selector('input', value: 'Unfavorite') }
-      end
-    end
-    
-    describe "unliking a post" do
-      before do
-        user.like!(liked_project_post)
-        visit user_project_path(other_user, liked_project_post)
-      end
-      
-      it "should decrement the user's liked posts count" do
-        expect do
-          click_button "Unfavorite"
-        end.to change(user.liked_posts, :count).by(-1)
-      end
-      
-      it "should decrement the post's likes count" do
-        expect do
-          click_button "Unfavorite"
-        end.to change(liked_project_post.likes, :count).by(-1)
-      end
-      
-      describe "toggling the button" do
-        before { click_button "Unfavorite" }
-        subject {page}
-        it { should have_selector('input', value: 'Favorite') }
-      end
-    end
-  end  
+ 
 end

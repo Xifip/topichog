@@ -1,0 +1,3 @@
+$("#like_form").html("<%= escape_javascript(render('posts/like')) %>")
+$("#liking").html('<%= @post.likes.count %>')
+$('<%=@liker_id_selector %>').remove()

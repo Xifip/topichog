@@ -1,0 +1,6 @@
+$("#like_form").html("<%= escape_javascript(render('posts/unlike')) %>")
+$("#liking").html('<%= @post.likes.count %>')
+$("div.user_avatars").append("<%= escape_javascript( link_to gravatar_for(@liker, size: 30), 
+@liker, id: 'liker_id_' + @liker.id.to_s)%>")
+
+

@@ -15,3 +15,7 @@
     = link_to "delete", post, method: :delete, |
       data: { confirm: "You sure?" },               |
       title: post.postable.title                    | 
+  %span.post_info
+  - if post.likes_count > 0
+    %strong#liking.stat #{post.likes_count}
+    favorites  

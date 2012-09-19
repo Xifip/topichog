@@ -1,2 +1,4 @@
 .post_stats
-  = pluralize(@likes_count, "favorite")
+  %strong#liking.stat
+    = @likes_count
+  favorites

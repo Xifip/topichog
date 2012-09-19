@@ -63,10 +63,8 @@ When /^I click title of the project$/ do
 end
 
 Then /^I should see the project details$/ do
-  page.should have_content "Project details page" 
   page.should have_content "#{@m3.postable.title}"
-  #page.should have_selector("h3", "Project details page") 
-  #page.should have_selector("h1", "#{@m3.title}")
+  page.should have_selector("title", text: full_title(@m3.user.name + ' | ' + @m3.postable.title)) 
 end
 
 Then /^I should get an error message$/ do

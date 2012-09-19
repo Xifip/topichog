@@ -9,13 +9,15 @@
       = render 'shared/user_link'
     %section
       %p= link_to "View all users", users_path      
-  .span8
-    %h1        
-      Title: #{@ppost.title}
+  .span8 
+    %span.span5
+      %h1        
+        Title: #{@ppost.title}
+    %span.span2
+      =render 'posts/like_form' if user_signed_in?
     %p
       summary: #{@ppost.summary}
-  .span8
-    =render 'shared/post_stats'
-  .span8
-    =render 'shared/likers_list'
-  %p= link_to "Back to #{@project_user.name}", user_path(@project_user)
+    .span8
+      =render 'shared/post_stats'
+    .span8
+      =render 'shared/likers_list'

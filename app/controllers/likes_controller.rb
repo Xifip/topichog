@@ -3,44 +3,53 @@ class LikesController < ApplicationController
   
   def create  
     @post = Post.find(params[:like][:liked_id])
+    @liker_id_selector = '#liker_id_' + current_user.id.to_s
+    @liker = current_user
+    
     current_user.like!(@post)
-    if @post.postable_type == "Project"
-      redirect_to user_project_path(@post.user, @post.postable)
+    #debugger
+    respond_to do |format|
+      format.html {
+        if @post.postable_type == "Project"
+          redirect_to user_project_path(@post.user, @post.postable)
+        end
+        if @post.postable_type == "Topic"
+          redirect_to user_topic_path(@post.user, @post.postable)
+        end
+        if @post.postable_type == "Tpost"
+          redirect_to user_tpost_path(@post.user, @post.postable)
+        end
+        if @post.postable_type == "Ppost"
+          redirect_to user_ppost_path(@post.user, @post.postable)
+        end
+      }
+      format.js
     end
-    if @post.postable_type == "Topic"
-      redirect_to user_topic_path(@post.user, @post.postable)
-    end
-    if @post.postable_type == "Tpost"
-      redirect_to user_tpost_path(@post.user, @post.postable)
-    end
-    if @post.postable_type == "Ppost"
-      redirect_to user_ppost_path(@post.user, @post.postable)
-    end
-    #respond_to do |format|
-    #  format.html { redirect_to @post }
-    #  format.js
-    #end
   end
   
   def destroy
     @post = Like.find(params[:id]).liked
+    @liker_id_selector = '#liker_id_' + current_user.id.to_s
+    
     current_user.unlike!(@post)
-    if @post.postable_type == "Project"
-      redirect_to user_project_path(@post.user, @post.postable)
+    
+    respond_to do |format|
+      format.html {
+        if @post.postable_type == "Project"
+          redirect_to user_project_path(@post.user, @post.postable)
+        end
+        if @post.postable_type == "Topic"
+          redirect_to user_topic_path(@post.user, @post.postable)
+        end
+        if @post.postable_type == "Tpost"
+          redirect_to user_tpost_path(@post.user, @post.postable)
+        end
+        if @post.postable_type == "Ppost"
+          redirect_to user_ppost_path(@post.user, @post.postable)
+        end
+      }
+      format.js
     end
-    if @post.postable_type == "Topic"
-      redirect_to user_topic_path(@post.user, @post.postable)
-    end
-    if @post.postable_type == "Tpost"
-      redirect_to user_tpost_path(@post.user, @post.postable)
-    end
-    if @post.postable_type == "Ppost"
-      redirect_to user_ppost_path(@post.user, @post.postable)
-    end
-    #respond_to do |format|
-    #  format.html { redirect_to @post }
-    #  format.js
-    #end
   end
   
 end
