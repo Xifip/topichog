@@ -12,10 +12,12 @@
     %span.span5
       %h1        
         Title: #{@topic.title}
-    %span.span2
+    %span.span3
       =render 'posts/like_form' if user_signed_in?
-    %p
+    %p.span8
       summary: #{@topic.summary}
+    .span8
+      =render 'shared/tags'
     .span8
       =render 'shared/post_stats'
     .span8

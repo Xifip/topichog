@@ -17,10 +17,8 @@ FactoryGirl.define do
   
   factory :topic do
     title "Lorem ipsum"
-    summary "My rails project"  
-    after_create do |topic|      
-       topic.tag_list = "tag1, tag2"
-    end
+    summary "My rails project" 
+    tag_list "tag1, tag2, tag3"
   end
   
   

@@ -131,15 +131,26 @@ describe "Topic pages" do
       before do
          page.fill_in 'topic_title', with: "Lorem ipsum"
          page.fill_in 'topic_summary', with: "Ipsum lorem"
+         page.fill_in 'topic_tag_list', with: "tag1, tag2, tag3"
       end
       it "should create a topic" do
         
         expect { page.click_button "Submit topic" }.to change(Topic, :count).by(1)
       end
       it "should create a post" do
-        expect { page.click_button "Submit topic" }.to change(Post, :count).by(1)
-        
+        expect { page.click_button "Submit topic" }.to change(Post, :count).by(1)        
       end
+      
+      describe "tag creation" do
+        before {page.click_button "Submit topic"}
+         it "should create topic tags" do  
+          Topic.last.tag_list.should eq([ "tag1", "tag2", "tag3" ])
+        end
+        it "should create post tags" do          
+          Topic.last.posts[0].owner_tags_on(user, :tags).should eq(Topic.last.tags)
+        end
+      end  
+
     end
   end
   
@@ -158,7 +169,26 @@ describe "Topic pages" do
       it "should delete a topic" do        
         expect { click_link "delete" }.to change(Topic, :count).by(-1)
       end
+      
+      describe "tag destruction" do
+        before {page.click_link "delete"}
+        it "should not find tags in topic model" do          
+          Topic.tag_counts.should eq([ ])
+        end
+        it "should not find tags in post model" do          
+          Post.tag_counts.should eq([ ])
+        end
+        it "should not find tags for user" do       
+          user.owned_tags.should eq([ ])
+        end
+         it "should not find topic with tags" do          
+          Topic.tagged_with("tag1").should eq([ ])
+        end
+         it "should not find post with tags" do          
+          Post.tagged_with("tag1").should eq([ ])
+        end
+      end  
+      
     end
   end  
-  
 end

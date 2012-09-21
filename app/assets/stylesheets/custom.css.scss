@@ -102,6 +102,16 @@ footer {
 
 /* miscellaneous */
 
+ol.tag {
+  float: left;
+  list-style: none;
+  margin-left: 0px;
+  li {
+    float: left;
+    margin-right: 10px;
+  }
+}
+
 .debug_dump {
   clear: both;
   float: left;

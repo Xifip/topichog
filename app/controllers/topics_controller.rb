@@ -2,15 +2,12 @@ class TopicsController < ApplicationController
   before_filter :authenticate_user!, only: [:create, :destroy] 
 
   def create  
-  #debugger
     @topic = Topic.new(params[:topic])
     @post = current_user.posts.build    
     if @topic.save
-      debugger
       @post.postable = @topic
       if @post.save
         @post.user.tag(@post, :with =>  params[:topic][:tag_list], :on => :tags)
-        debugger
         flash[:success] = "Topic created!"        
         redirect_to user_path(@post.user)
       else
@@ -43,6 +40,12 @@ class TopicsController < ApplicationController
     @user = @post.user
     @likers = @post.likers#.paginate(page: params[:page])
     @likes_count =  @post.likes_count
+    @tags_item = @post.owner_tags_on(@user, :tags)
+    #@tag_names = []
+    #@tags.each do |tag|
+      #@tag_names.push tag.name
+    #end
+
   end
   
   def destroy
