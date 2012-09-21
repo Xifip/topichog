@@ -1,0 +1,7 @@
+-#  This file is app/views/posts/index.html.haml
+= provide(:title, 'Explore')
+%h1 Explore
+%h2 Tags
+- tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class|
+  = link_to tag.name, { :action => :index }, :class => css_class
+%h2 Topics and Projects

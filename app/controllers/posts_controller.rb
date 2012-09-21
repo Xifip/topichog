@@ -2,6 +2,10 @@ class PostsController < ApplicationController
   before_filter :authenticate_user!, only: [:destroy] 
   before_filter :correct_user, only: :destroy
   
+  def index
+  tag_cloud
+  end
+  
   def destroy
     
     if @post.postable_type == "Ppost"
@@ -21,6 +25,10 @@ class PostsController < ApplicationController
       topic.destroy
     end
     redirect_to root_path
+  end
+  
+  def tag_cloud
+    @tags = Post.tag_counts_on(:tags)
   end
   
   private

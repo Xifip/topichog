@@ -30,7 +30,7 @@ TopicHog::Application.routes.draw do
   resources :pposts, only: [:destroy]
   resources :tposts, only: [:destroy]
   resources :topics, only: [:destroy]
-  resources :posts, only: [:destroy]
+  resources :posts, only: [:index, :destroy]
   
   resources :relationships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
