@@ -1,13 +1,17 @@
 class TopicsController < ApplicationController
   before_filter :authenticate_user!, only: [:create, :destroy] 
 
-  def create
+  def create  
+  #debugger
     @topic = Topic.new(params[:topic])
     @post = current_user.posts.build    
     if @topic.save
+      debugger
       @post.postable = @topic
       if @post.save
-        flash[:success] = "Topic created!"
+        @post.user.tag(@post, :with =>  params[:topic][:tag_list], :on => :tags)
+        debugger
+        flash[:success] = "Topic created!"        
         redirect_to user_path(@post.user)
       else
         @user = @post.user  

@@ -9,24 +9,18 @@ FactoryGirl.define do
     remember_me false
   end
 
-=begin
-  factory :user do
-    name "Michael Hartl"
-    email "michael@example.com"
-    password "foobar"
-    password_confirmation "foobar"
-    remember_me false
-  end
-=end 
-
   factory :project do
     title "Lorem ipsum"
     summary "My rails project"  
+    
   end
   
   factory :topic do
     title "Lorem ipsum"
     summary "My rails project"  
+    after_create do |topic|      
+       topic.tag_list = "tag1, tag2"
+    end
   end
   
   
@@ -42,7 +36,7 @@ FactoryGirl.define do
   end
   
   factory :post do
-    user 
-
+    user
+    #after_create { |post| post.user.tag(post, :with =>  "maths, ruby, rails", :on => :tags) }
   end
 end

@@ -7,6 +7,7 @@ gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.6'
 gem 'gon'
 gem 'devise'
+gem 'acts-as-taggable-on', '~>2.2.0'
 group :development, :test do
 gem 'sqlite3', '1.3.5'
 #gem 'ruby-debug19'
@@ -32,6 +33,7 @@ gem 'annotate', '~> 2.4.1.beta', group: :development
 group :test do
 gem 'capybara', '1.1.2'
 gem 'factory_girl_rails', '1.4.0'
+#gem 'factory_girl_rails', '~> 3.3.0'
 gem 'cucumber-rails', '1.2.1', require: false
 gem 'database_cleaner', '0.7.0'
 gem 'rb-notifu', '0.0.4'

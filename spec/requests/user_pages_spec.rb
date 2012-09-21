@@ -47,7 +47,7 @@ describe "User pages" do
   
 
     describe "should show the correct user profile and posts" do
-      before {visit user_path(user)}
+      before { visit user_path(user) }
       subject {page}
       it { should have_selector('title', text: full_title(user.name)) }
       it { should have_selector('h1', text: user.name) }

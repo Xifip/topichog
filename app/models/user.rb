@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   has_many :likes, foreign_key: "liker_id", dependent: :destroy
   has_many :liked_posts, :through => :likes, :source => :liked, 
           :class_name => "Post"
+  acts_as_tagger
     
   validates_presence_of :name
   validates_uniqueness_of :name, :email, :case_sensitive => false

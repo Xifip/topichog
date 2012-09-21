@@ -8,6 +8,8 @@ describe Topic do
   before do
     @post = user.posts.build
     @topic = Topic.create!(title: "Lorem ipsum", summary: "My rails project") 
+    @topic.tag_list = "tag1, tag2"
+    debugger
     @post.postable = @topic
   end
   

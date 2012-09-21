@@ -2,6 +2,7 @@ class Post < ActiveRecord::Base
    attr_accessible :postable_id, :postable_type
   belongs_to :user
   belongs_to :postable, polymorphic: true
+  acts_as_taggable_on :tags
   
   #likes
   has_many :likes, :foreign_key => "liked_id", :dependent => :destroy
@@ -11,6 +12,7 @@ class Post < ActiveRecord::Base
   validates :user_id, presence: true
   validates :postable_id, presence: true
   validates :postable_type, presence: true
+  
   default_scope order: 'posts.created_at DESC'
     
   def likes_count 
