@@ -34,6 +34,8 @@ TopicHog::Application.routes.draw do
   
   resources :relationships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
+  resources :tags_names
+  get 'posts/:tag1', to: 'posts#index', as: :post
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

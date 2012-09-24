@@ -13,7 +13,8 @@ class Post < ActiveRecord::Base
   validates :postable_id, presence: true
   validates :postable_type, presence: true
   
-  default_scope order: 'posts.created_at DESC'
+  default_scope order: 'posts.created_at DESC'  
+ 
     
   def likes_count 
     likes.count

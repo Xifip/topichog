@@ -1,7 +1,48 @@
 -#  This file is app/views/posts/index.html.haml
-= provide(:title, 'Explore')
-%h1 Explore
-%h2 Tags
-- tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class|
-  = link_to tag.name, { :action => :index }, :class => css_class
-%h2 Topics and Projects
+.row
+  %aside.span4
+    %section
+      = render 'shared/user_info'
+    %section
+      = render 'shared/user_link'
+    %section
+      = render 'shared/stats'  
+  .span8
+    = provide(:title, 'Explore')
+    %h1 Explore
+    .row  
+      #tags_remove.span6
+        = link_to @tag_filter[0], explore_path(@tag_filter[0]) ,id: 'tag1_remove'
+        = link_to @tag_filter[1], explore_path(@tag_filter[1]) ,id: 'tag2_remove'
+        = link_to @tag_filter[2], explore_path(@tag_filter[2]) ,id: 'tag3_remove'
+        = link_to @tag_filter[3], explore_path(@tag_filter[3]) ,id: 'tag4_remove'
+        = link_to @tag_filter[4], explore_path(@tag_filter[4]) ,id: 'tag5_remove'  
+      #results_count.span2.muted.hide 
+        .span2
+          #{pluralize(@feed_items.count, 'result')}
+        .span2
+          = link_to "clear filters", posts_path(:clear_tags => true)             
+    .row
+    = form_tag("/posts", :method => "get", id: "tags_filter_list") do
+      = hidden_field_tag 'tag1', value = @tag_filter[0] 
+      = hidden_field_tag 'tag2', value = @tag_filter[1] 
+      = hidden_field_tag 'tag3', value = @tag_filter[2] 
+      = hidden_field_tag 'tag4', value = @tag_filter[3] 
+      = hidden_field_tag 'tag5', value = @tag_filter[4] 
+    .row      
+      %h3.span8 
+        Popular tags 
+    .row
+      #popular_tags.span8 
+        - tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class|
+          = link_to tag.name, post_path(tag.name), :class => 'label'
+      .span4  
+        = form_tag("/posts", :method => "get", id: "search_tags") do
+          = label_tag(:tag_name, "enter a term to filter results")
+          = text_field_tag(:tag_name, nil, data: {autocomplete_source: tags_names_path}) 
+    .row
+      .span8
+        - if @feed_items.any?
+          %h3 Feed
+          = render partial: 'shared/feed'
+ 
