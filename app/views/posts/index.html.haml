@@ -12,11 +12,11 @@
     %h1 Explore
     .row  
       #tags_remove.span6
-        = link_to @tag_filter[0], explore_path(@tag_filter[0]) ,id: 'tag1_remove'
-        = link_to @tag_filter[1], explore_path(@tag_filter[1]) ,id: 'tag2_remove'
-        = link_to @tag_filter[2], explore_path(@tag_filter[2]) ,id: 'tag3_remove'
-        = link_to @tag_filter[3], explore_path(@tag_filter[3]) ,id: 'tag4_remove'
-        = link_to @tag_filter[4], explore_path(@tag_filter[4]) ,id: 'tag5_remove'  
+        = link_to @tag_filter[0], post_path(@tag_filter[0]) ,id: 'tag1_remove'
+        = link_to @tag_filter[1], post_path(@tag_filter[1]) ,id: 'tag2_remove'
+        = link_to @tag_filter[2], post_path(@tag_filter[2]) ,id: 'tag3_remove'
+        = link_to @tag_filter[3], post_path(@tag_filter[3]) ,id: 'tag4_remove'
+        = link_to @tag_filter[4], post_path(@tag_filter[4]) ,id: 'tag5_remove'  
       #results_count.span2.muted.hide 
         .span2
           #{pluralize(@feed_items.count, 'result')}
