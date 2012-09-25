@@ -11,13 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120920082436) do
+ActiveRecord::Schema.define(:version => 20120925093152) do
 
   create_table "likes", :force => true do |t|
-    t.string   "liker_id"
-    t.string   "liked_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "liker_id",   :limit => 255
+    t.integer  "liked_id",   :limit => 255
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   add_index "likes", ["liked_id"], :name => "index_likes_on_liked_id"
