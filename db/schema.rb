@@ -11,14 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120925104523) do
+ActiveRecord::Schema.define(:version => 20120925111325) do
 
   create_table "likes", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
     t.integer  "liker_id"
     t.integer  "liked_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
+
+  add_index "likes", ["liked_id"], :name => "index_likes_on_liked_id"
+  add_index "likes", ["liker_id", "liked_id"], :name => "index_likes_on_liker_id_and_liked_id", :unique => true
+  add_index "likes", ["liker_id"], :name => "index_likes_on_liker_id"
 
   create_table "posts", :force => true do |t|
     t.integer  "postable_id"
