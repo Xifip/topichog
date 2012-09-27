@@ -37,4 +37,10 @@ FactoryGirl.define do
     user
     #after_create { |post| post.user.tag(post, :with =>  "maths, ruby, rails", :on => :tags) }
   end
+  
+#  factory :profile do
+#    user
+#    bio "CTO and co-founder at Careergro, testing, usability and gathering customer feedback."
+#    mysite_url "http://www.careergro.com"
+#  end
 end

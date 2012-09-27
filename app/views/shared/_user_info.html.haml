@@ -1,6 +1,6 @@
 - @user ||= current_user
 %a{:href => user_path(@user)}
-  = gravatar_for @user, size: 52
+  = avatar_for @user, size: 52
 %h1
   = @user.name
 %span

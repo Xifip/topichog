@@ -31,6 +31,7 @@ TopicHog::Application.routes.draw do
   resources :tposts, only: [:destroy]
   resources :topics, only: [:destroy]
   resources :posts, only: [:index, :destroy]
+  resources :profiles, only: [:edit, :update]
   
   resources :relationships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]

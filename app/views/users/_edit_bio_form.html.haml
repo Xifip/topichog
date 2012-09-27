@@ -1,0 +1,10 @@
+- if current_user == @user
+  %span
+    = form_for(@user,                 |
+      :html => { :multipart => true }) do |f| |  
+      %div
+        = avatar_for @user, size: 52
+        %br/
+        = f.file_field :image
+        = f.hidden_field :image_cache
+      %div= f.submit "Update"

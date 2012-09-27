@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'database_cleaner'
+require 'debugger'
 DatabaseCleaner.strategy = :truncation
 
 describe User do
@@ -120,9 +121,31 @@ describe User do
     it { should respond_to(:liked_posts) }
     it { should respond_to(:liking?) }
     it { should respond_to(:like!) }
+    it { should respond_to(:profile) }
   end
 
-
+ describe "profile assossiation" do
+   before do
+     @user = User.new(@attr)
+     @user.save
+   end  
+   
+    let!(:user_profile) do
+      #FactoryGirl.create(:profile, user: @user)
+      @user.profile
+    end
+    
+    it "should have the right profile" do 
+      Profile.find_by_id(user_profile.id).should == user_profile 
+    end 
+    
+    it "should destroy associated profile associations" do      
+      @user.destroy
+      Profile.find_by_id(user_profile.id).should be_nil 
+    end
+    
+ end
+ 
  describe "posts assosications" do
     
     before do

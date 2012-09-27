@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require jquery.jqplot.min
+ *= require jquery.Jcrop.min
  *= require_tree .
  */
 

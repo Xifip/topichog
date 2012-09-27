@@ -6,7 +6,10 @@
     %section
       = render 'shared/stats'
     %section
-      %p= link_to "View all users", users_path      
+      %p= link_to "View all users", users_path   
+    %section
+      .actions
+        = link_to "edit", edit_profile_path(@user)   
   .span8
     = render 'follow_form' if user_signed_in?
     - if @projects.any?

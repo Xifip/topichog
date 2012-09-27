@@ -8,6 +8,8 @@ gem 'bootstrap-will_paginate', '0.0.6'
 gem 'gon'
 gem 'devise'
 gem 'acts-as-taggable-on', '~>2.2.0'
+gem "rmagick"
+gem "carrierwave"
 group :development, :test do
 gem 'sqlite3', '1.3.5'
 #gem 'ruby-debug19'
@@ -19,6 +21,7 @@ group :assets do
 gem 'sass-rails', '3.2.4'
 gem 'coffee-rails', '3.2.2'
 gem 'uglifier', '1.2.3'
+gem 'jquery-fileupload-rails'
 end
 gem 'jquery-rails'
 group :test, :development do
