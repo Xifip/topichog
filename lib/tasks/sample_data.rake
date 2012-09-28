@@ -15,7 +15,6 @@ def make_users
                 email: "example@topichog.com",
                 password: "foobar",
                 password_confirmation: "foobar"
-                confirmed_at: DateTime.now
                 )
   user.skip_confirmation!
   user.save!
