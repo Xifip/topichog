@@ -11,20 +11,27 @@ namespace :db do
 end
 
 def make_users 
-  User.create!(name: "Example User",
+  user = User.new(name: "Example User",
                 email: "example@topichog.com",
                 password: "foobar",
-                password_confirmation: "foobar")
-
+                password_confirmation: "foobar"
+                confirmed_at: DateTime.now
+                )
+  user.skip_confirmation!
+  user.save!
+=begin
     99.times do |n|
       name = Faker::Name.name
       email = "example-#{n+1}@topichog.com"
       password = "password"
-      User.create!(name: name,
+      user = User.create!(name: name,
                     email: email,
                     password: password,
                     password_confirmation: password)
+      user.skip_confirmation!
+      user.save!
     end
+=end    
 end      
 
 def make_posts  
