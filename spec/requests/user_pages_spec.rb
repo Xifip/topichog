@@ -91,11 +91,28 @@ describe "User pages" do
         it { page.should have_selector('title', text: full_title(other_user.name)) }  
         it "should increment the followed user count" do
           page.should have_selector('input', value: 'Follow')
-          #debugger
           expect do
             click_button "Follow"
           end.to change(user.followed_users, :count).by(1)
         end
+        
+        describe "follower email notification" do
+        
+          before do
+            reset_email
+            click_button "Follow"  
+          end
+          
+          it "should have a link to the follower" do
+            last_email.body.encoded.should have_link(user.name, href: user_url(user, host: 'localhost:3000'))
+          end
+          it { last_email.to.should include(other_user.email) }
+          it { last_email.from.should include("john.costello@careergro.com") }
+          it { last_email.subject.should eq(user.name + " followed you on TopicHog!") }
+          it { last_email.body.encoded.should include(user.name) }
+          it { last_email.body.encoded.should include(" is now following you on TopicHog") }
+        end
+
         it "should increment the other user's followers count" do
           expect do
             click_button "Follow"

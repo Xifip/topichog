@@ -5,7 +5,7 @@ class LikesController < ApplicationController
     @post = Post.find(params[:like][:liked_id])
     @liker_id_selector = '#liker_id_' + current_user.id.to_s
     @liker = current_user
-    
+    LikeMailer.like_confirmation(@liker, @post).deliver
     current_user.like!(@post)
     #debugger
     respond_to do |format|

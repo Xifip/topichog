@@ -7,6 +7,8 @@ FactoryGirl.define do
     password "foobar"
     password_confirmation "foobar"
     remember_me false
+    after_create { |user| user.confirm! }
+
   end
 
   factory :project do

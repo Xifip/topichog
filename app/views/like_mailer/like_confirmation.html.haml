@@ -1,0 +1,11 @@
+%p
+  = @liked_post.user.name
+  ,
+%p
+  = link_to @liker.name, user_url(@liker)
+  liked '#{@liked_post.postable.title}' on TopicHog!
+
+  
+
+
+
