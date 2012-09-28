@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
   after_create :add_profile
   accepts_nested_attributes_for :profile  
   validates_presence_of :name
-  validates_uniqueness_of :name, :email, :case_sensitive => false
+  validates_uniqueness_of :email, :case_sensitive => false
 
   
   def project_feed    

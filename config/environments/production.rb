@@ -57,11 +57,11 @@ TopicHog::Application.configure do
     config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
     port: 587,
-    domain: "careergro.com",
+    domain: "topichog.com",
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name: "john.costello@careergro.com",
-    password: "costello"
+    user_name: "no-reply@topichog.com",
+    password: "skunk1id"
   }
 
   # Specify what domain to use for mailer URLs

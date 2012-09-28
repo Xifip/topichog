@@ -94,7 +94,7 @@ describe "Topic pages" do
             last_email.body.encoded.should have_link(user.name, href: user_url(user, host: 'localhost:3000'))
           end
           it { last_email.to.should include(other_user.email) }
-          it { last_email.from.should include("john.costello@careergro.com") }
+          it { last_email.from.should include("no-reply@topichog.com") }
           it { last_email.subject.should eq(user.name + " liked '" + liked_post.postable.title + "' on TopicHog!") }
           it { last_email.body.encoded.should include(user.name) }
           it { last_email.body.encoded.should include("liked '" + liked_post.postable.title + "' on TopicHog!") }

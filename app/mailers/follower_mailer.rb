@@ -1,5 +1,5 @@
 class FollowerMailer < ActionMailer::Base
-  default from: "john.costello@careergro.com"
+  default from: "no-reply@topichog.com"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
