@@ -18,8 +18,8 @@ def make_users
                 )
   user.skip_confirmation!
   user.save!
-=begin
-    99.times do |n|
+
+    10.times do |n|
       name = Faker::Name.name
       email = "example-#{n+1}@topichog.com"
       password = "password"
@@ -30,7 +30,7 @@ def make_users
       user.skip_confirmation!
       user.save!
     end
-=end    
+   
 end      
 
 def make_posts  
