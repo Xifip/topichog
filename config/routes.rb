@@ -8,6 +8,7 @@ TopicHog::Application.routes.draw do
   match '/help', to: 'static_pages#help'
   
   devise_for :users #, :controllers => { :registrations => "registrations" } 
+
   resources :users, :only => [:show, :index] do
     member do
       get :following, :followers 

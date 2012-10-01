@@ -1,4 +1,6 @@
 require 'debugger'
+include(MailerMacros)
+
 ### UTILITY METHODS ###
 
 def create_visitor
@@ -21,14 +23,19 @@ end
 def create_user
   create_visitor
   delete_user
-  @user = FactoryGirl.create(:user, email: @visitor[:email])
+  #@user = FactoryGirl.create(:user, email: @visitor[:email])
+  @user = User.create!(name: @visitor[:name], email: @visitor[:email], password: @visitor[:password], password_confirmation: @visitor[:password_confirmation])
+  @user.confirm!
 end
 
 def create_other_user
   #create_visitor
   #delete_user
-  @other_user = FactoryGirl.create(:user, :name => "Following McUserton", :email => "following@example.com",
-    :password => "foobar", :password_confirmation => "foobar")
+  #@other_user = FactoryGirl.create(:user, :name => "Following McUserton", :email => "following@example.com",
+  #  :password => "foobar", :password_confirmation => "foobar")
+  @other_user = User.create(:name => "Following McUserton", :email => "following@example.com",
+    :password => "barfoo", :password_confirmation => "barfoo")
+  @other_user.confirm!
 end
 
 def delete_user
@@ -90,6 +97,10 @@ When /^I sign in with valid credentials$/ do
   sign_in
 end
 
+When /^I sign in with valid user data$/ do
+  sign_in
+end
+
 When /^I sign out$/ do
   #visit '/users/sign_out'
   visit destroy_user_session_path
@@ -98,6 +109,10 @@ end
 When /^I sign up with valid user data$/ do
   create_visitor
   sign_up
+end
+
+When /^I confirm sign up$/ do
+  @user.confirm!
 end
 
 When /^I sign up with an invalid email$/ do
@@ -188,6 +203,10 @@ Then /^I see an unconfirmed account message$/ do
   page.should have_content "You have to confirm your account before continuing."
 end
 
+Then /^I see an confirmation email sent message$/ do
+  page.should have_content  "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
+end
+
 Then /^I see a successful sign in message$/ do
   page.should have_content "Signed in successfully."
 end
@@ -227,6 +246,15 @@ end
 Then /^I should see my name$/ do
   create_user
   page.should have_content @user[:name]
+end
+
+Then /^I should get a confirmation email$/ do
+  last_email.from.should include("no-reply@topichog.com") 
+  last_email.to.should include(@user.email) 
+  last_email.subject.should eq("TopicHog confirmation instructions") 
+  last_email.body.encoded.should include("You can confirm your account email through the link below:")
+  last_email.body.encoded.should include("Welcome " + @user.name + "!")
+  last_email.body.encoded.should have_link(@user.email, href: confirmation_url(@user, :confirmation_token => @user.confirmation_token, host: 'localhost:3000'))
 end
 
 Then /^I should see my profile$/ do

@@ -8,9 +8,22 @@ Feature: Sign up
 
     Scenario: User signs up with valid data
       When I sign up with valid user data
-      Then I should see a successful sign up message
-      And I should see my profile
+      Then I see an confirmation email sent message
+      And I should get a confirmation email
       
+    
+    Scenario: User confirms sign up 
+      Given I exist as an unconfirmed user
+      When I confirm sign up
+      When I sign in with valid user data
+      And I should see my profile
+    
+    Scenario: User doesn't confirm sign up
+      Given I exist as an unconfirmed user
+      When I sign in with valid user data
+      Then I see an unconfirmed account message
+      And I should be signed out
+        
     Scenario: User signs up with invalid email
       When I sign up with an invalid email
       Then I should see an invalid email message
