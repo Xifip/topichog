@@ -172,6 +172,21 @@ describe "Topic pages" do
   end
   
   describe "topic destruction" do
+    describe "as incorrect user" do
+    
+      let(:other_user) { FactoryGirl.create(:user) }
+      
+      before do
+        FactoryGirl.create(:post, user: other_user, postable: 
+          FactoryGirl.create(:topic, title: "Foo", summary: "football")) 
+        visit user_path(other_user)
+      end
+      
+      subject {page}
+      
+      it { should_not have_link('delete', href: post_path(Post.last), method: :delete) }
+      
+    end
 
     describe "as correct user" do
       before do
@@ -179,6 +194,11 @@ describe "Topic pages" do
           FactoryGirl.create(:topic, title: "Foo", summary: "football")) 
         visit user_path(user)
       end
+      
+      subject {page}
+      
+      it { should have_link('delete', href: post_path(Post.last), method: :delete) }
+      
       it "should delete a post" do
         expect { click_link "delete" }.to change(Post, :count).by(-1)        
       end

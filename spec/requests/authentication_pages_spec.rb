@@ -6,20 +6,25 @@ describe "Authentication" do
       let(:user) { FactoryGirl.create(:user) }
       
       describe "in the Users controller" do
-
+        
+        describe "visiting the user show" do
+          before { visit user_path(user) }
+          it { page.should have_selector('title', text: full_title(user.name)) }
+        end
+        
         describe "visiting the user index" do
           before { visit users_path }
-          it { page.should have_selector('h2', text: 'Sign in') }
+          it { page.should have_selector('title', text: full_title('All users')) }
         end
 
         describe "visiting the following page" do
           before { visit following_user_path(user) }          
-          it { page.should have_selector('h2', text: 'Sign in') }
+          it { page.should have_selector('title', text: full_title(user.name + ' | Following')) }
         end
         
         describe "visiting the followers page" do
           before { visit followers_user_path(user) }          
-          it { page.should have_selector('h2', text: 'Sign in') }
+          it { page.should have_selector('title', text: full_title(user.name + ' | Followers')) }
         end
       end   
       
@@ -50,6 +55,11 @@ describe "Authentication" do
           before { delete post_path(FactoryGirl.create(:post, postable: FactoryGirl.create(:ppost))) }
           specify { response.should redirect_to(new_user_session_path) }
         end
+        
+        describe "submitting to the index action" do
+          before { visit posts_path }
+          it { page.should have_selector('title', text: full_title('explore topics and projects')) }
+        end
       end
       
       describe "in the Topics controller" do
@@ -61,6 +71,11 @@ describe "Authentication" do
           before { delete topic_path(FactoryGirl.create(:topic)) }
           specify { response.should redirect_to(new_user_session_path) }
         end
+        describe "submitting to the show action" do
+          let (:post) { FactoryGirl.create(:post, user: user, postable:FactoryGirl.create(:topic)) }
+          before { visit user_topic_path(user, post) }
+          it { page.should have_selector('title', text: full_title(user.name + ' | ' + post.postable.title)) }
+        end
       end
       
       describe "in the Projects controller" do
@@ -71,6 +86,11 @@ describe "Authentication" do
         describe "submitting to the destroy action" do
           before { delete project_path(FactoryGirl.create(:project)) }
           specify { response.should redirect_to(new_user_session_path) }
+        end
+          describe "submitting to the show action" do
+          let (:post) { FactoryGirl.create(:post, user: user, postable:FactoryGirl.create(:project)) }
+          before { visit user_project_path(user, post) }
+          it { page.should have_selector('title', text: full_title(user.name + ' | ' + post.postable.title)) }
         end
       end
       

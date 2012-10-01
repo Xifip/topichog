@@ -33,7 +33,7 @@ class TopicsController < ApplicationController
     end 
   end
   
-  def show    
+  def show   
     @topic_user = User.find_by_id(params[:user_id]) 
     @post = @topic_user.posts.find_by_id(params[:id])
     @topic = @post.postable

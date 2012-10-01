@@ -6,9 +6,12 @@ TopicHog::Application.routes.draw do
   
   root to: 'static_pages#home'
   match '/help', to: 'static_pages#help'
-  
-  devise_for :users #, :controllers => { :registrations => "registrations" } 
 
+  resources :posts, only: [:index, :destroy]
+  get 'posts/:tag1', to: 'posts#index', as: :post
+
+  devise_for :users #, :controllers => { :registrations => "registrations" } 
+  
   resources :users, :only => [:show, :index] do
     member do
       get :following, :followers 
@@ -21,6 +24,7 @@ TopicHog::Application.routes.draw do
         get :likers
       end
     end
+
     resources :projects, :only => [:create, :show, :new] 
     resources :pposts, :only => [:create, :show, :new] 
     resources :tposts, :only => [:create, :show, :new] 
@@ -31,13 +35,13 @@ TopicHog::Application.routes.draw do
   resources :pposts, only: [:destroy]
   resources :tposts, only: [:destroy]
   resources :topics, only: [:destroy]
-  resources :posts, only: [:index, :destroy]
+  
   resources :profiles, only: [:edit, :update]
   
   resources :relationships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
   resources :tags_names
-  get 'posts/:tag1', to: 'posts#index', as: :post
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
