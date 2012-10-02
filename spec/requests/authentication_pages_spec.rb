@@ -28,6 +28,19 @@ describe "Authentication" do
         end
       end   
       
+       describe "in the Profiles controller" do
+        
+        describe "visiting the profile edit" do
+          before { get edit_profile_path(user) }
+          specify { response.should redirect_to(new_user_session_path) }
+        end
+        
+        describe "submitting to the profile update action" do
+          before { put profile_path(user) }
+          specify { response.should redirect_to(new_user_session_path) }
+        end
+      end   
+      
       describe "in the Relationships controller" do
         describe "submitting to the create action" do
           before { post relationships_path }

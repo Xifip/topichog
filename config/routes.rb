@@ -6,7 +6,8 @@ TopicHog::Application.routes.draw do
   
   root to: 'static_pages#home'
   match '/help', to: 'static_pages#help'
-
+  match '/learn_more', to: 'static_pages#learn_more'
+  
   resources :posts, only: [:index, :destroy]
   get 'posts/:tag1', to: 'posts#index', as: :post
 

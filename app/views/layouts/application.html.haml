@@ -15,16 +15,15 @@
         .container
           .row
             #logo.span4
-              %a{:href => "#"}
+              %a{:href => root_path}
                 =image_tag "wild-boar.png"
             .span8       
               %nav
                 %ul.nav.pull-right
                   %li= link_to "Home", root_path
-                  %li= link_to "Help", help_path
+                  %li= link_to "Explore", posts_path
                   - if user_signed_in?
-                    %li= link_to "new topic", new_user_topic_path(current_user)
-                    %li= link_to "new project", new_user_project_path(current_user)
+                    %li= link_to "Find people", users_path                  
                     %li
                       .btn-group
                         = link_to current_user.name, user_path(current_user), class: "btn btn-info"
@@ -32,10 +31,15 @@
                           %span.caret
                         %ul.dropdown-menu
                           %li
+                            = link_to "new topic", new_user_topic_path(current_user)
+                          %li
+                            = link_to "new project", new_user_project_path(current_user)
+                          %li
                             = link_to 'Edit account', edit_user_registration_path
                           %li
                             = link_to "Logout", destroy_user_session_path, method: :delete                    
                   - else
+                    %li= link_to "Learn more", learn_more_path                  
                     %li
                       = link_to "Sign up", new_user_registration_path
                     %li

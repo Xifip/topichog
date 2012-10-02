@@ -17,11 +17,29 @@ describe "Static pages" do
             text: 'TopicHog Beta') }
       it { should have_xpath("//img[@src=\"/assets/wild-boar.png\"]") }
       it { should have_selector('title', text: full_title('')) }
+      it { should have_link("Home", href: root_path) }
+      it { should have_link("Explore", href: posts_path) }   
+      it { should have_link("Learn more", href: learn_more_path) }           
+      it { should have_link("Login", href: new_user_session_path) }
+      it { should have_link("Sign up", href: new_user_registration_path) }
+            
       it { should_not have_selector 'title', text: '| Home' }
       it { should_not have_link(user.name, href: user_path(user)) }
+      it { should_not have_link("Find people", href: users_path) }       
       it { should_not have_link("new topic", href: new_user_topic_path(user)) }
       it { should_not have_link("new project", 
                                  href: new_user_project_path(user)) }
+      it { should_not have_link("Edit account", 
+                            href: edit_user_registration_path) }                                 
+      it { should_not have_link("Logout", 
+                            href: destroy_user_session_path, method: :delete) }   
+                                                          
+      it { should_not have_link("new topic") }
+      it { should_not have_link("new project") }
+      it { should_not have_link("Edit accout") }
+      it { should_not have_link("Logout") }
+
+
     end 
   end
   
@@ -34,12 +52,26 @@ describe "Static pages" do
         visit root_path
       end
       subject{page}
+
       it { should have_selector('title', text: full_title('')) }
-      it { should_not have_selector 'title', text: '| Home' }
-      it { should have_link(user.name, href: user_path(user)) }
+      it { should have_link("Home", href: root_path) }
+      it { should have_link("Explore", href: posts_path) }  
+      it { should have_link("Find people", href: users_path) }              
       it { should have_link('view profile', href: user_path(user)) }
+      it { should have_link(user.name, href: user_path(user)) }      
       it { should have_link("new topic", href: new_user_topic_path(user)) }
       it { should have_link("new project", href: new_user_project_path(user)) }
+      it { should have_link("Edit account", 
+                            href: edit_user_registration_path) }                                 
+      it { should have_link("Logout", 
+                            href: destroy_user_session_path, method: :delete) }               
+
+
+      it { should_not have_selector 'title', text: '| Home' }
+      it { should_not have_link("Learn more", href: learn_more_path) }                 
+      it { should_not have_link("Login", href: new_user_session_path) }
+      it { should_not have_link("Sign up", href: new_user_registration_path) }
+            
       it "should render the user's post feed" do
         user.feed.each do |item|
           page.should have_selector("li##{item.id}", text: item.postable.title)
