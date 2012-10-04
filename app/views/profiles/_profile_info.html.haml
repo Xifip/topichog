@@ -1,0 +1,25 @@
+.row
+  .span6
+    = @user.profile.bio
+  .span2
+    .span2
+      -if @user.profile.twitter_url
+        = image_tag ('wild-boar.svg')
+        = link_to "my twitter", @user.profile.twitter_url
+    .span2
+      -if @user.profile.facebook_url
+        = image_tag ('wild-boar.svg')
+        = link_to 'my facebook', @user.profile.facebook_url
+    .span2      
+      -if @user.profile.linkedin_url
+        = image_tag ('wild-boar.svg')
+        = link_to 'my linkedin', @user.profile.linkedin_url
+    .span2
+      -if @user.profile.mysite_url
+        = image_tag ('wild-boar.svg')
+        = link_to 'my site', @user.profile.mysite_url   
+    .span2
+      -if @user.profile.myblog_url
+        = image_tag ('wild-boar.svg')
+        = link_to 'my blog', @user.profile.myblog_url                 
+      

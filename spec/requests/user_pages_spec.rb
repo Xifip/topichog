@@ -32,6 +32,8 @@ describe "User pages" do
     
     let(:user) { create_logged_in_user } 
     
+    let(:profile) { FactoryGirl.create(:profile, user: user) }
+    
     let!(:p1) { FactoryGirl.create(:ppost, title: "project1", summary: "football") }
     let!(:post1) { FactoryGirl.create(:post, user: user, postable: p1) }
     
@@ -47,14 +49,24 @@ describe "User pages" do
   
 
     describe "should show the correct user profile and posts" do
-      before { visit user_path(user) }
+      before do
+       user.profile = profile
+       visit user_path(user) 
+      end
       subject {page}
       it { should have_selector('title', text: full_title(user.name)) }
       it { should have_selector('h1', text: user.name) }
       it { should_not have_link('view my profile', href: user_path(user)) }
-      it { should have_content(p1.title) }
+      it { should have_link('edit profile', href: edit_profile_path(user)) }  
+      it { should have_content(user.profile.bio) }
+      it { should have_link('my twitter', href: user.profile.twitter_url) }
+      it { should have_link('my facebook', href: user.profile.facebook_url) }
+      it { should have_link('my linkedin', href: user.profile.linkedin_url) }      
+      it { should have_link('my site', href: user.profile.mysite_url) }  
+      it { should have_link('my blog', href: user.profile.myblog_url) }     
+      #it { should have_content(p1.title) }
       it { should have_content(p2.title) }    
-      it { should have_content(t1.title) }
+      #it { should have_content(t1.title) }
       it { should have_content(t2.title) }
       it { should have_content(user.posts.find_all_by_postable_type("Topic").count) }
       it { should have_content(user.posts.find_all_by_postable_type("Project").count) }
@@ -62,20 +74,28 @@ describe "User pages" do
     
     describe "vist another user's profile" do
       let(:user) { create_logged_in_user } 
-      let(:other_user) { FactoryGirl.create(:user, name: "foo_other", email: "other@foo.com", password: "other_foo", password_confirmation: "other_foo") }
+      let!(:other_user) { FactoryGirl.create(:user, name: "foo_other", email: "other@foo.com", password: "other_foo", password_confirmation: "other_foo") }
+      let!(:profile) { FactoryGirl.create(:profile, user: other_user, bio: "other user bio", mysite_url: "http://www.topichog.com") }      
       let(:p1) { FactoryGirl.create(:project, title: "Foo", summary: "football") }
       let(:post1) { FactoryGirl.create(:post, user: other_user, postable: p1) }
       
       describe "shows the correct user profile and posts" do
         before do
+         other_user.profile = profile
          visit user_path(other_user) 
         end
         subject {page}
         it { should_not have_selector('h1', text: user.name) }
         it { should_not have_link('view my profile', href: user_path(other_user))}
-        
+        it { should_not have_link('edit profile', href: edit_profile_path(user)) }         
         it { should have_selector('title', text: full_title(other_user.name)) }      
-        it { should have_selector('h1', text: other_user.name) }      
+        it { should have_selector('h1', text: other_user.name) }
+        it { should have_content(other_user.profile.bio) }
+        it { should have_link('my twitter', href: other_user.profile.twitter_url) }
+        it { should have_link('my facebook', href: other_user.profile.facebook_url) }
+        it { should have_link('my linkedin', href: other_user.profile.linkedin_url) }      
+        it { should have_link('my site', href: other_user.profile.mysite_url) } 
+        it { should have_link('my blog', href: other_user.profile.myblog_url) }           
         it { should have_content(p1.title) }
         it { should have_content(other_user.posts.find_all_by_postable_type("Topic").count) }
         it { should have_content(other_user.posts.find_all_by_postable_type("Project").count) }

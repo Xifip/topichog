@@ -1,6 +1,6 @@
 class Profile < ActiveRecord::Base
-  attr_accessible :bio, :facebook_url, :image, :linkedin_url, :mystire_url, :twitter_url,
-                    :crop_x, :crop_y, :crop_w, :crop_h
+  attr_accessible :bio, :facebook_url, :image, :linkedin_url, :mysite_url, :twitter_url,
+                  :myblog_url,  :crop_x, :crop_y, :crop_w, :crop_h
   belongs_to :user
   
   mount_uploader :image, ImageUploader
@@ -17,6 +17,7 @@ class Profile < ActiveRecord::Base
   validates_format_of :facebook_url, :allow_blank => true, :with => URI::regexp(%w(http https))
   validates_format_of :linkedin_url, :allow_blank => true, :with => URI::regexp(%w(http https))
   validates_format_of :mysite_url, :allow_blank => true, :with => URI::regexp(%w(http https))
+  validates_format_of :myblog_url, :allow_blank => true, :with => URI::regexp(%w(http https))
 
 
 end

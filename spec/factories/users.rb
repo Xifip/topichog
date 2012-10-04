@@ -10,6 +10,16 @@ FactoryGirl.define do
     after_create { |user| user.confirm! }
 
   end
+  
+  factory :profile do
+    bio "my bio summary"
+    linkedin_url "http://www.google.com"
+    twitter_url "http://www.google.com"
+    facebook_url "http://www.google.com"
+    mysite_url "http://www.google.com"
+    myblog_url "http://www.google.com"
+    user
+  end
 
   factory :project do
     title "Lorem ipsum"

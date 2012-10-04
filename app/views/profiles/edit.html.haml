@@ -1,18 +1,52 @@
 = provide(:title, @user.name + ' | edit profile')
-%h3 Edit your profile
-= form_for @profile, :html => {:multipart => true} do |f|
-  - @profile.errors.full_messages.each do |msg|
-    %p= msg
-  = f.hidden_field :user_id
-  %p
-    = f.label :bio
-    %br/
-    = f.text_field :bio
-  %p
-    = avatar_for @user, size: 52
-    = f.file_field :image
-    = f.hidden_field :image_cache
-  %p= f.submit
+.row
+  .span6.offset3  
+    %h3 Edit your profile
+    = form_for @profile, :html => {:multipart => true} do |f|
+      - @profile.errors.full_messages.each do |msg|
+        %p= msg
+      = f.hidden_field :user_id
+      %p.span6
+        .span1
+          = f.label :image, "Profile picture"          
+        .span4
+          .span1
+            = avatar_for @user, size: 52
+          .span2
+            = f.file_field :image
+            = f.hidden_field :image_cache
+      %p.span6
+        .span1
+          = f.label :bio, "Your bio"
+        .span4
+          = f.text_area :bio, rows: 5
+      %p.span6
+        .span1
+          = f.label :twitter_url, 'Twitter'
+        .span4  
+          = f.text_field :twitter_url
+      %p.span6
+        .span1
+          = f.label :linkedin_url, 'Linkedin'
+        .span4
+          = f.text_field :linkedin_url
+      %p.span6
+        .span1
+          = f.label :facebook_url, 'Facebook'
+        .span4
+          = f.text_field :facebook_url
+      %p.span6
+        .span1
+          = f.label :mysite_url, 'Your site'
+        .span4
+          = f.text_field :mysite_url    
+      %p.span6
+        .span1
+          = f.label :myblog_url, 'Your blog'
+        .span4
+          = f.text_field :myblog_url               
+      %p.span6.offset2
+        = f.submit
 
 
 

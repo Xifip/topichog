@@ -19,6 +19,7 @@ describe Profile do
   it { should respond_to(:twitter_url) }
   it { should respond_to(:facebook_url) }
   it { should respond_to(:mysite_url) }
+  it { should respond_to(:myblog_url) }
   it { should respond_to(:user) }
   its(:user) { should == user }
 
@@ -62,6 +63,10 @@ describe Profile do
       before { @profile.mysite_url = "http:\\ww.linkedin.com" }
       it { should_not be_valid }
     end
+    describe "when myblog_url is not valid" do    
+      before { @profile.myblog_url = "http:\\ww.linkedin.com" }
+      it { should_not be_valid }
+    end
   end
   
   describe "with valid information" do
@@ -85,6 +90,10 @@ describe Profile do
     end
      describe "when mysite_url is valid" do    
       before { @profile.mysite_url = "https:\\www.linkedin.com" }
+      it { should be_valid }
+    end
+    describe "when myblog_url is valid" do    
+      before { @profile.myblog_url = "https:\\www.linkedin.com" }
       it { should be_valid }
     end
   end
