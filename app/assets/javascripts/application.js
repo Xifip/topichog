@@ -18,5 +18,7 @@
 //= require jquery.jqplot.min
 //= require jqplot_plugins/jqplot.pieRenderer.min.js
 //= require excanvas.min
+//= require ckeditor/init
 //= require_tree .
+
 

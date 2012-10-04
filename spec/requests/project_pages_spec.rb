@@ -147,15 +147,26 @@ describe "Project pages" do
       before do
          page.fill_in 'project_title', with: "Lorem ipsum"
          page.fill_in 'project_summary', with: "Ipsum lorem"
+         page.fill_in 'project_content', with: "Ipsum lorem"
+         page.fill_in 'project_reference', with: "Ipsum lorem"
+         page.fill_in 'project_tag_list', with: "tag1, tag2, tag3"
       end
-      it "should create a project" do
-        
+      it "should create a project" do        
         expect { page.click_button "Submit project" }.to change(Project, :count).by(1)
       end
       it "should create a post" do
-        expect { page.click_button "Submit project" }.to change(Post, :count).by(1)
-        
+        expect { page.click_button "Submit project" }.to change(Post, :count).by(1)        
       end
+      
+      describe "tag creation" do
+        before {page.click_button "Submit project"}
+         it "should create project tags" do  
+          Project.last.tag_list.should eq([ "tag1", "tag2", "tag3" ])
+        end
+        it "should create post tags" do          
+          Project.last.posts[0].owner_tags_on(user, :tags).should eq(Project.last.tags)
+        end
+      end  
     end
   end
   
@@ -193,6 +204,26 @@ describe "Project pages" do
       it "should delete a project" do        
         expect { click_link "delete" }.to change(Project, :count).by(-1)
       end
+      
+      describe "tag destruction" do
+        before {page.click_link "delete"}
+        it "should not find tags in project model" do          
+          Project.tag_counts.should eq([ ])
+        end
+        it "should not find tags in post model" do          
+          Post.tag_counts.should eq([ ])
+        end
+        it "should not find tags for user" do       
+          user.owned_tags.should eq([ ])
+        end
+         it "should not find project with tags" do          
+          Project.tagged_with("tag1").should eq([ ])
+        end
+         it "should not find post with tags" do          
+          Post.tagged_with("tag1").should eq([ ])
+        end
+      end  
+            
     end
   end
  

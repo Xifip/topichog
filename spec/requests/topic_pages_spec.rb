@@ -148,6 +148,8 @@ describe "Topic pages" do
       before do
          page.fill_in 'topic_title', with: "Lorem ipsum"
          page.fill_in 'topic_summary', with: "Ipsum lorem"
+         page.fill_in 'topic_content', with: "Ipsum lorem"
+         page.fill_in 'topic_reference', with: "Ipsum lorem"         
          page.fill_in 'topic_tag_list', with: "tag1, tag2, tag3"
       end
       it "should create a topic" do

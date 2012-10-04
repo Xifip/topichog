@@ -1,5 +1,5 @@
 class Topic < ActiveRecord::Base
-  attr_accessible :summary, :title, :tag_list
+  attr_accessible :summary, :title, :tag_list, :content, :reference
   
   has_many :posts, as: :postable, :dependent => :destroy
   

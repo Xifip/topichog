@@ -10,6 +10,8 @@ gem 'devise'
 gem 'acts-as-taggable-on', '~>2.2.0'
 gem "rmagick"
 gem "carrierwave"
+gem "mini_magick"
+gem "ckeditor", "3.7.1"
 group :development, :test do
 gem 'sqlite3', '1.3.5'
 #gem 'ruby-debug19'

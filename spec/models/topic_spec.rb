@@ -15,6 +15,9 @@ describe Topic do
 
   it { should respond_to(:title) }
   it { should respond_to(:posts) }
+  it { should respond_to(:summary) }
+  it { should respond_to(:reference) }  
+  it { should respond_to(:content) }
   it { should respond_to(:tag_list) }
   it { should == @post.postable }
   
@@ -22,6 +25,15 @@ describe Topic do
     should be_valid
    end
 
+  describe "with blank content" do
+    before { @topic.content = " " }
+    it { should be_valid }
+  end
+  
+  describe "with blank reference" do
+    before { @topic.reference = " " }
+    it { should be_valid }
+  end
   
   describe "with blank title" do
     before { @topic.title = " " }

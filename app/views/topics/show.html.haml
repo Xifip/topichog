@@ -6,16 +6,16 @@
         = @user.name
     %section
       = render 'shared/user_link'
-    %section
-      %p= link_to "View all users", users_path      
   .span8 
-    %span.span5
+    %div.span8
       %h1        
         Title: #{@topic.title}
-    %span.span3
+    %div.span3
       =render 'posts/like_form' if user_signed_in?
-    %p.span8
-      summary: #{@topic.summary}
+    %div.span8
+      summary: 
+    %div.wtf 
+      =raw @topic.summary
     .span8
       =render 'shared/tags'
     .span8

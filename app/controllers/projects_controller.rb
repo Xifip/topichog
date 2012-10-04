@@ -7,6 +7,7 @@ class ProjectsController < ApplicationController
     if @project.save
       @post.postable = @project
       if @post.save
+        @post.user.tag(@post, :with =>  params[:project][:tag_list], :on => :tags)
         flash[:success] = "Project created!"
         redirect_to user_path(@post.user)
       else
@@ -39,6 +40,7 @@ class ProjectsController < ApplicationController
     @user = @post.user
     @likers = @post.likers#.paginate(page: params[:page])
     @likes_count =  @post.likes_count
+    @tags_item = @post.owner_tags_on(@user, :tags)
    end
   
   def destroy

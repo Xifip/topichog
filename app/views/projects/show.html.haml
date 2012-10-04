@@ -5,9 +5,7 @@
       %h1
         = @user.name
     %section
-      = render 'shared/user_link'
-    %section
-      %p= link_to "View all users", users_path      
+      = render 'shared/user_link'     
   .span8 
     %span.span5
       %h1        
@@ -16,6 +14,12 @@
       =render 'posts/like_form' if user_signed_in?
     %p
       summary: #{@project.summary}
+    %p
+      Links and references: #{raw @project.reference}
+    %p
+      #{raw @project.content}            
+    .span8
+      =render 'shared/tags'      
     .span8
       =render 'shared/post_stats'
     .span8
