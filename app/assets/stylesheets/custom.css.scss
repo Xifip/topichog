@@ -136,6 +136,40 @@ ol.tag {
 .hide{
   display:none;
 }
+
+.my-hero-unit {
+    background-color: #EEEEEE;
+    margin-left: 0px;
+    border-radius: 6px 6px 6px 6px;
+    margin-bottom: 20px;
+    padding: 10px;
+    
+    h1 {
+      color: inherit;
+      font-size: 30px;
+      //letter-spacing: -1px;
+      line-height: 1;
+      //margin-bottom: 5px;
+      text-align: left;
+  }
+    p {
+      color: inherit;
+      font-size: 18px;
+      font-weight: 200;
+      line-height: 30px;
+  }
+  
+    .ref{
+            p {
+          color: inherit;
+          font-size: inherit;
+          font-weight: inherit;
+          line-height: inherit;
+      }    
+    }
+}
+
+
 /* sidebar */
 
 aside {

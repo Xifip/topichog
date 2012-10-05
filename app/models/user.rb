@@ -33,11 +33,11 @@ class User < ActiveRecord::Base
 
   
   def project_feed    
-    Post.from_users_followed_by(self)
+    Post.from_users_followed_by(self)#.find_by_postable_type("project")
   end
   
   def topic_feed    
-    Post.from_users_followed_by(self)
+    Post.from_users_followed_by(self)#.find_by_postable_type("topic")
   end
   
   def feed

@@ -1,6 +1,7 @@
 class TopicsController < ApplicationController
   before_filter :authenticate_user!, only: [:create, :destroy] 
-
+  before_filter :correct_user, only: [:create, :destroy, :edit]
+  
   def create  
     @topic = Topic.new(params[:topic])
     @post = current_user.posts.build    
@@ -48,8 +49,41 @@ class TopicsController < ApplicationController
 
   end
   
+  def edit
+    @topic_user = User.find_by_id(params[:user_id]) 
+    @post = @topic_user.posts.find_by_id(params[:id])
+    @topic = @post.postable
+    @user = @post.user  
+  end 
+  
+  def update
+    @topic_user = User.find_by_id(params[:user_id]) 
+    @post = @topic_user.posts.find_by_id(params[:id])
+    @topic = @post.postable
+    @user = @post.user 
+    if @topic.update_attributes(title: params[:topic][:title],
+                                   summary: params[:topic][:summary],
+                                   reference: params[:topic][:reference],
+                                   content: params[:topic][:content],
+                                   tag_list: params[:topic][:tag_list],
+                                   )
+      @post.postable = @topic 
+      flash[:notice] = "Successfully updated topic."
+      redirect_to user_topic_path(@user, @post)
+    else
+      render :action => 'edit'
+    end                                   
+  end
+  
   def destroy
 
   end 
+
+  private
+  
+  def correct_user
+    @user = User.find_by_id(params[:user_id])
+    redirect_to root_path if @user != current_user
+  end
 
 end

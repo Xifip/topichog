@@ -2,25 +2,39 @@
 .row
   %aside.span4
     %section  
-      %h1
-        = @user.name
+      = render 'shared/user_info' 
     %section
-      = render 'shared/user_link'     
-  .span8 
-    %span.span5
-      %h1        
-        Title: #{@project.title}
-    %span.span2
-      =render 'posts/like_form' if user_signed_in?
-    %p
-      summary: #{@project.summary}
-    %p
-      Links and references: #{raw @project.reference}
-    %p
-      #{raw @project.content}            
-    .span8
-      =render 'shared/tags'      
-    .span8
+      = render 'shared/stats'   
+    = render partial: 'users/follow_form' if user_signed_in? 
+    %section.my-hero-unit
+      %h4 Links and references:
+      .ref 
+        =raw @project.reference 
+    %section.my-hero-unit
       =render 'shared/post_stats'
-    .span8
-      =render 'shared/likers_list'
+      =render 'shared/likers_list'   
+  .span8  
+    .row.my-hero-unit
+      .span8
+        .row   
+          %span.span6
+            %h1         
+              =@project.title
+          %span.span1
+            =render 'posts/like_form' if user_signed_in?
+          %span
+            = link_to "edit project", edit_user_project_path(@user, @post) if @user == current_user
+        .row
+          .span1
+            %h4 Summary: 
+          .span6  
+            =@project.summary
+        .row  
+          %p.span8
+            =render 'shared/tags'       
+    .row
+      .span8                 
+        .row
+          .span8
+            =raw @project.content
+

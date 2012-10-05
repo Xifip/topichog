@@ -2,6 +2,45 @@ require 'spec_helper'
 describe "Authentication" do
 
   describe "authorization" do
+    describe "for other users" do
+    
+    let(:user) { create_logged_in_user } 
+    let(:other_user) { FactoryGirl.create(:user) }
+    
+     describe "in the Projects controller" do
+      let(:post ) { FactoryGirl.create(:post, user: other_user, postable: 
+        FactoryGirl.create(:project, title: "Foo", summary: "football"))  }
+        describe "submitting to the create action" do
+          before { post user_projects_path(other_user) }
+          specify { response.should redirect_to(root_path) }
+        end
+        describe "submitting to the edit action" do
+          before { get edit_user_project_path(other_user, post) }
+          specify { response.should redirect_to(root_path) }
+        end
+        describe "submitting to the destroy action" do
+          before { delete project_path(post.postable) }
+          specify { response.should redirect_to(new_user_session_path) }
+        end
+     end
+     
+     describe "in the Topics controller" do
+      let(:post ) { FactoryGirl.create(:post, user: other_user, postable: 
+        FactoryGirl.create(:topic, title: "Foo", summary: "football"))  }
+        describe "submitting to the create action" do
+          before { post user_topics_path(other_user) }
+          specify { response.should redirect_to(root_path) }
+        end
+        describe "submitting to the edit action" do
+          before { get edit_user_topic_path(other_user, post) }
+          specify { response.should redirect_to(root_path) }
+        end
+        describe "submitting to the destroy action" do
+          before { delete topic_path(post.postable) }
+          specify { response.should redirect_to(new_user_session_path) }
+        end
+     end     
+    end
     describe "for non-signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
       

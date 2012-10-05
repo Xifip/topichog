@@ -1,5 +1,5 @@
 %li{:id => topic_feed_item.id}
-  = link_to gravatar_for(topic_feed_item.user), topic_feed_item.user
+  = link_to avatar_for(topic_feed_item.user), topic_feed_item.user
   %span.user
     = link_to topic_feed_item.user.name, topic_feed_item.user
   %span.title

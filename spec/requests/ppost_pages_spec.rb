@@ -1,3 +1,4 @@
+=begin
 require 'spec_helper'
 describe "Project pages" do
   
@@ -158,3 +159,4 @@ describe "Project pages" do
   end
  
 end
+=end

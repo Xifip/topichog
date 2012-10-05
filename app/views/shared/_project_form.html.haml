@@ -1,6 +1,7 @@
 = form_for(project, :url => user_projects_url(@post.user.id)) do |f|
   = render partial: 'shared/error_messages', locals: {object: f.object}
   .field
+    %h2.span8 New Project
     %p.span8
       .span1
         = f.label :title, "Title"
@@ -10,7 +11,7 @@
       .span1
         = f.label :summary, "Summary"
       .span6          
-        = f.text_field :summary, placeholder: "Project summary..."
+        = f.text_area :summary, placeholder: "Project summary...", rows: 3
     %p.span8
       .span1
         = f.label :reference, "Links & references"

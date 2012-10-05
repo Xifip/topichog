@@ -1,3 +1,4 @@
+=begin
 require 'spec_helper'
 describe "Topic pages" do
   
@@ -158,3 +159,4 @@ describe "Topic pages" do
   end
 
 end
+=end

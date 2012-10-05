@@ -28,10 +28,12 @@ TopicHog::Application.routes.draw do
       end
     end
 
-    resources :projects, :only => [:create, :show, :new] 
+    resources :projects, :only => [:create, :show, :new, :edit] 
+    resources :projects, :only => [ :update] , as: :update_projects
     resources :pposts, :only => [:create, :show, :new] 
     resources :tposts, :only => [:create, :show, :new] 
-    resources :topics, :only => [:create, :show, :new]     
+    resources :topics, :only => [:create, :show, :new, :edit]     
+    resources :topics, :only => [ :update] , as: :update_topics
   end
 
   resources :projects, only: [:destroy]

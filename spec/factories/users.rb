@@ -23,13 +23,17 @@ FactoryGirl.define do
 
   factory :project do
     title "Lorem ipsum"
-    summary "My rails project"  
+    summary "My rails project" 
+    reference "<a href='http://www.google.com'>My project reference</a>"  
+    content "<div>My project content</div>"   
     tag_list "tag1, tag2, tag3"
   end
   
   factory :topic do
     title "Lorem ipsum"
     summary "My rails project" 
+    reference "<a href='http://www.google.com'>My topic reference</a>"  
+    content "<div>My topic content</div>"       
     tag_list "tag1, tag2, tag3"
   end
   

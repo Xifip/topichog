@@ -13,13 +13,41 @@ describe "Topic pages" do
     
     subject {page} 
     
-    describe "shows user info" do
+    describe "shows user info and topic" do
       it { should have_selector('h1', text: user.name) }
       it { should have_content ( post.postable.title) }
       it { should have_content ( post.postable.summary) }
+      #user nokogiri or elementor to scrap content  
+      it { should have_content ( 'My topic reference') }
+      it { should have_content ( 'My topic content') }
       it { should have_link('view profile', href: user_path(user)) }
-    end
+      it { should have_link('edit topic', href: edit_user_topic_path(user, post.postable)) }
+      it { should have_link('My topic reference', href: 'http://www.google.com') }
+    end    
   end
+  
+  describe "viewing another users topic" do
+    let(:other_user) { FactoryGirl.create(:user) }
+    let(:post ) { FactoryGirl.create(:post, user: other_user, postable: 
+      FactoryGirl.create(:topic, title: "Foo", summary: "football"))  }
+    before { visit user_topic_path(other_user, post.postable) }    
+    
+    subject {page} 
+    
+    describe "shows user and topic info" do
+      it { should have_selector('h1', text: other_user.name) }
+      it { should have_content ( post.postable.title) }
+      it { should have_content ( post.postable.summary) }
+      #user nokogiri or elementor to scrap content  
+      it { should have_content ( 'My topic reference') }
+      it { should have_content ( 'My topic content') }
+      it { should have_link('view profile', href: user_path(other_user)) }
+      it { should_not have_link('edit topic', href: edit_user_topic_path(user, post.postable)) }
+      it { should have_link('My topic reference', href: 'http://www.google.com') }
+    end
+    
+    
+  end  
   
   describe "shows likers and liker count" do
     let(:other_user) { FactoryGirl.create(:user) }
@@ -146,11 +174,11 @@ describe "Topic pages" do
   
     describe "with valid information" do
       before do
-         page.fill_in 'topic_title', with: "Lorem ipsum"
-         page.fill_in 'topic_summary', with: "Ipsum lorem"
-         page.fill_in 'topic_content', with: "Ipsum lorem"
-         page.fill_in 'topic_reference', with: "Ipsum lorem"         
-         page.fill_in 'topic_tag_list', with: "tag1, tag2, tag3"
+         page.fill_in 'Title', with: "Lorem ipsum"
+         page.fill_in 'Summary', with: "Ipsum lorem"
+         page.fill_in 'content_textarea', with: "Ipsum lorem"
+         page.fill_in 'reference_textarea', with: "Ipsum lorem"
+         page.fill_in 'Tags', with: "tag1, tag2, tag3"
       end
       it "should create a topic" do
         
@@ -209,6 +237,10 @@ describe "Topic pages" do
         expect { click_link "delete" }.to change(Topic, :count).by(-1)
       end
       
+      it "should not delete a project" do        
+        expect { click_link "delete" }.to_not change(Project, :count)
+      end
+      
       describe "tag destruction" do
         before {page.click_link "delete"}
         it "should not find tags in topic model" do          
@@ -229,5 +261,68 @@ describe "Topic pages" do
       end  
       
     end
-  end  
+  end 
+  
+  describe "topic editing" do
+
+    describe "as correct user" do
+      let(:post) {FactoryGirl.create(:post, user: user, postable: 
+          FactoryGirl.create(:topic, title: "Foo", summary: "football")) }
+      before do        
+        visit edit_user_topic_path(user, post.postable)
+      end
+      
+      subject {page}
+      
+      describe "shows topic info" do
+        it { should have_selector('title', text: full_title(user.name + ' | edit ' + post.postable.title)) }
+        it { should have_selector('input', value: post.postable.title) }
+        it { should have_selector('input', value: post.postable.summary) }
+        it { should have_selector('input', value: post.postable.reference) }
+        it { should have_selector('input', value: post.postable.content) }                
+      end
+      
+      describe "with invalid information" do
+        before do
+           page.fill_in 'Title', with: ""
+           page.click_button "Submit topic"
+        end
+       
+        it "should not update the topic" do
+          Topic.last.title.should_not eq(" ")
+        end
+        
+        describe "error messages" do
+          it { page.should have_content('error') }
+        end      
+      end
+    
+      describe "with valid information" do
+        before do
+           page.fill_in 'Title', with: "Lorem ipsum"
+           page.fill_in 'Summary', with: "Ipsum lorem"
+           page.fill_in 'content_textarea', with: "Ipsum lorem"
+           page.fill_in 'reference_textarea', with: "Ipsum lorem"
+           page.fill_in 'Tags', with: "tag1, tag2, tag3"
+           page.click_button "Submit topic"
+        end
+        it "should update the topic" do        
+          Topic.last.title.should eq("Lorem ipsum")
+          Topic.last.summary.should eq("Ipsum lorem")
+          Topic.last.content.should eq("Ipsum lorem")
+          Topic.last.reference.should eq("Ipsum lorem")
+          Topic.last.tag_list.should eq([ "tag1", "tag2", "tag3" ])                             
+        end        
+
+        it "should update the post" do        
+          Topic.last.title.should eq(Post.last.postable.title)
+          Topic.last.summary.should eq(Post.last.postable.summary)
+          Topic.last.content.should eq(Post.last.postable.content)
+          Topic.last.reference.should eq(Post.last.postable.reference)
+          Topic.last.tags.should eq(Post.last.postable.tags)                              
+        end   
+
+      end
+    end 
+  end    
 end

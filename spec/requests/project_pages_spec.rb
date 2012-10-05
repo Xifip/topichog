@@ -5,7 +5,7 @@ describe "Project pages" do
   
   let(:user) { create_logged_in_user } 
   
-  describe "project viewing" do
+  describe "viewing own project" do
    
     let(:post ) { FactoryGirl.create(:post, user: user, postable: FactoryGirl.create(:project, title: "Foo", summary: "football"))  }
     before { visit user_project_path(user, post.postable) }    
@@ -16,7 +16,35 @@ describe "Project pages" do
       it { should have_selector('h1', text: user.name) }
       it { should have_content ( post.postable.title) }
       it { should have_content ( post.postable.summary) }
+      #user nokogiri or elementor to scrap content  
+      it { should have_content ( 'My project reference') }
+      it { should have_content ( 'My project content') }
       it { should have_link('view profile', href: user_path(user)) }
+      it { should have_link('edit project', href: edit_user_project_path(user, post.postable)) }
+      it { should have_link('My project reference', href: 'http://www.google.com') }
+    end
+    
+    
+  end
+
+  describe "viewing another users project" do
+    let(:other_user) { FactoryGirl.create(:user) }
+    let(:post ) { FactoryGirl.create(:post, user: other_user, postable: 
+    FactoryGirl.create(:project, title: "Foo", summary: "football"))  }
+    before { visit user_project_path(other_user, post.postable) }    
+    
+    subject {page} 
+    
+    describe "shows user and project info" do
+      it { should have_selector('h1', text: other_user.name) }
+      it { should have_content ( post.postable.title) }
+      it { should have_content ( post.postable.summary) }
+      #user nokogiri or elementor to scrap content  
+      it { should have_content ( 'My project reference') }
+      it { should have_content ( 'My project content') }
+      it { should have_link('view profile', href: user_path(other_user)) }
+      it { should_not have_link('edit project', href: edit_user_project_path(user, post.postable)) }
+      it { should have_link('My project reference', href: 'http://www.google.com') }
     end
     
     
@@ -145,11 +173,11 @@ describe "Project pages" do
   
     describe "with valid information" do
       before do
-         page.fill_in 'project_title', with: "Lorem ipsum"
-         page.fill_in 'project_summary', with: "Ipsum lorem"
-         page.fill_in 'project_content', with: "Ipsum lorem"
-         page.fill_in 'project_reference', with: "Ipsum lorem"
-         page.fill_in 'project_tag_list', with: "tag1, tag2, tag3"
+         page.fill_in 'Title', with: "Lorem ipsum"
+         page.fill_in 'Summary', with: "Ipsum lorem"
+         page.fill_in 'content_textarea', with: "Ipsum lorem"
+         page.fill_in 'reference_textarea', with: "Ipsum lorem"
+         page.fill_in 'Tags', with: "tag1, tag2, tag3"
       end
       it "should create a project" do        
         expect { page.click_button "Submit project" }.to change(Project, :count).by(1)
@@ -205,6 +233,10 @@ describe "Project pages" do
         expect { click_link "delete" }.to change(Project, :count).by(-1)
       end
       
+      it "should not delete a topic" do        
+        expect { click_link "delete" }.to_not change(Topic, :count)
+      end
+           
       describe "tag destruction" do
         before {page.click_link "delete"}
         it "should not find tags in project model" do          
@@ -227,4 +259,67 @@ describe "Project pages" do
     end
   end
  
+ 
+  describe "project editing" do 
+
+    describe "as correct user" do
+      let(:post) {FactoryGirl.create(:post, user: user, postable: 
+          FactoryGirl.create(:project, title: "Foo", summary: "football")) }
+      before do        
+        visit edit_user_project_path(user, post.postable)
+      end
+      
+      subject {page}
+      
+      describe "shows project info" do
+        it { should have_selector('title', text: full_title(user.name + ' | edit ' + post.postable.title)) }
+        it { should have_selector('input', value: post.postable.title) }
+        it { should have_selector('input', value: post.postable.summary) }
+        it { should have_selector('input', value: post.postable.reference) }
+        it { should have_selector('input', value: post.postable.content) }                
+      end
+      
+      describe "with invalid information" do
+        before do
+           page.fill_in 'Title', with: ""
+           page.click_button "Submit project"
+        end
+       
+        it "should not update the project" do
+          Project.last.title.should_not eq(" ")
+        end
+        
+        describe "error messages" do
+          it { page.should have_content('error') }
+        end      
+      end
+    
+      describe "with valid information" do
+        before do
+           page.fill_in 'Title', with: "Lorem ipsum"
+           page.fill_in 'Summary', with: "Ipsum lorem"
+           page.fill_in 'content_textarea', with: "Ipsum lorem"
+           page.fill_in 'reference_textarea', with: "Ipsum lorem"
+           page.fill_in 'Tags', with: "tag1, tag2, tag3"
+           page.click_button "Submit project"
+        end
+        it "should update the project" do        
+          Project.last.title.should eq("Lorem ipsum")
+          Project.last.summary.should eq("Ipsum lorem")
+          Project.last.content.should eq("Ipsum lorem")
+          Project.last.reference.should eq("Ipsum lorem")
+          Project.last.tag_list.should eq([ "tag1", "tag2", "tag3" ])                             
+        end        
+
+        it "should update the post" do        
+          Project.last.title.should eq(Post.last.postable.title)
+          Project.last.summary.should eq(Post.last.postable.summary)
+          Project.last.content.should eq(Post.last.postable.content)
+          Project.last.reference.should eq(Post.last.postable.reference)
+          Project.last.tags.should eq(Post.last.postable.tags)                              
+        end   
+
+      end
+    end 
+  end  
 end

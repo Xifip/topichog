@@ -5,6 +5,8 @@
 .span2  
   %h1
     = @user.name
+  %span
+    = render 'shared/user_link'   
   %span  
     -if @user == current_user  
       .actions

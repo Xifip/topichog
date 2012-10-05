@@ -3,23 +3,21 @@
     = @user.profile.bio
   .span2
     .span2
-      -if @user.profile.twitter_url
-        = image_tag ('wild-boar.svg')
+      -if @user.profile.twitter_url != ''
+        =image_tag("Twitter-Blue-Transparent-t-3D-Button-Logo.png", :size => "16x10", :alt => "Edit Entry")
         = link_to "my twitter", @user.profile.twitter_url
     .span2
-      -if @user.profile.facebook_url
-        = image_tag ('wild-boar.svg')
-        = link_to 'my facebook', @user.profile.facebook_url
+      -if @user.profile.facebook_url != ''
+        = image_tag("facebook_icon.png", :size => "16x10", :alt => "Edit Entry") 
+        = link_to "my facebook", @user.profile.facebook_url
     .span2      
-      -if @user.profile.linkedin_url
-        = image_tag ('wild-boar.svg')
-        = link_to 'my linkedin', @user.profile.linkedin_url
+      -if @user.profile.linkedin_url != ''
+        = image_tag("linkedin-icon.png", :size => "16x10", :alt => "Edit Entry") 
+        = link_to "my linkedin", @user.profile.linkedin_url
     .span2
-      -if @user.profile.mysite_url
-        = image_tag ('wild-boar.svg')
-        = link_to 'my site', @user.profile.mysite_url   
+      -if @user.profile.mysite_url != ''
+        = link_to "my site", @user.profile.mysite_url   
     .span2
-      -if @user.profile.myblog_url
-        = image_tag ('wild-boar.svg')
-        = link_to 'my blog', @user.profile.myblog_url                 
+      -if @user.profile.myblog_url != ''
+        = link_to "my blog", @user.profile.myblog_url                 
       
