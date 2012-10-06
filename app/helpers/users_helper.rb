@@ -8,11 +8,10 @@ module UsersHelper
   end
   
   def avatar_for(user, options = { size: 50 })
-  #debugger
     if user.profile.image?
       image_tag(user.profile.image_url(:thumb).to_s)
     else
-      gravatar_for @user, size: 52
+      gravatar_for user, size: 52
     end  
   end
 end

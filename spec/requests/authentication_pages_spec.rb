@@ -108,7 +108,7 @@ describe "Authentication" do
           specify { response.should redirect_to(new_user_session_path) }
         end
         
-        describe "submitting to the index action" do
+        describe "submitting to the index action" do         
           before { visit posts_path }
           it { page.should have_selector('title', text: full_title('explore topics and projects')) }
         end
