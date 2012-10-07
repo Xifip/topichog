@@ -4,13 +4,11 @@
     %section
       = render 'shared/user_info' 
     %section
-      = render 'shared/user_link'
-    %section
       = render 'shared/stats'
       - if @users.any?
         .user_avatars
           - @users.each do |user|
-            = link_to gravatar_for(user, size: 30), user
+            = link_to avatar_for(user, size: 30), user
   .span8
     %h3= @title
     - if @users.any?

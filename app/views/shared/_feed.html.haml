@@ -1,3 +1,5 @@
 %ol.feed
   = render partial: 'shared/feed_item', collection: @feed_items, :inner_window => 10, :outer_window => 10
-= will_paginate @feed_items, :param_name => 'feed_page'  
+= will_paginate @feed_items, :param_name => 'feed_page', 
+                previous_label: h("<"), next_label: h(">"), 
+                inner_window: 2, outer_window: 2

@@ -154,35 +154,40 @@ describe User do
     end    
  
     let!(:older_topic) do
-      FactoryGirl.create(:tpost, created_at: 1.day.ago)      
+      FactoryGirl.create(:topic, created_at: 1.day.ago)      
     end
     let!(:older_topic_post) do
-      FactoryGirl.create(:post, user: @user, postable: older_topic, created_at: 1.day.ago)      
+      FactoryGirl.create(:post, user: @user, postable: older_topic, 
+        created_at: 1.day.ago)      
     end
     
     let!(:newer_topic) do
-      FactoryGirl.create(:tpost, created_at: 1.day.ago)      
+      FactoryGirl.create(:topic, created_at: 1.day.ago)      
     end
     let!(:newer_topic_post) do
-      FactoryGirl.create(:post, user: @user, postable: newer_topic, created_at: 3.hours.ago)
+      FactoryGirl.create(:post, user: @user, postable: newer_topic, 
+        created_at: 3.hours.ago)
     end
     
     let!(:older_project) do
-      FactoryGirl.create(:ppost, created_at: 1.day.ago)      
+      FactoryGirl.create(:project, created_at: 1.day.ago)      
     end
     let!(:older_project_post) do
-      FactoryGirl.create(:post, user: @user, postable: older_project, created_at: 3.days.ago)
+      FactoryGirl.create(:post, user: @user, postable: older_project, 
+        created_at: 3.days.ago)
     end
     
     let!(:newer_project) do
-      FactoryGirl.create(:ppost, created_at: 1.day.ago)      
+      FactoryGirl.create(:project, created_at: 1.day.ago)      
     end
     let!(:newer_project_post) do
-      FactoryGirl.create(:post, user: @user, postable: newer_project, created_at: 1.hour.ago)
+      FactoryGirl.create(:post, user: @user, postable: newer_project, 
+        created_at: 1.hour.ago)
     end
     
     it "should have the right projects in the right order" do      
-      @user.posts.should == [newer_project_post, newer_topic_post, older_topic_post, older_project_post ]
+      @user.posts.should == [newer_project_post, newer_topic_post, 
+        older_topic_post, older_project_post ]
     end    
 
     it "should destroy associated posts and project and topic associations" do
@@ -206,20 +211,23 @@ describe User do
     
     describe "feed of posts" do  
     
-      let(:unfollowed_user) { FactoryGirl.create(:user, name: "unfollowed", email:"unfollowed@user.com") }
+      let(:unfollowed_user) { FactoryGirl.create(:user, name: "unfollowed", 
+        email:"unfollowed@user.com") }
       
       let!(:unfollowed_topic) do
-        FactoryGirl.create(:tpost, created_at: 1.day.ago)      
+        FactoryGirl.create(:topic, created_at: 1.day.ago)      
       end
       let(:unfollowed_topic_post) do
-        FactoryGirl.create(:post, user: unfollowed_user, postable: unfollowed_topic)
+        FactoryGirl.create(:post, user: unfollowed_user, 
+          postable: unfollowed_topic)
       end
       
       let!(:unfollowed_project) do
-        FactoryGirl.create(:ppost, created_at: 1.day.ago)      
+        FactoryGirl.create(:project, created_at: 1.day.ago)      
       end
       let(:unfollowed_project_post) do
-        FactoryGirl.create(:post, user: unfollowed_user, postable: unfollowed_project)
+        FactoryGirl.create(:post, user: unfollowed_user, 
+          postable: unfollowed_project)
       end    
         
       let(:followed_user) { FactoryGirl.create(:user) }
@@ -230,32 +238,36 @@ describe User do
       end
       
       let!(:followed_user_newer_topic) do
-        FactoryGirl.create(:tpost, created_at: 1.day.ago)      
+        FactoryGirl.create(:topic, created_at: 1.day.ago)      
       end
       let!(:followed_user_newer_topic_post) do
-        FactoryGirl.create(:post, user: followed_user, postable: followed_user_newer_topic, created_at: 2.hours.ago)
+        FactoryGirl.create(:post, user: followed_user, 
+          postable: followed_user_newer_topic, created_at: 2.hours.ago)
       end
       
       
       let!(:followed_user_newer_project) do
-        FactoryGirl.create(:ppost, created_at: 1.day.ago)      
+        FactoryGirl.create(:project, created_at: 1.day.ago)      
       end
       let!(:followed_user_newer_project_post) do
-        FactoryGirl.create(:post, user: followed_user, postable: followed_user_newer_project, created_at: 4.hours.ago)
+        FactoryGirl.create(:post, user: followed_user, 
+          postable: followed_user_newer_project, created_at: 4.hours.ago)
       end
       
       let!(:followed_user_older_topic) do
-        FactoryGirl.create(:tpost, created_at: 1.day.ago)      
+        FactoryGirl.create(:topic, created_at: 1.day.ago)      
       end
       let!(:followed_user_older_topic_post) do
-        FactoryGirl.create(:post, user: followed_user, postable: followed_user_older_topic, created_at: 4.days.ago)
+        FactoryGirl.create(:post, user: followed_user, 
+          postable: followed_user_older_topic, created_at: 4.days.ago)
       end
       
       let!(:followed_user_older_project) do
-        FactoryGirl.create(:ppost, created_at: 1.day.ago)      
+        FactoryGirl.create(:project, created_at: 1.day.ago)      
       end
       let!(:followed_user_older_project_post) do
-        FactoryGirl.create(:post, user: followed_user, postable: followed_user_older_project, created_at: 2.days.ago)
+        FactoryGirl.create(:post, user: followed_user, 
+          postable: followed_user_older_project, created_at: 2.days.ago)
       end  
       
       it "should have the right projects and topics in the right order in the feed" do      
@@ -276,11 +288,34 @@ describe User do
         end
       end
       
+      its(:project_feed) { should_not include(newer_topic_post) }
+      its(:project_feed) { should_not include(older_topic_post) }   
+      its(:project_feed) { should_not include(followed_user_newer_topic_post) }
+      its(:project_feed) { should include(followed_user_newer_project_post) }
+      its(:project_feed) { should_not include(unfollowed_topic_post) }
+      its(:project_feed) { should_not include(unfollowed_project_post) }
+      its(:project_feed) do
+        followed_user.posts.each do |post|
+          should include(post) if post.postable_type == "Project"
+          should_not include(post) if post.postable_type == "Topic"          
+        end
+      end
       
+      its(:topic_feed) { should include(newer_topic_post) }
+      its(:topic_feed) { should include(older_topic_post) }   
+      its(:topic_feed) { should include(followed_user_newer_topic_post) }
+      its(:topic_feed) { should_not include(followed_user_newer_project_post) }
+      its(:topic_feed) { should_not include(unfollowed_topic_post) }
+      its(:topic_feed) { should_not include(unfollowed_project_post) }
+      its(:topic_feed) do
+        followed_user.posts.each do |post|
+          should_not include(post) if post.postable_type == "Project"
+          should include(post) if post.postable_type == "Topic"  
+        end
+      end            
       
       it "should destroy associated posts and project and topic associations" do
         posts = @user.posts
-        #debugger
         posts.each do |post|
           Post.find_by_id(post.id).should_not be_nil
           postable_type = post.postable_type

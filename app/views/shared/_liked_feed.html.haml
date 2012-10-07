@@ -1,3 +1,5 @@
 %ol.feed
   = render partial: 'shared/liked_feed_item', collection: @liked_posts
-= will_paginate @liked_posts, :param_name => 'liked_page'
+= will_paginate @liked_posts, :param_name => 'liked_page', 
+                previous_label: h("<"), next_label: h(">"), 
+                inner_window: 2, outer_window: 2

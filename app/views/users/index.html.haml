@@ -1,9 +1,14 @@
 = provide(:title, 'All users')
-%h3 Users list
-= will_paginate
-%ul.users
-  - @users.each do |user|
-    %li
-      = render user
-      signed up #{user.created_at.to_date}
-= will_paginate
+.row
+  %aside.span4
+    %section
+      = render 'shared/user_info' 
+    %section
+      = render 'shared/stats'
+  .span8
+    %h3 Users list
+    = will_paginate
+    - if @users.any?
+      %ul.users
+        = render @users
+      = will_paginate

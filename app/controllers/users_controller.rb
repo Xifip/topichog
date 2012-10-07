@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     @projects = @user.posts.find_all_by_postable_type("Project").paginate(page: params[:project_page], per_page: 5)
     @topics = @user.posts.find_all_by_postable_type("Topic").paginate(page: params[:topic_page], per_page: 5)   
     @liked_posts = @user.liked_posts.paginate(page: params[:liked_page], per_page: 5) 
-    
+    @page = 'profile'
   end
 
   def following

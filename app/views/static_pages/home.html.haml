@@ -7,17 +7,23 @@
         = render 'shared/stats'
     .span8
       - if @feed_items.any?
-        %h3 Feed
+        %h3.well.well-small Feed
         = render partial: 'shared/feed'
+      - if @liked_posts.any?
+        %h3.well.well-small Favorited items (#{@liked_posts.count})
+        = render partial: 'shared/liked_feed'        
       - if @project_feed_items.any?
-        %h3 Project Feed
+        %h3.well.well-small Project Feed
         = render partial: 'shared/project_feed'
       - if @topic_feed_items.any?
-        %h3 Topic Feed
+        %h3.well.well-small Topic Feed
         = render partial: 'shared/topic_feed'
-      - if @liked_posts.any?
-        %h3 Favorited items (#{@liked_posts.count})
-        = render partial: 'shared/liked_feed'
+      %h3.well.well-small 
+        =link_to 'Explore topics and projects', posts_path
+      #popular_tags.span8 
+        - tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class|
+          = link_to tag.name, post_path(tag.name), :class => 'label' 
+            
 - else
   .center.hero-unit
     %h1 Welcome to TopicHog Beta

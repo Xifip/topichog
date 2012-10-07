@@ -5,7 +5,7 @@
 jQuery ->
   $('#tag_name').autocomplete
     source: $('#tag_name').data('autocomplete-source')
-    select: (event, ui) ->  
+    select: (event, ui) -> 
       add_to_filter(ui.item.value)    
 
   $("#tags_remove a").click (event) ->

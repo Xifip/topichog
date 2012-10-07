@@ -1,3 +1,5 @@
 %ol.feed
   = render partial: 'shared/topic_feed_item', collection: @topic_feed_items
-= will_paginate @topic_feed_items, :param_name => 'topic_page'
+= will_paginate @topic_feed_items, :param_name => 'topic_page', 
+                previous_label: h("<"), next_label: h(">"), 
+                inner_window: 2, outer_window: 2

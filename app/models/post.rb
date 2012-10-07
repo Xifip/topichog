@@ -26,4 +26,25 @@ class Post < ActiveRecord::Base
     where("user_id IN (#{followed_user_ids}) OR user_id = :user_id",
           user_id: user.id)
   end
+  
+  def self.topics_from_users_followed_by(user)
+    followed_user_ids = "SELECT followed_id FROM relationships
+                          WHERE follower_id = :user_id"
+    where("(user_id IN (#{followed_user_ids}) OR user_id = :user_id) AND (postable_type = 'Topic')",
+          user_id: user.id)
+  end
+  
+  def self.topics_from_users_followed_by(user)
+    followed_user_ids = "SELECT followed_id FROM relationships
+                          WHERE follower_id = :user_id"
+    where("(user_id IN (#{followed_user_ids}) OR user_id = :user_id) AND (postable_type = 'Topic')",
+          user_id: user.id)
+  end
+  
+  def self.projects_from_users_followed_by(user)
+    followed_user_ids = "SELECT followed_id FROM relationships
+                          WHERE follower_id = :user_id"
+    where("(user_id IN (#{followed_user_ids}) OR user_id = :user_id) AND (postable_type = 'Project')",
+          user_id: user.id)
+  end
 end

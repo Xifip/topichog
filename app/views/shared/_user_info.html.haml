@@ -6,8 +6,9 @@
   %h1
     = @user.name
   %span
-    = render 'shared/user_link'   
+    -if @page != 'profile'
+      = render 'shared/user_link' 
   %span  
-    -if @user == current_user  
+    -if @user == current_user && @page == 'profile'
       .actions
         = link_to "edit profile", edit_profile_path(@user)
