@@ -9,7 +9,7 @@ class ProfilesController < ApplicationController
   
   def update    
     @user = User.find_by_id(params[:id])
-    @profile = @user.profile    
+    @profile = @user.profile  
     if @profile.update_attributes(bio: params[:profile][:bio], image: params[:profile][:image],
     twitter_url: params[:profile][:twitter_url],
     facebook_url: params[:profile][:facebook_url],

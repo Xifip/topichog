@@ -1,7 +1,7 @@
 .row
   .span6
     = @user.profile.bio
-  .span2
+  .span2{:class => @offset_links}
     .span2
       -if @user.profile.twitter_url != ''
         =image_tag("Twitter-Blue-Transparent-t-3D-Button-Logo.png", :size => "16x10", :alt => "Edit Entry")
