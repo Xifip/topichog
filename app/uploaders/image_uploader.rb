@@ -72,4 +72,12 @@ class ImageUploader < CarrierWave::Uploader::Base
   #   "something.jpg" if original_filename
   # end
 
+  #Heroku has a read-only filesystem, so uploads must be stored on S3 and cannot 
+  #be cached in the public directory.
+  #You can work around this by setting the cache_dir in your Uploader classes to the tmp directory:
+  #https://github.com/jnicklas/carrierwave/wiki/How-to%3A-Make-Carrierwave-work-on-Heroku
+  def cache_dir
+    "#{Rails.root}/tmp/uploads"
+  end
+
 end
