@@ -48,4 +48,5 @@
     .container
       - flash.each do |key, value|
         = content_tag(:div, value, class: "alert alert-#{key}")      
-      = yield
+      = yield  
+= render :partial => 'layouts/ga' if Rails.env == 'production'
