@@ -8,23 +8,23 @@ class ProfilesController < ApplicationController
     @avatar = @user.avatar
   end
   
-  def update    
+  def update
+ 
     @profile = Profile.find_by_id(params[:id])
     @user = @profile.user
-    if @profile.update_attributes(bio: params[:profile][:bio],
-    twitter_url: params[:profile][:twitter_url],
-    facebook_url: params[:profile][:facebook_url],
-    linkedin_url: params[:profile][:linkedin_url],
-    mysite_url: params[:profile][:mysite_url],
-    myblog_url: params[:profile][:myblog_url])
-      flash[:notice] = "Successfully updated profile."
-      redirect_to user_path(@user)
-    else
-      render :action => 'edit'
-    end    
-
-  end 
+   
+     respond_to do |format|
+      if @profile.update_attributes(params[:profile])
+        format.html { redirect_to(@user, :notice => 'User was successfully updated.') }
+        format.json { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.json { render :json => @profile.errors.full_messages, :status => :unprocessable_entity }
+      end
+    end
   
+  end
+ 
   private
   
   def correct_user

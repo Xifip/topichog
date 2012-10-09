@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require jquery.purr
+//= require best_in_place
 //= require jquery.Jcrop.min
 //= require bootstrap
 //= require jquery.jqplot.min

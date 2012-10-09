@@ -17,43 +17,43 @@
             = f.hidden_field :image_cache            
 .row
   .span6.offset3  
-    %h3 Edit your profile
-    = form_for @profile, :html => {:multipart => true} do |f|
-      - @profile.errors.full_messages.each do |msg|
-        %p= msg
-      = f.hidden_field :user_id
-      %p.span6
-        .span1
-          = f.label :bio, "Your bio"
-        .span4
-          = f.text_area :bio, rows: 5
-      %p.span6
-        .span1
-          = f.label :twitter_url, 'Twitter'
-        .span4  
-          = f.text_field :twitter_url
-      %p.span6
-        .span1
-          = f.label :linkedin_url, 'Linkedin'
-        .span4
-          = f.text_field :linkedin_url
-      %p.span6
-        .span1
-          = f.label :facebook_url, 'Facebook'
-        .span4
-          = f.text_field :facebook_url
-      %p.span6
-        .span1
-          = f.label :mysite_url, 'Your site'
-        .span4
-          = f.text_field :mysite_url    
-      %p.span6
-        .span1
-          = f.label :myblog_url, 'Your blog'
-        .span4
-          = f.text_field :myblog_url               
-      %p.span6.offset2
-        = f.submit
-
+    %h3 Edit your profile  
+    %p.spacer20  
+    %table.table.table-hover
+      %tbody
+        %tr
+          %td.span1 Bio:
+          %td.span4= best_in_place @profile, :bio, type: :textarea, :activator => '#edit_bio'
+          %td.span1
+            %a#edit_bio{:href => "#"} edit   
+        %tr
+          %td.span1 Twitter:
+          %td.span4= best_in_place @profile, :twitter_url, :activator => '#edit_twitter'
+          %td.span1
+            %a#edit_twitter{:href => "#"} edit  
+        %tr
+          %td.span1 Linkedin:
+          %td.span4= best_in_place @profile, :linkedin_url, :activator => '#edit_ln'
+          %td.span1
+            %a#edit_ln{:href => "#"} edit  
+        %tr
+          %td.span1 Facebook:
+          %td.span4= best_in_place @profile, :facebook_url   , :activator => '#edit_fb'
+          %td.span1
+            %a#edit_fb{:href => "#"} edit  
+        %tr
+          %td.span1 Website:
+          %td.span4= best_in_place @profile, :mysite_url, :activator => '#edit_site'
+          %td.span1
+            %a#edit_site{:href => "#"} edit     
+        %tr
+          %td.span1 Blog:
+          %td.span4= best_in_place @profile, :myblog_url, type: :textarea, :activator => '#edit_blog'
+          %td.span1
+            %a#edit_blog{:href => "#"} edit 
+.row
+  %p.spacer20
+  %p.offset3
+    =link_to "Back to profile", @user, class: "btn btn-medium btn-primary"
 
 
