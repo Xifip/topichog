@@ -1,20 +1,27 @@
 = provide(:title, @user.name + ' | edit profile')
 .row
+  .span6.offset3
+    %h3 Edit your avatar
+    = form_for @avatar, :html => {:multipart => true} do |f|
+      - @avatar.errors.full_messages.each do |msg|
+        %p= msg
+      = f.hidden_field :user_id
+      %p.span6
+        .span1
+          = f.label :image, "Profile picture"  
+        .span3        
+          %p
+            = avatar_for @user, size: 52
+          %p
+            = f.file_field :image
+            = f.hidden_field :image_cache            
+.row
   .span6.offset3  
     %h3 Edit your profile
     = form_for @profile, :html => {:multipart => true} do |f|
       - @profile.errors.full_messages.each do |msg|
         %p= msg
       = f.hidden_field :user_id
-      %p.span6
-        .span1
-          = f.label :image, "Profile picture"          
-        .span4
-          .span1
-            = avatar_for @user, size: 52
-          .span2
-            = f.file_field :image
-            = f.hidden_field :image_cache
       %p.span6
         .span1
           = f.label :bio, "Your bio"

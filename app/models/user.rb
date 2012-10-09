@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   
   has_many :posts, dependent: :destroy
   has_one :profile, dependent: :destroy
+  has_one :avatar, dependent: :destroy
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy
   has_many :followed_users, through: :relationships, source: :followed
   has_many :reverse_relationships, foreign_key: "followed_id",
@@ -27,6 +28,7 @@ class User < ActiveRecord::Base
   
   acts_as_tagger
   after_create :add_profile
+  after_create :add_avatar
   accepts_nested_attributes_for :profile  
   validates_presence_of :name
   validates_uniqueness_of :email, :case_sensitive => false
@@ -72,5 +74,9 @@ class User < ActiveRecord::Base
 
   def add_profile
     self.create_profile
+  end
+  
+  def add_avatar
+    self.create_avatar
   end
 end

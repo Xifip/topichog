@@ -42,7 +42,7 @@ TopicHog::Application.routes.draw do
   resources :topics, only: [:destroy]
   
   resources :profiles, only: [:edit, :update]
-  
+  resources :avatars, only: [:edit, :update]
   resources :relationships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
   resources :tags_names

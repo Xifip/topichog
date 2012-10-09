@@ -1,0 +1,15 @@
+%h1.center Crop Avatar
+%p.row
+  .offset4
+    = image_tag @user.avatar.image_url(:large), id: "avatar_cropbox"
+%p.row
+  %h4.offset4 Preview
+%p.row
+  .span2.offset4{:style => "width:100px; height:100px; overflow:hidden"}
+    = image_tag @user.avatar.image_url(:large), :id => "preview"  
+  .span2
+    = form_for @avatar do |f|
+      - %w[x y w h].each do |attribute|
+        = f.text_field "crop_#{attribute}"     
+      = f.submit "Crop"
+  

@@ -2,34 +2,23 @@ class ProfilesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :correct_user
   
-  def edit      
-    @user = User.find_by_id(params[:id])
-    @profile = @user.profile
+  def edit 
+    @profile = Profile.find_by_id(params[:id])
+    @user = @profile.user
+    @avatar = @user.avatar
   end
   
   def update    
-    @user = User.find_by_id(params[:id])
-    @profile = @user.profile  
-    if @profile.update_attributes(bio: params[:profile][:bio], image: params[:profile][:image],
+    @profile = Profile.find_by_id(params[:id])
+    @user = @profile.user
+    if @profile.update_attributes(bio: params[:profile][:bio],
     twitter_url: params[:profile][:twitter_url],
     facebook_url: params[:profile][:facebook_url],
     linkedin_url: params[:profile][:linkedin_url],
     mysite_url: params[:profile][:mysite_url],
-    myblog_url: params[:profile][:myblog_url],
-    crop_x: params[:profile][:crop_x], crop_y: params[:profile][:crop_y], 
-    crop_w: params[:profile][:crop_w], crop_h: params[:profile][:crop_h])
-      if params[:profile][:image].present?
-        render :crop
-      else  
-        #debugger
-        if params[:profile][:crop_x].present?
-          render :action => 'edit'
-        else  
-          flash[:notice] = "Successfully updated profile."
-          redirect_to user_path(@user)
-          #render :action => 'edit'
-        end
-      end
+    myblog_url: params[:profile][:myblog_url])
+      flash[:notice] = "Successfully updated profile."
+      redirect_to user_path(@user)
     else
       render :action => 'edit'
     end    
@@ -39,7 +28,8 @@ class ProfilesController < ApplicationController
   private
   
   def correct_user
-    @user = User.find_by_id(params[:id])
+    @profile = Profile.find_by_id(params[:id])
+    @user = @profile.user
     redirect_to root_path if @user != current_user
   end
 end
