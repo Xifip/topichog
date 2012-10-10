@@ -5,10 +5,13 @@ class AvatarsController < ApplicationController
   def edit
     @avatar = Avatar.find_by_id(params[:id])
     @user = @avatar.user
+   #@uploader = @avatar.image
+    #@uploader.success_action_redirect = new_painting_url
   end
 
   def update
     @avatar = Avatar.find_by_id(params[:id])
+    #@uploader = @avatar.image
     @user = @avatar.user
     if @avatar.update_attributes(image: params[:avatar][:image],
     crop_x: params[:avatar][:crop_x], crop_y: params[:avatar][:crop_y], 

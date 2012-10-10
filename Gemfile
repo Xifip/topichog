@@ -13,6 +13,9 @@ gem "carrierwave"
 gem "mini_magick"
 gem "ckeditor", "3.7.1"
 gem "best_in_place"
+gem "fog"
+gem "carrierwave_direct"
+gem "sidekiq"
 group :development, :test do
 gem 'sqlite3', '1.3.5'
 #gem 'ruby-debug19'
