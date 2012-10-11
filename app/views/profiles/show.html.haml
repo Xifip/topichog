@@ -1,0 +1,9 @@
+= provide(:title, @user.name + ' | change profile picture')
+.row
+  .span1
+    = avatar_for @user, size: 52
+  .span6.offset3  
+    %h3 Change your picture
+    = direct_upload_form_for @uploader do |f|
+      %p= f.file_field :image
+      %p= f.submit "Upload Image"

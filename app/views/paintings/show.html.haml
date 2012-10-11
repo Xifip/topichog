@@ -1,0 +1,7 @@
+%h1= @painting.name
+%p= image_tag @painting.image_url
+%p
+  = link_to "Edit", edit_painting_path(@painting)
+  |
+  \#{link_to "Destroy", @painting, :confirm => 'Are you sure?', :method => :delete} |
+  \#{link_to "Back to Paintings", paintings_path}

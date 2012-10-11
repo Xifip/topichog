@@ -1,3 +1,4 @@
+require 'sidekiq/web'
 TopicHog::Application.routes.draw do
   
   mount Ckeditor::Engine => '/ckeditor'
@@ -36,17 +37,19 @@ TopicHog::Application.routes.draw do
     resources :topics, :only => [ :update] , as: :update_topics
   end
 
+  resources :paintings
   resources :projects, only: [:destroy]
   resources :pposts, only: [:destroy]
   resources :tposts, only: [:destroy]
   resources :topics, only: [:destroy]
   
-  resources :profiles, only: [:edit, :update]
+  resources :profiles, only: [:edit, :update, :show]
   resources :avatars, only: [:edit, :update]
   resources :relationships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
   resources :tags_names
-
+  
+  mount Sidekiq::Web, at: '/sidekiq'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

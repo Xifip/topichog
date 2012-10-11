@@ -16,6 +16,10 @@ gem "best_in_place"
 gem "fog"
 gem "carrierwave_direct"
 gem "sidekiq"
+# sinatra & slim needed for sidekiq web interface
+gem 'sinatra', require:false
+gem 'slim'
+gem 'sidekiq-failures'
 group :development, :test do
 gem 'sqlite3', '1.3.5'
 #gem 'ruby-debug19'

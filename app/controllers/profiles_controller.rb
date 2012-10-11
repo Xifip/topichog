@@ -6,9 +6,22 @@ class ProfilesController < ApplicationController
     @profile = Profile.find_by_id(params[:id])
     @user = @profile.user
     @avatar = @user.avatar
-    debugger
+          debugger
+    if params[:key]
+
+      @avatar.key = params[:key]
+    end
+    #@uploader = @avatar.image
+    #@uploader.success_action_redirect = edit_profile_url  
+  end 
+
+  def show 
+    @profile = Profile.find_by_id(params[:id])
+    @user = @profile.user
+    @avatar = @user.avatar
     @uploader = @avatar.image
-  end
+    @uploader.success_action_redirect = edit_profile_url  
+  end 
   
   def update
  

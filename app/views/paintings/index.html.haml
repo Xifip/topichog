@@ -1,0 +1,9 @@
+%h1 Painting Gallery
+#paintings
+  = render @paintings
+.clear
+.span6.offset3  
+  %h3 Change your picture
+  = direct_upload_form_for @uploader do |f|
+    %p= f.file_field :image
+    %p= f.submit "Upload Image"

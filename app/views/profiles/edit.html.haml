@@ -1,10 +1,6 @@
 = provide(:title, @user.name + ' | edit profile')
 .row
   .span6.offset3
-    = direct_upload_form_for @uploader do |f|
-      %p= f.file_field :image
-      %p= f.submit "Upload Image"
-  .span6.offset3
     %h3 Edit your avatar
     = form_for @avatar, :html => {:multipart => true} do |f|
       - @avatar.errors.full_messages.each do |msg|
@@ -15,6 +11,7 @@
           = f.label :image, "Profile picture"  
         .span3        
           %p
+            = image_tag @avatar.image_url
             = avatar_for @user, size: 52
           %p
             = f.file_field :image
