@@ -165,7 +165,8 @@ describe "User pages" do
       end
     end
   end 
-  
+
+=begin    
   describe "project pages ppost" do
     
     describe "users project page" do
@@ -185,7 +186,8 @@ describe "User pages" do
       
     end    
   end
-  
+
+
   describe "topic pages tpost" do   
     
     describe "users topic page" do
@@ -206,7 +208,7 @@ describe "User pages" do
       it { should have_link('view profile', href: user_path(other_user)) }
     end    
   end
-  
+=end  
   describe "project pages" do
     
     describe "users project page" do
@@ -215,8 +217,9 @@ describe "User pages" do
       let!(:p2) { FactoryGirl.create(:project, title: "Foo", summary: "football") }
       let!(:post3) { FactoryGirl.create(:post, user: other_user, postable: p2) }
       
-      before do        
-        visit user_project_path(other_user, p2)
+      before do  
+        #debugger      
+        visit user_project_path(other_user, post3)
       end
       
       subject{page}
@@ -240,7 +243,7 @@ describe "User pages" do
       let!(:post4) { FactoryGirl.create(:post, user: other_user, postable: t2) }
       
       before do        
-        visit user_topic_path(other_user, t2)
+        visit user_topic_path(other_user, post4)
       end
       
       subject{page}

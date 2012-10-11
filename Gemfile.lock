@@ -268,8 +268,6 @@ GEM
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sqlite3 (1.3.5)
-    sqlite3 (1.3.5-x86-mingw32)
     subexec (0.2.2)
     systemu (2.5.2)
     temple (0.5.4)
@@ -334,6 +332,7 @@ DEPENDENCIES
   pg (= 0.12.2)
   rails (= 3.2.6)
   rb-notifu (= 0.0.4)
+  redis
   rmagick
   rspec-rails (= 2.11.0)
   sass-rails (= 3.2.4)
@@ -343,6 +342,5 @@ DEPENDENCIES
   sinatra
   slim
   spork (= 0.9.0)
-  sqlite3 (= 1.3.5)
   uglifier (= 1.2.3)
   will_paginate (= 3.0.3)

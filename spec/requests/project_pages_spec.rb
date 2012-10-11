@@ -4,12 +4,12 @@ describe "Project pages" do
   #subject { page }
   
   let(:user) { create_logged_in_user } 
-  
+
   describe "viewing own project" do
    
     let(:post ) { FactoryGirl.create(:post, user: user, postable: FactoryGirl.create(:project, title: "Foo", summary: "football"))  }
-    before { visit user_project_path(user, post.postable) }    
-    
+    #before { visit user_project_path(user, post.postable) }    
+    before { visit user_project_path(user, post) }  
     subject {page} 
     
     describe "shows user and project info" do
@@ -20,7 +20,7 @@ describe "Project pages" do
       it { should have_content ( 'My project reference') }
       it { should have_content ( 'My project content') }
       it { should have_link('view profile', href: user_path(user)) }
-      it { should have_link('edit project', href: edit_user_project_path(user, post.postable)) }
+      it { should have_link('edit project', href: edit_user_project_path(user, post)) }
       it { should have_link('My project reference', href: 'http://www.google.com') }
     end
     
@@ -31,8 +31,8 @@ describe "Project pages" do
     let(:other_user) { FactoryGirl.create(:user) }
     let(:post ) { FactoryGirl.create(:post, user: other_user, postable: 
     FactoryGirl.create(:project, title: "Foo", summary: "football"))  }
-    before { visit user_project_path(other_user, post.postable) }    
-    
+    #before { visit user_project_path(other_user, post.postable) }    
+    before { visit user_project_path(other_user, post) }
     subject {page} 
     
     describe "shows user and project info" do
@@ -57,18 +57,19 @@ describe "Project pages" do
               
     before do
       user.like!(liked_post)
-      visit user_project_path(other_user, liked_post.postable)
+      #visit user_project_path(other_user, liked_post.postable)
+      visit user_project_path(other_user, liked_post)
     end
     
     subject {page} 
-    
+  
     it { should have_selector('div.post_stats', text: liked_post.likes_count.to_s)}
     it "should render the list of users who like the post" do
       liked_post.likers.each do |item|
         should have_link('', href: user_path(item))
       end
     end    
-    
+   
     describe "like/unlike buttons" do
       describe "unliking a post" do  
         it "should decrement the user's liked posts count" do
@@ -92,12 +93,14 @@ describe "Project pages" do
                text: liked_post.likes_count.to_s) } 
           it { should_not have_selector('a#liker_id_' + user.id.to_s) }
         end
+       
       end  
-      
+  
       describe "liking a project" do
         before do
           user.unlike!(liked_post)
-          visit user_project_path(other_user, liked_post.postable)
+          #visit user_project_path(other_user, liked_post.postable)
+          visit user_project_path(other_user, liked_post)          
         end
         it "should increment the user's liked posts count" do
           expect do
@@ -135,17 +138,19 @@ describe "Project pages" do
                text: liked_post.likes_count.to_s) } 
           it { page.should have_selector('a#liker_id_' + user.id.to_s) }          
         end
+      
       end
+      
     end
-    
+  
     describe "shows user and project info" do
       it { should have_selector('h1', text: other_user.name) }
       it { should have_content ( liked_post.postable.title) }
       it { should have_content ( liked_post.postable.summary) }
       it { should have_link('view profile', href: user_path(other_user)) }
-    end 
+    end   
   end
-    
+   
   describe "project creation" do
     before { visit new_user_project_path(user) }
     
@@ -189,7 +194,10 @@ describe "Project pages" do
       describe "tag creation" do
         before {page.click_button "Submit project"}
          it "should create project tags" do  
-          Project.last.tag_list.should eq([ "tag1", "tag2", "tag3" ])
+          #Project.last.tag_list.should eq([ "tag1", "tag2", "tag3" ])
+          Project.last.tag_list.should include("tag1") 
+          Project.last.tag_list.should include("tag2")
+          Project.last.tag_list.should include("tag3")
         end
         it "should create post tags" do          
           Project.last.posts[0].owner_tags_on(user, :tags).should eq(Project.last.tags)
@@ -266,7 +274,8 @@ describe "Project pages" do
       let(:post) {FactoryGirl.create(:post, user: user, postable: 
           FactoryGirl.create(:project, title: "Foo", summary: "football")) }
       before do        
-        visit edit_user_project_path(user, post.postable)
+        #visit edit_user_project_path(user, post.postable)
+        visit edit_user_project_path(user, post)
       end
       
       subject {page}
@@ -308,7 +317,10 @@ describe "Project pages" do
           Project.last.summary.should eq("Ipsum lorem")
           Project.last.content.should eq("Ipsum lorem")
           Project.last.reference.should eq("Ipsum lorem")
-          Project.last.tag_list.should eq([ "tag1", "tag2", "tag3" ])                             
+          Project.last.tag_list.should include("tag1") 
+          Project.last.tag_list.should include("tag2")
+          Project.last.tag_list.should include("tag3")
+          #Project.last.tag_list.should eq([ "tag1", "tag2", "tag3" ])                             
         end        
 
         it "should update the post" do        

@@ -49,8 +49,6 @@ class ProjectsController < ApplicationController
     @post = @project_user.posts.find_by_id(params[:id])
     @project = @post.postable
     @user = @post.user  
-    #debugger
-    #p = 5  
   end 
   
   def update

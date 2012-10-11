@@ -9,7 +9,7 @@ describe "Topic pages" do
    
     let(:post ) { FactoryGirl.create(:post, user: user, postable: 
       FactoryGirl.create(:topic, title: "Foo", summary: "football"))  }
-    before { visit user_topic_path(user, post.postable) }    
+    before { visit user_topic_path(user, post) }    
     
     subject {page} 
     
@@ -21,7 +21,7 @@ describe "Topic pages" do
       it { should have_content ( 'My topic reference') }
       it { should have_content ( 'My topic content') }
       it { should have_link('view profile', href: user_path(user)) }
-      it { should have_link('edit topic', href: edit_user_topic_path(user, post.postable)) }
+      it { should have_link('edit topic', href: edit_user_topic_path(user, post)) }
       it { should have_link('My topic reference', href: 'http://www.google.com') }
     end    
   end
@@ -30,7 +30,7 @@ describe "Topic pages" do
     let(:other_user) { FactoryGirl.create(:user) }
     let(:post ) { FactoryGirl.create(:post, user: other_user, postable: 
       FactoryGirl.create(:topic, title: "Foo", summary: "football"))  }
-    before { visit user_topic_path(other_user, post.postable) }    
+    before { visit user_topic_path(other_user, post) }    
     
     subject {page} 
     
@@ -42,7 +42,7 @@ describe "Topic pages" do
       it { should have_content ( 'My topic reference') }
       it { should have_content ( 'My topic content') }
       it { should have_link('view profile', href: user_path(other_user)) }
-      it { should_not have_link('edit topic', href: edit_user_topic_path(user, post.postable)) }
+      it { should_not have_link('edit topic', href: edit_user_topic_path(user, post)) }
       it { should have_link('My topic reference', href: 'http://www.google.com') }
     end
     
@@ -56,7 +56,7 @@ describe "Topic pages" do
               
     before do
       user.like!(liked_post)
-      visit user_topic_path(other_user, liked_post.postable)
+      visit user_topic_path(other_user, liked_post)
     end
     
     subject {page}     
@@ -97,7 +97,7 @@ describe "Topic pages" do
       describe "liking a topic" do
         before do
           user.unlike!(liked_post)
-          visit user_topic_path(other_user, liked_post.postable)
+          visit user_topic_path(other_user, liked_post)
         end
         it "should increment the user's liked posts count" do
           expect do
@@ -191,7 +191,10 @@ describe "Topic pages" do
       describe "tag creation" do
         before {page.click_button "Submit topic"}
          it "should create topic tags" do  
-          Topic.last.tag_list.should eq([ "tag1", "tag2", "tag3" ])
+          Topic.last.tag_list.should include("tag1") 
+          Topic.last.tag_list.should include("tag2")  
+          Topic.last.tag_list.should include("tag3")          
+          #Topic.last.tag_list.should eq([ "tag1", "tag2", "tag3" ])
         end
         it "should create post tags" do          
           Topic.last.posts[0].owner_tags_on(user, :tags).should eq(Topic.last.tags)
@@ -269,7 +272,7 @@ describe "Topic pages" do
       let(:post) {FactoryGirl.create(:post, user: user, postable: 
           FactoryGirl.create(:topic, title: "Foo", summary: "football")) }
       before do        
-        visit edit_user_topic_path(user, post.postable)
+        visit edit_user_topic_path(user, post)
       end
       
       subject {page}
@@ -311,7 +314,10 @@ describe "Topic pages" do
           Topic.last.summary.should eq("Ipsum lorem")
           Topic.last.content.should eq("Ipsum lorem")
           Topic.last.reference.should eq("Ipsum lorem")
-          Topic.last.tag_list.should eq([ "tag1", "tag2", "tag3" ])                             
+          Topic.last.tag_list.should include("tag1") 
+          Topic.last.tag_list.should include("tag2")  
+          Topic.last.tag_list.should include("tag3")                                 
+          #Topic.last.tag_list.should eq([ "tag1", "tag2", "tag3" ])                             
         end        
 
         it "should update the post" do        
