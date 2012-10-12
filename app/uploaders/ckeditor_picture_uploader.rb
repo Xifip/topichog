@@ -7,9 +7,16 @@ class CkeditorPictureUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   # include CarrierWave::ImageScience
 
-  # Choose what kind of storage to use for this uploader:
-  storage :file
+  # Include the Sprockets helpers for Rails 3.1+ asset pipeline compatibility:
+   include Sprockets::Helpers::RailsHelper
+   include Sprockets::Helpers::IsolatedHelper
 
+  # Choose what kind of storage to use for this uploader:
+  #storage :file
+  storage :fog
+  
+  include CarrierWave::MimeTypes
+  process :set_content_type
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
@@ -55,8 +62,8 @@ class CkeditorPictureUploader < CarrierWave::Uploader::Base
   #be cached in the public directory.
   #You can work around this by setting the cache_dir in your Uploader classes to the tmp directory:
   #https://github.com/jnicklas/carrierwave/wiki/How-to%3A-Make-Carrierwave-work-on-Heroku
-  def cache_dir
-    "#{Rails.root}/tmp/uploads"
-  end
+  #def cache_dir
+  #  "#{Rails.root}/tmp/uploads"
+  #end
   
 end
