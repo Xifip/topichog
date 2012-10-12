@@ -9,8 +9,6 @@
         .span1
           = f.label :image, "Profile picture"  
         .span3        
-          %p
-            = image_tag @avatar.image_url
           %p  
             = avatar_for @user, size: 52
           %p

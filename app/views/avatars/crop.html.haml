@@ -10,6 +10,6 @@
   .span2
     = form_for @avatar do |f|
       - %w[x y w h].each do |attribute|
-        = f.text_field "crop_#{attribute}"     
+        = f.hidden_field "crop_#{attribute}"     
       = f.submit "Crop" 
   
