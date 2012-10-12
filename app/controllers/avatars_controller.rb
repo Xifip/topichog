@@ -13,9 +13,10 @@ class AvatarsController < ApplicationController
     @avatar = Avatar.find_by_id(params[:id])
     #@uploader = @avatar.image
     @user = @avatar.user
-    if @avatar.update_attributes(image: params[:avatar][:image],
-    crop_x: params[:avatar][:crop_x], crop_y: params[:avatar][:crop_y], 
-    crop_w: params[:avatar][:crop_w], crop_h: params[:avatar][:crop_h])
+    if @avatar.update_attributes(params[:avatar])
+#    if @avatar.update_attributes(image: params[:avatar][:image],
+#    crop_x: params[:avatar][:crop_x], crop_y: params[:avatar][:crop_y], 
+#    crop_w: params[:avatar][:crop_w], crop_h: params[:avatar][:crop_h])
       if params[:avatar][:image].present?
           render :crop
       else          

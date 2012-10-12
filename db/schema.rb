@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121010091433) do
+ActiveRecord::Schema.define(:version => 20121011155313) do
 
   create_table "avatars", :force => true do |t|
     t.integer  "user_id"
@@ -50,8 +50,9 @@ ActiveRecord::Schema.define(:version => 20121010091433) do
   create_table "paintings", :force => true do |t|
     t.string   "name"
     t.string   "image"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.boolean  "image_processed"
   end
 
   create_table "posts", :force => true do |t|

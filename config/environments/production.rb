@@ -86,4 +86,8 @@ TopicHog::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+  
+  # heroku instructions for using resis https://devcenter.heroku.com/articles/redistogo
+  ENV["REDISTOGO_URL"] = 'redis://redistogo:33ff2a95d8c697b3f6c9d02922af5308@ray.redistogo.com:9459/' 
+  
 end

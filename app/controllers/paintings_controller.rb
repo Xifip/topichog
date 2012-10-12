@@ -1,7 +1,6 @@
 class PaintingsController < ApplicationController
   def index
     @paintings = Painting.all
-    #debugger
     @uploader = Painting.new.image
     @uploader.success_action_redirect = new_painting_url
   end
@@ -11,13 +10,11 @@ class PaintingsController < ApplicationController
   end
 
   def new
-    #debugger
+  
     @painting = Painting.new(key: params[:key])
-    t = 0
   end
 
   def create
-  debugger
     @painting = Painting.new(params[:painting])
     if @painting.save
       redirect_to paintings_url, notice: "Painting was successfully created."
@@ -31,7 +28,6 @@ class PaintingsController < ApplicationController
   end
 
   def update
-    #debugger
     @painting = Painting.find(params[:id])
     if @painting.update_attributes(params[:painting])
       redirect_to paintings_url, notice: "Painting was successfully updated."
