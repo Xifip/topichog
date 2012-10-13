@@ -1,0 +1,37 @@
+= provide(:title, @user.name + ' | ' + @projectdraft.title)
+.row
+  %aside.span4
+    %section  
+      = render 'shared/user_info' 
+    %section
+      = render 'shared/stats'   
+    = render partial: 'users/follow_form' if user_signed_in? 
+    %section.my-hero-unit
+      %h4 Links and references:
+      .ref 
+        =raw @projectdraft.reference 
+  .span8  
+    .row.my-hero-unit
+      .span8
+        .row   
+          %span.span6
+            %h1         
+              =@projectdraft.title
+          %span
+            = link_to "publish project", publish_user_projectdraft_path(@user, @projectdraft), class: "btn btn-large btn-primary" if @user == current_user
+          %span
+            = link_to "edit draft project", edit_user_projectdraft_path(@user, @projectdraft) if @user == current_user
+        .row
+          .span1
+            %h4 Summary: 
+          .span6  
+            =@projectdraft.summary
+        .row  
+          %p.span8
+            =render 'shared/tags'       
+    .row
+      .span8                 
+        .row
+          .span8
+            =raw @projectdraft.content
+

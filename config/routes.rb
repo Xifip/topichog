@@ -29,15 +29,22 @@ TopicHog::Application.routes.draw do
       end
     end
 
-    resources :projects, :only => [:create, :show, :new, :edit] 
-    resources :projects, :only => [ :update] , as: :update_projects
+    resources :projects, :only => [:show]
+    #resources :projects, :only => [:create, :show, :new, :edit] 
+    #resources :projects, :only => [ :update] , as: :update_projects
+    resources :projectdrafts, :only => [:create, :show, :new, :edit] do
+     member do
+        get :publish
+      end
+    end
+    resources :projectdrafts, :only => [ :update] , as: :update_projectdrafts
     resources :pposts, :only => [:create, :show, :new] 
     resources :tposts, :only => [:create, :show, :new] 
     resources :topics, :only => [:create, :show, :new, :edit]     
     resources :topics, :only => [ :update] , as: :update_topics
   end
-
-  resources :paintings
+  #demo of direct uploading in background process as per railscast
+  #resources :paintings
   resources :projects, only: [:destroy]
   resources :pposts, only: [:destroy]
   resources :tposts, only: [:destroy]

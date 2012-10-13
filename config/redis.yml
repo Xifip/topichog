@@ -5,4 +5,4 @@ development:
 production:
   host: URI.parse(ENV["REDISTOGO_URL"]).host
   port: URI.parse(ENV["REDISTOGO_URL"]).post
-  password: URI.parse(ENV["REDISTOGO_URL"]).password
+  password: URI.parse(ENV["REDISTOGO_URL"]).password 

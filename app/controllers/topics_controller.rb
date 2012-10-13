@@ -4,6 +4,7 @@ class TopicsController < ApplicationController
   
   def create  
     @topic = Topic.new(params[:topic])
+    #debugger
     @post = current_user.posts.build    
     if @topic.save
       @post.postable = @topic
@@ -65,7 +66,7 @@ class TopicsController < ApplicationController
                                    summary: params[:topic][:summary],
                                    reference: params[:topic][:reference],
                                    content: params[:topic][:content],
-                                   tag_list: params[:topic][:tag_list],
+                                   tag_list: params[:topic][:tag_list]
                                    )
       @post.postable = @topic 
       flash[:notice] = "Successfully updated topic."

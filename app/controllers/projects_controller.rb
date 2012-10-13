@@ -2,10 +2,13 @@ class ProjectsController < ApplicationController
   before_filter :authenticate_user!, only: [:create, :destroy]
   before_filter :correct_user, only: [:create, :destroy, :edit]
 
+=begin
   def create
-    @project = Project.new(params[:project])
+    @project = Project.new(params[:project])    
     @post = current_user.posts.build    
     if @project.save
+      #debugger
+      @project.projectdraft.update_attributes(params[:project])
       @post.postable = @project
       if @post.save
         @post.user.tag(@post, :with =>  params[:project][:tag_list], :on => :tags)
@@ -17,12 +20,13 @@ class ProjectsController < ApplicationController
         render :new 
       end
     else
-      @user = current_user   
+      @user = current_user  
+      #debugger 
       render :new 
     end
   end
   
-  def new
+  def new   
     @user = User.find_by_id(params[:user_id])
     if current_user != @user
       flash[:error] = "You can't create a project for another user!"
@@ -33,7 +37,7 @@ class ProjectsController < ApplicationController
       @post.postable = @project
     end 
   end
-  
+=end  
   def show 
     @project_user = User.find_by_id(params[:user_id]) 
     @post = @project_user.posts.find_by_id(params[:id])
@@ -43,7 +47,7 @@ class ProjectsController < ApplicationController
     @likes_count =  @post.likes_count
     @tags_item = @post.owner_tags_on(@user, :tags)
    end
-   
+=begin   
   def edit
     @project_user = User.find_by_id(params[:user_id]) 
     @post = @project_user.posts.find_by_id(params[:id])
@@ -69,7 +73,7 @@ class ProjectsController < ApplicationController
       render :action => 'edit'
     end                                   
   end
-  
+=end  
   def destroy
 
   end 

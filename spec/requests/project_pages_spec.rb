@@ -150,7 +150,7 @@ describe "Project pages" do
       it { should have_link('view profile', href: user_path(other_user)) }
     end   
   end
-   
+=begin   
   describe "project creation" do
     before { visit new_user_project_path(user) }
     
@@ -205,7 +205,7 @@ describe "Project pages" do
       end  
     end
   end
-  
+=end  
   describe "project destruction" do
     describe "as incorrect user" do
     
@@ -267,7 +267,7 @@ describe "Project pages" do
     end
   end
  
- 
+=begin 
   describe "project editing" do 
 
     describe "as correct user" do
@@ -334,4 +334,5 @@ describe "Project pages" do
       end
     end 
   end  
+=end  
 end

@@ -18,8 +18,11 @@ describe Project do
   it { should respond_to(:content) }
   it { should respond_to(:reference) }
   it { should respond_to(:tag_list) }
-  it { should == @post.postable }
-  
+  it { should respond_to(:projectdraft) }
+  it { should == @post.postable }  
+
+
+    
   it "should be valid" do
     should be_valid
    end
@@ -61,4 +64,5 @@ describe Project do
      end
     it { should_not be_valid }
   end
+  
 end
