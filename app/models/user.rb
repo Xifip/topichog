@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   
   has_many :posts, dependent: :destroy
   has_many :projectdrafts, dependent: :destroy
+  has_many :topicdrafts, dependent: :destroy  
   has_one :profile, dependent: :destroy
   has_one :avatar, dependent: :destroy
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy

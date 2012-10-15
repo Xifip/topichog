@@ -6,19 +6,19 @@
   - if liked_feed_item.postable_type == "Ppost"
     = link_to liked_feed_item.postable.title, 
         user_ppost_path(liked_feed_item.user.id, 
-        liked_feed_item.id), id: "ppost_link_#{liked_feed_item.id}"
+        liked_feed_item.postable), id: "ppost_link_#{liked_feed_item.id}"
   - if liked_feed_item.postable_type == "Tpost"   
     = link_to liked_feed_item.postable.title, 
       user_tpost_path(liked_feed_item.user.id, 
-      liked_feed_item.id), id: "tpost_link_#{liked_feed_item.id}"
+      liked_feed_item.postable), id: "tpost_link_#{liked_feed_item.id}"
   - if liked_feed_item.postable_type == "Project"
     = link_to liked_feed_item.postable.title,
       user_project_path(liked_feed_item.user.id, 
-      liked_feed_item.id), id: "project_link_#{liked_feed_item.id}"
+      liked_feed_item.postable), id: "project_link_#{liked_feed_item.id}"
   - if liked_feed_item.postable_type == "Topic"   
     = link_to liked_feed_item.postable.title, 
       user_topic_path(liked_feed_item.user.id, 
-      liked_feed_item.id), id: "topic_link_#{liked_feed_item.id}"  
+      liked_feed_item.postable), id: "topic_link_#{liked_feed_item.id}"  
   %span.summary= liked_feed_item.postable.summary
   %span.timestamp
     Posted #{time_ago_in_words(liked_feed_item.created_at)} ago

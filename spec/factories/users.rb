@@ -40,13 +40,20 @@ FactoryGirl.define do
   
   factory :topic do
     title "Lorem ipsum"
-    summary "My rails project" 
+    summary "My rails topic" 
     reference "<a href='http://www.google.com'>My topic reference</a>"  
     content "<div>My topic content</div>"       
     tag_list "tag1, tag2, tag3"
   end
   
-  
+  factory :topicdraft do
+    title "Lorem ipsum"
+    summary "My rails topic" 
+    reference "<a href='http://www.google.com'>My topic reference</a>"  
+    content "<div>My topic content</div>"   
+    tag_list "tag1, tag2, tag3"
+    user
+  end  
   
   factory :tpost do
     title "Lorem ipsum"

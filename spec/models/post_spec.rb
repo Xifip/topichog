@@ -76,9 +76,10 @@ describe Post do
   describe "tags" do
 
     it { should be_valid }
+
     it "should have the right tags" do   
       @post.owner_tags_on(nil, :tags).each_with_index do |tag, n|
-        topic.tag_list[n].should == tag.name
+        topic.tag_list.should include tag.name
       end     
     end
     

@@ -76,7 +76,7 @@ describe "Projectdraft pages" do
   
   describe "viewing own projectdraft" do
    
-    let(:projectdraft ) { FactoryGirl.create(:projectdraft, title: "Foo", summary: "football") }
+    let(:projectdraft ) { FactoryGirl.create(:projectdraft, title: "Foo", summary: "football", user: user) }
   
     before { visit user_projectdraft_path(user, projectdraft) }  
     subject {page} 
@@ -159,9 +159,12 @@ describe "Projectdraft pages" do
         it "draft is not ahead of published" do
           Projectdraft.last.draft_ahead.should eq false
         end
-        it "should create post tags" do          
-          Project.last.posts[0].owner_tags_on(user, :tags).should eq(Project.last.tags)
-        end
+
+        it "should create post tags" do   
+          Project.last.posts[0].owner_tags_on(user, :tags).each_with_index do |tag, n|
+            Project.last.tag_list.should include tag.name
+          end     
+        end         
         it "should have the right title" do
          Project.last.title.should eq projectdraft.title
         end
@@ -216,9 +219,12 @@ describe "Projectdraft pages" do
         it "draft is not ahead of published" do
           Projectdraft.last.draft_ahead.should eq false
         end
-        it "should create post tags" do          
-          Project.last.posts[0].owner_tags_on(user, :tags).should eq(Project.last.tags)
-        end
+
+        it "should create post tags" do   
+          Project.last.posts[0].owner_tags_on(user, :tags).each_with_index do |tag, n|
+            Project.last.tag_list.should include tag.name
+          end     
+        end        
         it "should have the right title" do
          Project.last.title.should eq projectdraft.title
         end

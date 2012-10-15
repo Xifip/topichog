@@ -3,6 +3,7 @@ class PostsController < ApplicationController
   before_filter :correct_user, only: :destroy
   
   def index  
+
     tag_cloud
     @tag_filter =  [params[:tag1]||'',params[:tag2]||'',params[:tag3]||'',
                                            params[:tag4]||'',params[:tag5]||'']

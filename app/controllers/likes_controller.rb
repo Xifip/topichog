@@ -10,16 +10,16 @@ class LikesController < ApplicationController
     respond_to do |format|
       format.html {
         if @post.postable_type == "Project"
-          redirect_to user_project_path(@post.user, @post)
+          redirect_to user_project_path(@post.user, @post.postable)
         end
         if @post.postable_type == "Topic"
-          redirect_to user_topic_path(@post.user, @post)
+          redirect_to user_topic_path(@post.user, @post.postable)
         end
         if @post.postable_type == "Tpost"
-          redirect_to user_tpost_path(@post.user, @post)
+          redirect_to user_tpost_path(@post.user, @post.postable)
         end
         if @post.postable_type == "Ppost"
-          redirect_to user_ppost_path(@post.user, @post)
+          redirect_to user_ppost_path(@post.user, @post.postable)
         end
       }
       format.js
@@ -35,16 +35,16 @@ class LikesController < ApplicationController
     respond_to do |format|
       format.html {
         if @post.postable_type == "Project"
-          redirect_to user_project_path(@post.user, @post)
+          redirect_to user_project_path(@post.user, @post.postable)
         end
         if @post.postable_type == "Topic"
-          redirect_to user_topic_path(@post.user, @post)
+          redirect_to user_topic_path(@post.user, @post.postable)
         end
         if @post.postable_type == "Tpost"
-          redirect_to user_tpost_path(@post.user, @post)
+          redirect_to user_tpost_path(@post.user, @post.postable)
         end
         if @post.postable_type == "Ppost"
-          redirect_to user_ppost_path(@post.user, @post)
+          redirect_to user_ppost_path(@post.user, @post.postable)
         end
       }
       format.js

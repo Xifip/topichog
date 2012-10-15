@@ -27,6 +27,13 @@ describe "User pages" do
     end
   end
 
+      before do
+        FactoryGirl.create(:post, user: user, 
+        postable: FactoryGirl.create(:project, title: "Foo", summary: "football",
+        projectdraft: FactoryGirl.create(:projectdraft, title: "Foo", 
+          summary: "football", user: user)))
+        visit user_path(user)
+      end
   
   describe "profile page with posts" do 
     
@@ -34,16 +41,24 @@ describe "User pages" do
     
     let(:profile) { FactoryGirl.create(:profile, user: user) }
     
-    let!(:p1) { FactoryGirl.create(:ppost, title: "project1", summary: "football") }
+    let!(:p1) { FactoryGirl.create(:project, title: "project1", summary: "football",
+        projectdraft: FactoryGirl.create(:projectdraft, title: "Foo", 
+          summary: "football", user: user)) }
     let!(:post1) { FactoryGirl.create(:post, user: user, postable: p1) }
     
-    let!(:p2) { FactoryGirl.create(:project, title: "project2", summary: "barley") }
+    let!(:p2) { FactoryGirl.create(:project, title: "project2", summary: "barley",
+        projectdraft: FactoryGirl.create(:projectdraft, title: "Foo", 
+          summary: "football", user: user)) }
     let!(:post2) { FactoryGirl.create(:post, user: user, postable: p2) }
     
-    let!(:t1) { FactoryGirl.create(:tpost, title: "topic1", summary: "football") }
+    let!(:t1) { FactoryGirl.create(:topic, title: "topic1", summary: "football",
+        topicdraft: FactoryGirl.create(:topicdraft, title: "Foo", 
+          summary: "football", user: user)) }
     let!(:post3) { FactoryGirl.create(:post, user: user, postable: t1) }
     
-    let!(:t2) { FactoryGirl.create(:topic, title: "topic2", summary: "barley") }
+    let!(:t2) { FactoryGirl.create(:topic, title: "topic2", summary: "barley",
+        topicdraft: FactoryGirl.create(:topicdraft, title: "Foo", 
+          summary: "football", user: user)) }
     let!(:post4) { FactoryGirl.create(:post, user: user, postable: t2) }
     
   
@@ -219,7 +234,7 @@ describe "User pages" do
       
       before do  
         #debugger      
-        visit user_project_path(other_user, post3)
+        visit user_project_path(other_user, post3.postable)
       end
       
       subject{page}
@@ -243,7 +258,7 @@ describe "User pages" do
       let!(:post4) { FactoryGirl.create(:post, user: other_user, postable: t2) }
       
       before do        
-        visit user_topic_path(other_user, post4)
+        visit user_topic_path(other_user, post4.postable)
       end
       
       subject{page}

@@ -1,4 +1,4 @@
-= provide(:title, @user.name + ' | ' + @projectdraft.title + ' draft')
+= provide(:title, @user.name + ' | ' + @topicdraft.title + ' draft')
 .row
   %aside.span4
     %section  
@@ -9,23 +9,23 @@
     %section.my-hero-unit
       %h4 Links and references:
       .ref 
-        =raw @projectdraft.reference 
+        =raw @topicdraft.reference 
   .span8  
     .row.my-hero-unit
       .span8
         .row   
           %span.span6
             %h1         
-              =@projectdraft.title
+              =@topicdraft.title
           %span
-            = link_to "publish project", publish_user_projectdraft_path(@user, @projectdraft), class: "btn btn-large btn-primary" if @user == current_user
+            = link_to "publish topic", publish_user_topicdraft_path(@user, @topicdraft), class: "btn btn-large btn-primary" if @user == current_user
           %span
-            = link_to "edit draft project", edit_user_projectdraft_path(@user, @projectdraft) if @user == current_user
+            = link_to "edit draft topic", edit_user_topicdraft_path(@user, @topicdraft) if @user == current_user
         .row
           .span1
             %h4 Summary: 
           .span6  
-            =@projectdraft.summary
+            =@topicdraft.summary
         .row  
           %p.span8
             =render 'shared/tags'       
@@ -33,5 +33,5 @@
       .span8                 
         .row
           .span8
-            =raw @projectdraft.content
+            =raw @topicdraft.content
 

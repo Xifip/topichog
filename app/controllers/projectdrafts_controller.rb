@@ -3,6 +3,7 @@ class ProjectdraftsController < ApplicationController
   before_filter :correct_user, only: [:create, :destroy, :edit, :show]
   
   def create  
+  
     @projectdraft = current_user.projectdrafts.new(params[:projectdraft])
     @projectdraft.draft_ahead = true
       # note update_attributes Updates this resource with all the attributes 
@@ -19,14 +20,12 @@ class ProjectdraftsController < ApplicationController
   
   def edit
     @user = User.find_by_id(params[:user_id]) 
-    @projectdraft = Projectdraft.find_by_id(params[:id])
-    #@topic = @post.postable
-    #@user = @post.user  
+    @projectdraft = @user.projectdrafts.find_by_id(params[:id])
   end 
 
   def update
     @user = User.find_by_id(params[:user_id]) 
-    @projectdraft = Projectdraft.find_by_id(params[:id])    
+    @projectdraft = @user.projectdrafts.find_by_id(params[:id])    
     
     if @projectdraft.update_attributes(title: params[:projectdraft][:title],
                                    summary: params[:projectdraft][:summary],
@@ -46,7 +45,7 @@ class ProjectdraftsController < ApplicationController
   def show 
 
     @user = User.find_by_id(params[:user_id]) 
-    @projectdraft = Projectdraft.find_by_id(params[:id])
+    @projectdraft = @user.projectdrafts.find_by_id(params[:id])
 
   end
   
@@ -61,9 +60,8 @@ class ProjectdraftsController < ApplicationController
   end
   
   def publish
-   #debugger
    @user = User.find_by_id(params[:user_id]) 
-   @projectdraft = Projectdraft.find_by_id(params[:id])
+   @projectdraft = @user.projectdrafts.find_by_id(params[:id])
    @projectdraft.update_attributes(draft_ahead: false)
    if @projectdraft.project == nil
     #create project and post   

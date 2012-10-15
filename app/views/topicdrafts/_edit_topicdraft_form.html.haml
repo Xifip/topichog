@@ -1,7 +1,7 @@
-= form_for(@topic, :url => user_update_topic_path(@user, @post), :html => { :method => "put" }) do |f|
+= form_for(topicdraft, :url => user_update_topicdraft_path(@user, topicdraft), :html => { :method => "put" }) do |f|
   = render partial: 'shared/error_messages', locals: {object: f.object}
   .field
-    %h2.span8 Edit Topic
+    %h2.span8 New Topic
     %p.span8
       .span1
         = f.label :title, "Title"
@@ -25,4 +25,4 @@
     %p.span8   
       = f.text_area :content, :id =>'content_textarea', placeholder: "Topic content..."
     %p.span8  
-      = f.submit "Submit topic", class: "btn btn-large btn-primary"
+      = f.submit "Save draft topic", class: "btn btn-large btn-primary"

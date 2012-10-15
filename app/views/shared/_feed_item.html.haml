@@ -5,13 +5,13 @@
       = link_to feed_item.user.name, feed_item.user
     %span.title
       - if feed_item.postable_type == "Tpost"
-        = link_to feed_item.postable.title, user_tpost_path(feed_item.user.id, feed_item.id), id: "feed_topic_link_#{feed_item.id}"
+        = link_to feed_item.postable.title, user_tpost_path(feed_item.user.id, feed_item.postable), id: "feed_topic_link_#{feed_item.id}"
       - if feed_item.postable_type == "Ppost"
-        = link_to feed_item.postable.title, user_ppost_path(feed_item.user.id, feed_item.id), id: "feed_project_link_#{feed_item.id}"
+        = link_to feed_item.postable.title, user_ppost_path(feed_item.user.id, feed_item.postable), id: "feed_project_link_#{feed_item.id}"
       - if feed_item.postable_type == "Topic"
-        = link_to feed_item.postable.title, user_topic_path(feed_item.user.id, feed_item.id), id: "feed_topic_link_#{feed_item.id}"
+        = link_to feed_item.postable.title, user_topic_path(feed_item.user.id, feed_item.postable), id: "feed_topic_link_#{feed_item.id}"
       - if feed_item.postable_type == "Project"
-        = link_to feed_item.postable.title, user_project_path(feed_item.user.id, feed_item.id), id: "feed_project_link_#{feed_item.id}"
+        = link_to feed_item.postable.title, user_project_path(feed_item.user.id, feed_item.postable), id: "feed_project_link_#{feed_item.id}"
     %span.summary= feed_item.postable.summary
   %span  
     %span.timestamp

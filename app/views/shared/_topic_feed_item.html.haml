@@ -3,7 +3,7 @@
   %span.user
     = link_to topic_feed_item.user.name, topic_feed_item.user
   %span.title
-    = link_to topic_feed_item.postable.title, user_topic_path(topic_feed_item.user.id, topic_feed_item.id), id: "topic_link_#{topic_feed_item.id}"
+    = link_to topic_feed_item.postable.title, user_topic_path(topic_feed_item.user.id, topic_feed_item.postable), id: "topic_link_#{topic_feed_item.id}"
   %span.summary= topic_feed_item.postable.summary
   %span.timestamp
     Posted #{time_ago_in_words(topic_feed_item.created_at)} ago.

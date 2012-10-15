@@ -7,9 +7,14 @@ describe "Project pages" do
 
   describe "viewing own project" do
    
-    let(:post ) { FactoryGirl.create(:post, user: user, postable: FactoryGirl.create(:project, title: "Foo", summary: "football"))  }
-    #before { visit user_project_path(user, post.postable) }    
-    before { visit user_project_path(user, post) }  
+    let(:post ) { FactoryGirl.create(:post, user: user, 
+      postable: FactoryGirl.create(:project, title: "Foo", summary: "football",
+      projectdraft: FactoryGirl.create(:projectdraft, title: "Foo", 
+          summary: "football", user: user))) }
+    before do
+     #debugger
+     visit user_project_path(user, post.postable) 
+    end
     subject {page} 
     
     describe "shows user and project info" do
@@ -20,7 +25,7 @@ describe "Project pages" do
       it { should have_content ( 'My project reference') }
       it { should have_content ( 'My project content') }
       it { should have_link('view profile', href: user_path(user)) }
-      it { should have_link('edit project', href: edit_user_project_path(user, post)) }
+      it { should have_link('edit project', href: edit_user_projectdraft_path(user, post.postable.projectdraft)) }
       it { should have_link('My project reference', href: 'http://www.google.com') }
     end
     
@@ -31,8 +36,7 @@ describe "Project pages" do
     let(:other_user) { FactoryGirl.create(:user) }
     let(:post ) { FactoryGirl.create(:post, user: other_user, postable: 
     FactoryGirl.create(:project, title: "Foo", summary: "football"))  }
-    #before { visit user_project_path(other_user, post.postable) }    
-    before { visit user_project_path(other_user, post) }
+    before { visit user_project_path(other_user, post.postable) }
     subject {page} 
     
     describe "shows user and project info" do
@@ -43,7 +47,7 @@ describe "Project pages" do
       it { should have_content ( 'My project reference') }
       it { should have_content ( 'My project content') }
       it { should have_link('view profile', href: user_path(other_user)) }
-      it { should_not have_link('edit project', href: edit_user_project_path(user, post.postable)) }
+      it { should_not have_link('edit project', href: edit_user_projectdraft_path(other_user, post)) }
       it { should have_link('My project reference', href: 'http://www.google.com') }
     end
     
@@ -57,8 +61,7 @@ describe "Project pages" do
               
     before do
       user.like!(liked_post)
-      #visit user_project_path(other_user, liked_post.postable)
-      visit user_project_path(other_user, liked_post)
+      visit user_project_path(other_user, liked_post.postable)
     end
     
     subject {page} 
@@ -99,8 +102,7 @@ describe "Project pages" do
       describe "liking a project" do
         before do
           user.unlike!(liked_post)
-          #visit user_project_path(other_user, liked_post.postable)
-          visit user_project_path(other_user, liked_post)          
+          visit user_project_path(other_user, liked_post.postable)          
         end
         it "should increment the user's liked posts count" do
           expect do
@@ -150,62 +152,7 @@ describe "Project pages" do
       it { should have_link('view profile', href: user_path(other_user)) }
     end   
   end
-=begin   
-  describe "project creation" do
-    before { visit new_user_project_path(user) }
-    
-    subject {page}
-    
-    describe "shows user info" do
-      it { should have_selector('title', text: full_title(user.name + ' | new project')) }
-      it { should have_selector('h1', text: user.name) }
-    end
-    
-    describe "with invalid information" do
-      it {page.should have_content "#{user.name}"}
-      it {page.should have_content "New Project"}
-     
-      it "should not create a project" do
-        expect { page.click_button "Submit project" }.to_not change(Post, :count)
-        expect { page.click_button "Submit project" }.to_not change(Project, :count)
-      end
-      
-      describe "error messages" do
-        before { page.click_button "Submit project" }
-        it { page.should have_content('error') }
-      end      
-    end
-  
-    describe "with valid information" do
-      before do
-         page.fill_in 'Title', with: "Lorem ipsum"
-         page.fill_in 'Summary', with: "Ipsum lorem"
-         page.fill_in 'content_textarea', with: "Ipsum lorem"
-         page.fill_in 'reference_textarea', with: "Ipsum lorem"
-         page.fill_in 'Tags', with: "tag1, tag2, tag3"
-      end
-      it "should create a project" do        
-        expect { page.click_button "Submit project" }.to change(Project, :count).by(1)
-      end
-      it "should create a post" do
-        expect { page.click_button "Submit project" }.to change(Post, :count).by(1)        
-      end
-      
-      describe "tag creation" do
-        before {page.click_button "Submit project"}
-         it "should create project tags" do  
-          #Project.last.tag_list.should eq([ "tag1", "tag2", "tag3" ])
-          Project.last.tag_list.should include("tag1") 
-          Project.last.tag_list.should include("tag2")
-          Project.last.tag_list.should include("tag3")
-        end
-        it "should create post tags" do          
-          Project.last.posts[0].owner_tags_on(user, :tags).should eq(Project.last.tags)
-        end
-      end  
-    end
-  end
-=end  
+
   describe "project destruction" do
     describe "as incorrect user" do
     
@@ -225,7 +172,10 @@ describe "Project pages" do
 
     describe "as correct user" do
       before do
-        FactoryGirl.create(:post, user: user, postable: FactoryGirl.create(:project, title: "Foo", summary: "football")) 
+        FactoryGirl.create(:post, user: user, 
+        postable: FactoryGirl.create(:project, title: "Foo", summary: "football",
+        projectdraft: FactoryGirl.create(:projectdraft, title: "Foo", 
+          summary: "football", user: user)))
         visit user_path(user)
       end
       
@@ -239,6 +189,10 @@ describe "Project pages" do
       
       it "should delete a project" do        
         expect { click_link "delete" }.to change(Project, :count).by(-1)
+      end
+      
+      it "should delete a projectdraft" do        
+        expect { click_link "delete" }.to change(Projectdraft, :count).by(-1)
       end
       
       it "should not delete a topic" do        
@@ -265,74 +219,6 @@ describe "Project pages" do
       end  
             
     end
-  end
- 
-=begin 
-  describe "project editing" do 
-
-    describe "as correct user" do
-      let(:post) {FactoryGirl.create(:post, user: user, postable: 
-          FactoryGirl.create(:project, title: "Foo", summary: "football")) }
-      before do        
-        #visit edit_user_project_path(user, post.postable)
-        visit edit_user_project_path(user, post)
-      end
-      
-      subject {page}
-      
-      describe "shows project info" do
-        it { should have_selector('title', text: full_title(user.name + ' | edit ' + post.postable.title)) }
-        it { should have_selector('input', value: post.postable.title) }
-        it { should have_selector('input', value: post.postable.summary) }
-        it { should have_selector('input', value: post.postable.reference) }
-        it { should have_selector('input', value: post.postable.content) }                
-      end
-      
-      describe "with invalid information" do
-        before do
-           page.fill_in 'Title', with: ""
-           page.click_button "Submit project"
-        end
-       
-        it "should not update the project" do
-          Project.last.title.should_not eq(" ")
-        end
-        
-        describe "error messages" do
-          it { page.should have_content('error') }
-        end      
-      end
-    
-      describe "with valid information" do
-        before do
-           page.fill_in 'Title', with: "Lorem ipsum"
-           page.fill_in 'Summary', with: "Ipsum lorem"
-           page.fill_in 'content_textarea', with: "Ipsum lorem"
-           page.fill_in 'reference_textarea', with: "Ipsum lorem"
-           page.fill_in 'Tags', with: "tag1, tag2, tag3"
-           page.click_button "Submit project"
-        end
-        it "should update the project" do        
-          Project.last.title.should eq("Lorem ipsum")
-          Project.last.summary.should eq("Ipsum lorem")
-          Project.last.content.should eq("Ipsum lorem")
-          Project.last.reference.should eq("Ipsum lorem")
-          Project.last.tag_list.should include("tag1") 
-          Project.last.tag_list.should include("tag2")
-          Project.last.tag_list.should include("tag3")
-          #Project.last.tag_list.should eq([ "tag1", "tag2", "tag3" ])                             
-        end        
-
-        it "should update the post" do        
-          Project.last.title.should eq(Post.last.postable.title)
-          Project.last.summary.should eq(Post.last.postable.summary)
-          Project.last.content.should eq(Post.last.postable.content)
-          Project.last.reference.should eq(Post.last.postable.reference)
-          Project.last.tags.should eq(Post.last.postable.tags)                              
-        end   
-
-      end
-    end 
-  end  
-=end  
+  end 
+  
 end

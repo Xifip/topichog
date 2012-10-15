@@ -21,9 +21,9 @@
       %h3.well.well-small 
         =link_to 'Explore topics and projects', posts_path
       #popular_tags.span8 
-        - tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class|
-          = link_to tag.name, post_path(tag.name), :class => 'label' 
-            
+        -tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class|
+          = link_to tag.name, post_path(tag.name), :class => 'label', method: :GET      
+      .spacer200      
 - else
   .center.hero-unit
     %h1 Welcome to TopicHog Beta

@@ -26,9 +26,10 @@ describe "Static pages" do
       it { should_not have_selector 'title', text: '| Home' }
       it { should_not have_link(user.name, href: user_path(user)) }
       it { should_not have_link("Find people", href: users_path) }       
-      it { should_not have_link("new topic", href: new_user_topic_path(user)) }
+      it { should_not have_link("new topic", 
+                                 href: new_user_topicdraft_path(user)) }
       it { should_not have_link("new project", 
-                                 href: new_user_project_path(user)) }
+                                 href: new_user_projectdraft_path(user)) }
       it { should_not have_link("Edit account", 
                             href: edit_user_registration_path) }                                 
       it { should_not have_link("Logout", 
@@ -59,8 +60,8 @@ describe "Static pages" do
       it { should have_link("Find people", href: users_path) }              
       it { should have_link('view profile', href: user_path(user)) }
       it { should have_link(user.name, href: user_path(user)) }      
-      it { should have_link("new topic", href: new_user_topic_path(user)) }
-      it { should have_link("new project", href: new_user_project_path(user)) }
+      it { should have_link("new topic", href: new_user_topicdraft_path(user)) }
+      it { should have_link("new project", href: new_user_projectdraft_path(user)) }
       it { should have_link("Edit account", 
                             href: edit_user_registration_path) }                                 
       it { should have_link("Logout", 

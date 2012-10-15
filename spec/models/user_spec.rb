@@ -122,6 +122,7 @@ describe User do
     it { should respond_to(:liking?) }
     it { should respond_to(:like!) }
     it { should respond_to(:profile) }
+
   end
 
  describe "profile assossiation" do

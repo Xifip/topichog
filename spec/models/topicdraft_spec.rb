@@ -1,22 +1,22 @@
 require 'spec_helper'
 require 'debugger'
 
-describe Projectdraft do
+describe Topicdraft do
   let(:user) { FactoryGirl.create(:user) }
   
   before do
-     @projectdraft = user.projectdrafts.build      
-     @projectdraft.title = "Lorem ipsum"
-     @projectdraft.summary = "My rails project" 
-     @projectdraft.tag_list = "tag1, tag2"  
-     @projectdraft.draft_ahead = true
-     @projectdraft.save!
+     @topicdraft = user.topicdrafts.build      
+     @topicdraft.title = "Lorem ipsum"
+     @topicdraft.summary = "My rails topic" 
+     @topicdraft.tag_list = "tag1, tag2"  
+     @topicdraft.draft_ahead = true
+     @topicdraft.save!
     
   end
   
-  subject { @projectdraft }
+  subject { @topicdraft }
   it { should respond_to(:title) }
-  it { should respond_to(:project_id) }
+  it { should respond_to(:topic_id) }
   it { should respond_to(:user_id) }
   it { should respond_to(:summary) }
   it { should respond_to(:content) }
@@ -29,44 +29,44 @@ describe Projectdraft do
    end
 
   describe "with no user_id" do
-    before { @projectdraft.user_id = nil }
+    before { @topicdraft.user_id = nil }
     it { should_not be_valid }
   end
 
   describe "with blank content" do
-    before { @projectdraft.content = " " }
+    before { @topicdraft.content = " " }
     it { should be_valid }
   end
   
   describe "with blank reference" do
-    before { @projectdraft.reference = " " }
+    before { @topicdraft.reference = " " }
     it { should be_valid }
   end   
   
   describe "with blank title" do
-    before { @projectdraft.title = " " }
+    before { @topicdraft.title = " " }
     it { should_not be_valid }
   end
   
   describe "with title that is too long" do
-    before { @projectdraft.title = "a" * 31 }
+    before { @topicdraft.title = "a" * 31 }
     it { should_not be_valid }
   end
   
   describe "with blank summary" do
-    before { @projectdraft.summary = " " }
+    before { @topicdraft.summary = " " }
     it { should_not be_valid }
   end
   
   describe "with summary that is too long" do
-    before { @projectdraft.summary = "a" * 141 }
+    before { @topicdraft.summary = "a" * 141 }
     it { should_not be_valid }
   end
   
   describe "with to few tags" do
     before do       
-       @projectdraft.tag_list = "tag1"
-       @projectdraft.save
+       @topicdraft.tag_list = "tag1"
+       @topicdraft.save
      end
     it { should_not be_valid }
   end

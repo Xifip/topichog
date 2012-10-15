@@ -4,43 +4,99 @@ describe "Authentication" do
   describe "authorization" do
     describe "for other users" do
     
-    let(:user) { create_logged_in_user } 
-    let(:other_user) { FactoryGirl.create(:user) }
+      let(:user) { create_logged_in_user } 
+      let(:other_user) { FactoryGirl.create(:user) }
     
-     describe "in the Projects controller" do
-      let(:post ) { FactoryGirl.create(:post, user: other_user, postable: 
-        FactoryGirl.create(:project, title: "Foo", summary: "football"))  }
+      describe "in the Projectdrafts controller" do
+     # let(:post ) { FactoryGirl.create(:post, user: other_user, postable: 
+     #   FactoryGirl.create(:project, projectdraft: 
+     #   FactoryGirl.create(:projectdraft, user: other_user, 
+     #   title: "Foo", summary: "football"), 
+     #   title: "Foo", summary: "football"))  }
+     #   let doesn't seem to work here http://forums.pragprog.com/forums/95/topics/4911
+        before "create post with project and draft for other user" do
+          @post =  FactoryGirl.create(:post, user: other_user, postable: 
+          FactoryGirl.create(:project, projectdraft: 
+          FactoryGirl.create(:projectdraft, user: other_user, title: "Foo", summary: "football"), 
+          title: "Foo", summary: "football"))  
+        end   
+
+  
         describe "submitting to the create action" do
-          before { post user_projects_path(other_user) }
-          specify { response.should redirect_to(root_path) }
+          before { post user_projectdrafts_path(other_user) }
+            specify { response.should redirect_to(new_user_session_path) }
+          end
+          describe "submitting to the edit action" do
+            before { get edit_user_projectdraft_path(other_user, @post.postable.projectdraft) }
+            specify { response.should redirect_to(new_user_session_path) }
+          end
+          describe "submitting to the show action" do        
+            before { get user_projectdraft_path(other_user, @post.postable.projectdraft) }
+            specify { response.should redirect_to(new_user_session_path) }
+          end         
         end
-        describe "submitting to the edit action" do
-          before { get edit_user_project_path(other_user, post) }
-          specify { response.should redirect_to(root_path) }
-        end
-        describe "submitting to the destroy action" do
-          before { delete project_path(post.postable) }
-          specify { response.should redirect_to(new_user_session_path) }
-        end
-     end
      
-     describe "in the Topics controller" do
-      let(:post ) { FactoryGirl.create(:post, user: other_user, postable: 
-        FactoryGirl.create(:topic, title: "Foo", summary: "football"))  }
-        describe "submitting to the create action" do
-          before { post user_topics_path(other_user) }
-          specify { response.should redirect_to(root_path) }
+        describe "in the Projects controller" do
+         let(:post ) { FactoryGirl.create(:post, user: other_user, postable: 
+           FactoryGirl.create(:project, projectdraft: 
+           FactoryGirl.create(:projectdraft, title: "Foo", summary: "football"), 
+           title: "Foo", summary: "football"))  }
+
+           describe "visiting the other users project" do        
+             before { visit user_project_path(other_user, post.postable) }
+             it { page.should have_selector('title', 
+             text: full_title(other_user.name + ' | ' + post.postable.title)) }          
+           end  
         end
-        describe "submitting to the edit action" do
-          before { get edit_user_topic_path(other_user, post) }
-          specify { response.should redirect_to(root_path) }
-        end
-        describe "submitting to the destroy action" do
-          before { delete topic_path(post.postable) }
-          specify { response.should redirect_to(new_user_session_path) }
-        end
-     end     
-    end
+     
+        describe "in the Topicdrafts controller" do
+
+          before "create post with topic and draft for other user" do
+           @post =  FactoryGirl.create(:post, user: other_user, postable: 
+             FactoryGirl.create(:topic, topicdraft: 
+             FactoryGirl.create(:topicdraft, user: other_user, title: "Foo", summary: "football"), 
+             title: "Foo", summary: "football"))  
+          end       
+        
+           describe "submitting to the create action" do
+             before { post user_topicdrafts_path(other_user) }
+             specify { response.should redirect_to(new_user_session_path) }
+           end
+           describe "submitting to the edit action" do
+             before { get edit_user_topicdraft_path(other_user, @post.postable.topicdraft) }
+             specify { response.should redirect_to(new_user_session_path) }
+           end
+           describe "submitting to the show action" do        
+             before { get user_topicdraft_path(other_user, @post.postable.topicdraft) }
+             specify { response.should redirect_to(new_user_session_path) }
+           end  
+        end   
+     
+        describe "in the Topics controller" do
+         let(:post ) { FactoryGirl.create(:post, user: other_user, postable: 
+           FactoryGirl.create(:topic, title: "Foo", summary: "football"))  }
+ 
+           describe "visiting the other users topic" do        
+             before do
+               visit user_topic_path(other_user, post.postable)
+             end
+             it { page.should have_selector('title', 
+             text: full_title(other_user.name + ' | ' + post.postable.title)) }          
+           end 
+        end       
+       
+        describe "in the Posts controller" do
+         let(:post ) { FactoryGirl.create(:post, user: other_user, postable: 
+           FactoryGirl.create(:topic, title: "Foo", summary: "football"))  }
+ 
+           describe "submitting to the destroy action" do
+             before { delete post_path(post) }
+             specify { response.should redirect_to(new_user_session_path) }
+
+           end
+        end          
+     end
+    
     describe "for non-signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
       
@@ -113,36 +169,79 @@ describe "Authentication" do
           it { page.should have_selector('title', text: full_title('explore topics and projects')) }
         end
       end
-      
-      describe "in the Topics controller" do
+
+      describe "in the Topicdrafts controller" do     
+
+       before "create post with topic and draft for user" do
+        @post =  FactoryGirl.create(:post, user: user, postable: 
+          FactoryGirl.create(:topic, topicdraft: 
+          FactoryGirl.create(:topicdraft, user: user, title: "Foo", 
+          summary: "football"), 
+          title: "Foo", summary: "football"))  
+       end  
+  
         describe "submitting to the create action" do
-          before { post user_topics_path(user) }
+          before { post user_topicdrafts_path(user) }
           specify { response.should redirect_to(new_user_session_path) }
         end
-        describe "submitting to the destroy action" do
-          before { delete topic_path(FactoryGirl.create(:topic)) }
+
+        describe "submitting to the show action" do   
+          before { get user_topicdraft_path(user, @post.postable.topicdraft) }
+          specify { response.should redirect_to(new_user_session_path) }          
+        end
+        
+        describe "submitting to the edit action" do
+          before { get edit_user_topicdraft_path(user, @post.postable.topicdraft) }
           specify { response.should redirect_to(new_user_session_path) }
-        end
-        describe "submitting to the show action" do
-          let (:post) { FactoryGirl.create(:post, user: user, postable:FactoryGirl.create(:topic)) }
-          before { visit user_topic_path(user, post) }
-          it { page.should have_selector('title', text: full_title(user.name + ' | ' + post.postable.title)) }
-        end
+        end 
+                
       end
       
-      describe "in the Projects controller" do
+      describe "in the Topics controller" do
+        
+        describe "visiting the users topic" do
+          let (:post) { FactoryGirl.create(:post, user: user, 
+          postable:FactoryGirl.create(:topic)) }
+          before { visit user_topic_path(user, post.postable) }
+          it { page.should have_selector('title', 
+          text: full_title(user.name + ' | ' + post.postable.title)) }
+        end
+       
+      end
+      
+      describe "in the Projectdrafts controller" do   
+
+       before "create post with project and draft for user" do
+        @post =  FactoryGirl.create(:post, user: user, postable: 
+          FactoryGirl.create(:project, projectdraft: 
+          FactoryGirl.create(:projectdraft, user: user, title: "Foo", 
+          summary: "football"), 
+          title: "Foo", summary: "football"))  
+       end 
+              
         describe "submitting to the create action" do
-          before { post user_projects_path(user) }
+          before { post user_projectdrafts_path(user) }
           specify { response.should redirect_to(new_user_session_path) }
         end
-        describe "submitting to the destroy action" do
-          before { delete project_path(FactoryGirl.create(:project)) }
+        
+        describe "submitting to the show action" do    
+          before { get user_projectdraft_path(user, @post.postable.projectdraft) }
           specify { response.should redirect_to(new_user_session_path) }
-        end
-          describe "submitting to the show action" do
-          let (:post) { FactoryGirl.create(:post, user: user, postable:FactoryGirl.create(:project)) }
-          before { visit user_project_path(user, post) }
-          it { page.should have_selector('title', text: full_title(user.name + ' | ' + post.postable.title)) }
+        end        
+        describe "submitting to the edit action" do
+          before { get edit_user_projectdraft_path(user, @post.postable.projectdraft) }
+          specify { response.should redirect_to(new_user_session_path) }
+        end         
+      end
+
+      describe "in the Projects controller" do
+        
+        describe "submitting to the show action" do
+          let (:post) { FactoryGirl.create(:post, user: user, 
+          postable:FactoryGirl.create(:project)) }
+          before { visit user_project_path(user, post.postable) }
+          it { page.should have_selector('title', 
+          text: full_title(user.name + ' | ' + post.postable.title)) }
         end
       end
       
@@ -151,19 +250,11 @@ describe "Authentication" do
           before { post user_tposts_path(user) }
           specify { response.should redirect_to(new_user_session_path) }
         end
-        describe "submitting to the destroy action" do
-          before { delete tpost_path(FactoryGirl.create(:tpost)) }
-          specify { response.should redirect_to(new_user_session_path) }
-        end
       end
       
       describe "in the Pposts controller" do
         describe "submitting to the create action" do
           before { post user_pposts_path(user) }
-          specify { response.should redirect_to(new_user_session_path) }
-        end
-        describe "submitting to the destroy action" do
-          before { delete ppost_path(FactoryGirl.create(:ppost)) }
           specify { response.should redirect_to(new_user_session_path) }
         end
       end

@@ -23,7 +23,7 @@
           %span.span1
             =render 'posts/like_form' if user_signed_in?
           %span
-            = link_to "edit project", edit_user_projectdraft_path(@user, @post) if @user == current_user
+            = link_to "edit project", edit_user_projectdraft_path(@user, @post.postable.projectdraft) if @user == current_user
         .row
           .span1
             %h4 Summary: 

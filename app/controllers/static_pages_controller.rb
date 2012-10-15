@@ -3,6 +3,7 @@ require 'will_paginate/array'
 class StaticPagesController < ApplicationController
   def home
     tag_cloud
+
     if user_signed_in?
       @project_feed_items = current_user.project_feed.page(params[:project_page]).per_page(5)
       @topic_feed_items = current_user.topic_feed.page(params[:topic_page]).per_page(5)
