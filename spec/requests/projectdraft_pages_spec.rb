@@ -89,7 +89,8 @@ describe "Projectdraft pages" do
       it { should have_content ( 'My project reference') }
       it { should have_content ( 'My project content') }
       it { should have_link('view profile', href: user_path(user)) }
-      it { should have_link('edit draft project', href: edit_user_projectdraft_path(user, projectdraft)) }
+      it { should have_link('edit draft', href: edit_user_projectdraft_path(user, projectdraft)) }
+      it { should have_link('discard draft', href: discard_user_projectdraft_path(user, projectdraft)) }
       it { should have_link('publish project', href: publish_user_projectdraft_path(user, projectdraft)) }      
       it { should have_link('My project reference', href: 'http://www.google.com') }
     end
@@ -136,6 +137,24 @@ describe "Projectdraft pages" do
       it "should create a post" do
         expect { page.click_link "publish project" }.to change(Post, :count).by(1)        
       end
+
+      describe "discarding a published projectdraft" do
+        
+        before do
+          page.click_link "publish project"
+          visit user_projectdraft_path(user, projectdraft)
+        end
+        
+        it "should delete a user projectdraft" do        
+          expect { page.click_link "discard draft" }.to_not change(Projectdraft, :count).by(-1)
+        end
+        it "should not delete a user project" do
+          expect { page.click_link "discard draft" }.to_not change(Project, :count)        
+        end 
+        it "should not delete a user post" do
+          expect { page.click_link "discard draft" }.to_not change(Post, :count)      
+        end 
+      end 
       
       describe "updates project values" do
         before {page.click_link "publish project"}
@@ -196,6 +215,24 @@ describe "Projectdraft pages" do
       it "should notcreate a post" do
         expect { page.click_link "publish project" }.to_not change(Post, :count)        
       end
+
+      describe "discarding a published projectdraft" do
+        
+        before do
+          page.click_link "publish project"
+          visit user_projectdraft_path(user, projectdraft) 
+        end
+        
+        it "should delete a user projectdraft" do        
+          expect { page.click_link "discard draft" }.to_not change(Projectdraft, :count).by(-1)
+        end
+        it "should not delete a user project" do
+          expect { page.click_link "discard draft" }.to_not change(Project, :count)        
+        end 
+        it "should not delete a user post" do
+          expect { page.click_link "discard draft" }.to_not change(Post, :count)      
+        end 
+      end  
       
       describe "updates project values" do
         before {page.click_link "publish project"}

@@ -32,20 +32,26 @@ TopicHog::Application.routes.draw do
     resources :projects, :only => [:show]
     #resources :projects, :only => [:create, :show, :new, :edit] 
     #resources :projects, :only => [ :update] , as: :update_projects
-    resources :projectdrafts, :only => [:create, :show, :new, :edit] do
+    resources :projectdrafts, :only => [:create, :show, :new, :edit, :destroy] do
      member do
         get :publish
       end
+     member do
+        get :discard
+      end       
     end
     resources :projectdrafts, :only => [ :update] , as: :update_projectdrafts
     resources :pposts, :only => [:create, :show, :new] 
     resources :tposts, :only => [:create, :show, :new] 
     resources :topics, :only => [:create, :show, :new, :edit]     
     resources :topics, :only => [ :update] , as: :update_topics
-    resources :topicdrafts, :only => [:create, :show, :new, :edit] do
+    resources :topicdrafts, :only => [:create, :show, :new, :edit, :destroy] do
      member do
         get :publish
       end
+     member do
+        get :discard
+      end 
     end
     resources :topicdrafts, :only => [ :update] , as: :update_topicdrafts
   end

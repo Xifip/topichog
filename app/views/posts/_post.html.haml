@@ -1,4 +1,4 @@
-%li{:id => (post.id)}
+%li
   %span.title
   - if post.postable_type == "Ppost"
     = link_to post.postable.title, user_ppost_path(post.user.id, post.postable), id: "ppost_link_#{post.id}"
@@ -17,10 +17,10 @@
       title: post.postable.title               |
   - if post.postable_type == "Project" && current_user == post.user
     - if post.postable.projectdraft.draft_ahead
-      = link_to "view unpublished draft", user_projectdraft_path(post.user, post.postable.projectdraft )  
+      = link_to "draft (unpublished)", user_projectdraft_path(post.user, post.postable.projectdraft )  
   - if post.postable_type == "Topic" && current_user == post.user
     - if post.postable.topicdraft.draft_ahead
-      = link_to "View unpublished draft", user_topicdraft_path(post.user, post.postable.topicdraft )               
+      = link_to "draft (unpublished)", user_topicdraft_path(post.user, post.postable.topicdraft )               
   %span.post_info
   - if post.likes_count > 0
     %strong#liking.stat #{post.likes_count}

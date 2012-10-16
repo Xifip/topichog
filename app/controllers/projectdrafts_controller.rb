@@ -59,6 +59,30 @@ class ProjectdraftsController < ApplicationController
     end 
   end
   
+  def discard
+    @user = User.find_by_id(params[:user_id]) 
+    @projectdraft = @user.projectdrafts.find_by_id(params[:id])
+    if @projectdraft.project
+      if @projectdraft.update_attributes(title:@projectdraft.project.title,
+                                     summary: @projectdraft.project.summary,
+                                     reference: @projectdraft.project.reference,
+                                     content: @projectdraft.project.content,
+                                     tag_list: @projectdraft.project.tag_list,
+                                     draft_ahead: false
+                                     )          
+        flash[:notice] = "Successfully discarded draft project."
+        redirect_to user_path(@user)
+      else
+        render :action => 'show'
+      end  
+    else
+      @projectdraft.destroy
+      flash[:notice] = "Successfully discarded draft project."
+      redirect_to user_path(@user)
+    end
+  end
+
+  
   def publish
    @user = User.find_by_id(params[:user_id]) 
    @projectdraft = @user.projectdrafts.find_by_id(params[:id])

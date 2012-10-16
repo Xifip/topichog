@@ -8,20 +8,42 @@
     = render 'follow_form' if user_signed_in?      
   .span8
     = render 'profiles/profile_info'  
-.row  
+.row
+  .spacer50  
   .span4
-    %h3
-      Projects (#{@projects.count})
+    .well.well-small   
+      %h3.span2
+        Projects (#{@projects.count})
+      .span2
+      = link_to "new project", new_user_projectdraft_path(@user), class: "btn btn-small btn-info" if @user == current_user
     %ol.posts
       = render @projects
     = will_paginate @projects, :param_name => 'project_page'
   .span4  
-    %h3
-      Topics (#{@topics.count})
+    .well.well-small
+      %h3.span2
+        Topics (#{@topics.count})
+      .span2
+      = link_to "new topic", new_user_projectdraft_path(@user), class: "btn btn-small btn-info" if @user == current_user      
     %ol.posts
       = render @topics
     = will_paginate @topics, :param_name => 'topic_page'
   .span4  
-    %h3
+    %h3.well.well-small
       Favorited items (#{@liked_posts.count})
-    = render partial: 'shared/liked_feed'  
+    = render partial: 'shared/liked_feed' 
+- if @user == current_user
+  .row
+    .spacer50  
+    .span4
+      %h3.well.well-small
+        Project drafts (#{@unpublished_projectdrafts.count})    
+      %ol.posts
+        = render @unpublished_projectdrafts  
+      = will_paginate @unpublished_projectdrafts, :param_name => 'unpublished_projectdrafts_page'                
+    .span4
+      %h3.well.well-small
+        Topic drafts (#{@unpublished_topicdrafts.count}) 
+      %ol.posts
+        = render @unpublished_topicdrafts         
+      = will_paginate @unpublished_topicdrafts, :param_name => 'unpublished_topicdrafts_page'                        

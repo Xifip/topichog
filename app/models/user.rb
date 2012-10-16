@@ -35,6 +35,14 @@ class User < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :email, :case_sensitive => false
 
+    
+  def project_drafts_ahead
+    Projectdraft.projectdrafts_unpublished_from(self)
+  end
+  
+  def topic_drafts_ahead
+    Topicdraft.topicdrafts_unpublished_from(self)
+  end
   
   def project_feed    
     Post.projects_from_users_followed_by(self)#.find_by_postable_type("project")

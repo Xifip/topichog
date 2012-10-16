@@ -12,8 +12,11 @@ class Topicdraft < ActiveRecord::Base
   
   default_scope order: 'topicdrafts.created_at DESC' 
 
+  def self.topicdrafts_unpublished_from(user)
+    where("(user_id = :user_id) AND (draft_ahead = true)", user_id: user.id)
+  end
   
-   def validate_tags
+  def validate_tags
     #debugger
     tags_number = self.tag_list.count
     errors.add(:tag_lists, 'you must include at least two tags') unless tags_number > 1

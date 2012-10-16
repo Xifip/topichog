@@ -13,19 +13,23 @@
   .span8  
     .row.my-hero-unit
       .span8
-        .row   
-          %span.span6
-            %h1         
-              =@projectdraft.title
-          %span
-            = link_to "publish project", publish_user_projectdraft_path(@user, @projectdraft), class: "btn btn-large btn-primary" if @user == current_user
-          %span
-            = link_to "edit draft project", edit_user_projectdraft_path(@user, @projectdraft) if @user == current_user
         .row
-          .span1
-            %h4 Summary: 
-          .span6  
-            =@projectdraft.summary
+          .span5
+            .row.span5
+              %h1         
+                =@projectdraft.title
+            .row
+              .span1
+                %h4 Summary: 
+              .span4  
+                =@projectdraft.summary              
+          .span2    
+            .span2
+              = link_to "publish project", publish_user_projectdraft_path(@user, @projectdraft), class: "btn btn-large btn-primary" if @user == current_user
+            .span2
+              = link_to "edit draft", edit_user_projectdraft_path(@user, @projectdraft) if @user == current_user
+            .span2
+              = link_to "discard draft", discard_user_projectdraft_path(@user, @projectdraft) if @user == current_user        
         .row  
           %p.span8
             =render 'shared/tags'       

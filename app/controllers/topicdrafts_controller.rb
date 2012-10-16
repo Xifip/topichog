@@ -57,6 +57,29 @@ class TopicdraftsController < ApplicationController
       @topicdraft = Topicdraft.new
     end 
   end
+
+  def discard
+    @user = User.find_by_id(params[:user_id]) 
+    @topicdraft = @user.topicdrafts.find_by_id(params[:id])
+    if @topicdraft.topic
+      if @topicdraft.update_attributes(title:@topicdraft.topic.title,
+                                     summary: @topicdraft.topic.summary,
+                                     reference: @topicdraft.topic.reference,
+                                     content: @topicdraft.topic.content,
+                                     tag_list: @topicdraft.topic.tag_list,
+                                     draft_ahead: false
+                                     )          
+        flash[:notice] = "Successfully discarded draft topic."
+        redirect_to user_path(@user)
+      else
+        render :action => 'show'
+      end  
+    else
+      @topicdraft.destroy
+      flash[:notice] = "Successfully discarded draft topic."
+      redirect_to user_path(@user)
+    end
+  end
   
   def publish
    @user = User.find_by_id(params[:user_id]) 

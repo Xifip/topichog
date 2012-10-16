@@ -1,0 +1,6 @@
+%li{:id => "topicdraft_" + topicdraft.id.to_s}
+  %span.title
+    = link_to topicdraft.title, user_topicdraft_path(topicdraft.user, topicdraft), id: "topicdraft_link_#{topicdraft.id}"
+  %span.summary= topicdraft.summary
+  %span.timestamp
+    Last edited #{time_ago_in_words(topicdraft.created_at)} ago.

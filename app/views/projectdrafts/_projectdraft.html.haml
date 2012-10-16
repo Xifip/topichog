@@ -1,0 +1,8 @@
+%li{:id => "projectdraft_" + projectdraft.id.to_s}
+  %span.title
+    = link_to projectdraft.title, user_projectdraft_path(projectdraft.user, projectdraft), id: "projectdraft_link_#{projectdraft.id}"
+  %span.summary= projectdraft.summary
+  %span.timestamp
+    Last edited #{time_ago_in_words(projectdraft.created_at)} ago.
+  
+          

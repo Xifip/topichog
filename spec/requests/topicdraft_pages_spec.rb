@@ -90,12 +90,11 @@ describe "Topicdraft pages" do
       it { should have_content ( 'My topic reference') }
       it { should have_content ( 'My topic content') }
       it { should have_link('view profile', href: user_path(user)) }
-      it { should have_link('edit draft topic', href: edit_user_topicdraft_path(user, topicdraft)) }
+      it { should have_link('edit draft', href: edit_user_topicdraft_path(user, topicdraft)) }
+      it { should have_link('discard draft', href: discard_user_topicdraft_path(user, topicdraft)) }      
       it { should have_link('publish topic', href: publish_user_topicdraft_path(user, topicdraft)) }      
       it { should have_link('My topic reference', href: 'http://www.google.com') }
-    end
-    
-    
+    end    
   end
 =begin
   describe "viewing another users topic" do
@@ -137,6 +136,24 @@ describe "Topicdraft pages" do
       it "should create a post" do
         expect { page.click_link "publish topic" }.to change(Post, :count).by(1)        
       end
+
+      describe "discarding a published topicdraft" do
+        
+        before do
+          page.click_link "publish topic"
+          visit user_topicdraft_path(user, topicdraft)
+        end
+        
+        it "should delete a user topicdraft" do        
+          expect { page.click_link "discard draft" }.to_not change(Topicdraft, :count).by(-1)
+        end
+        it "should not delete a user topic" do
+          expect { page.click_link "discard draft" }.to_not change(Topic, :count)        
+        end 
+        it "should not delete a user post" do
+          expect { page.click_link "discard draft" }.to_not change(Post, :count)      
+        end 
+      end    
       
       describe "updates topic values" do
         before {page.click_link "publish topic"}
@@ -197,6 +214,24 @@ describe "Topicdraft pages" do
       it "should notcreate a post" do
         expect { page.click_link "publish topic" }.to_not change(Post, :count)        
       end
+
+      describe "discarding a published topicdraft" do
+        
+        before do
+          page.click_link "publish topic"
+          visit user_topicdraft_path(user, topicdraft) 
+        end
+        
+        it "should delete a user topicdraft" do        
+          expect { page.click_link "discard draft" }.to_not change(Topicdraft, :count).by(-1)
+        end
+        it "should not delete a user topic" do
+          expect { page.click_link "discard draft" }.to_not change(Topic, :count)        
+        end 
+        it "should not delete a user post" do
+          expect { page.click_link "discard draft" }.to_not change(Post, :count)      
+        end 
+      end   
       
       describe "updates topic values" do
         before {page.click_link "publish topic"}
@@ -321,7 +356,43 @@ describe "Topicdraft pages" do
       end
     end 
 
-   describe "for a non published topic" do
+  describe "viewing a non published topicdraft" do
+   
+    let(:topicdraft ) { FactoryGirl.create(:topicdraft, title: "Foo", summary: "football", user: user) }
+  
+    before { visit user_topicdraft_path(user, topicdraft) }
+
+    subject {page} 
+    
+    describe "shows user and topic info" do
+      it { should have_selector('h1', text: user.name) }
+      it { should have_content ( topicdraft.title) }
+      it { should have_content ( topicdraft.summary) }
+      #user nokogiri or elementor to scrap content  
+      it { should have_content ( 'My topic reference') }
+      it { should have_content ( 'My topic content') }
+      it { should have_link('view profile', href: user_path(user)) }
+      it { should have_link('edit draft', href: edit_user_topicdraft_path(user, topicdraft)) }
+      it { should have_link('discard draft', href: discard_user_topicdraft_path(user, topicdraft)) }      
+      it { should have_link('publish topic', href: publish_user_topicdraft_path(user, topicdraft)) }      
+      it { should have_link('My topic reference', href: 'http://www.google.com') }
+    end
+    
+    describe "discarding a non published topicdraft" do
+      it "should delete a user topicdraft" do        
+        expect { page.click_link "discard draft" }.to change(Topicdraft, :count).by(-1)
+      end
+      it "should not delete a user topic" do
+        expect { page.click_link "discard draft" }.to_not change(Topic, :count)        
+      end 
+      it "should not delete a user post" do
+        expect { page.click_link "discard draft" }.to_not change(Post, :count)      
+      end 
+    end
+    
+  end
+
+   describe "editing and saving a non published topic" do
       
       let(:topicdraft ) { FactoryGirl.create(:topicdraft, user: user) }  
       
@@ -371,11 +442,8 @@ describe "Topicdraft pages" do
           Topicdraft.last.draft_ahead.should eq true   
           Topicdraft.last.topic_id.should eq nil                    
         end        
-  
+
       end
-      
-      
-    end 
-    
+    end
   end  
 end
