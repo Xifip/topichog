@@ -3,3 +3,15 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
   $('.best_in_place').best_in_place()
+  handler = ->
+    $(".edit_bio_col textarea").charCount
+      allowed: 50
+      warning: 20
+      counterText: "Characters left: "
+
+
+  $("#edit_bio").bind "click", handler
+  $(".best_in_place").bind "ajax:success", ->
+    $("#edit_bio").unbind "click", handler
+
+

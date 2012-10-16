@@ -267,6 +267,22 @@ input, textarea, select, .uneditable-input {
 }
       
 /* projecs */
+
+
+.edit_bio_col, form.new_projectdraft, form.new_topicdraft, form.edit_projectdraft, form.edit_topicdraft {
+  .counter{
+	  font-weight:bold;
+	  color:#ccc;
+	  }
+
+  .warning{
+    color:#600;
+    }	
+  .exceeded{
+    color:#e00;
+    }	
+}  
+
 .projects, .topics, .feed {
   list-style: none;
   margin: 10px 0 0 0;

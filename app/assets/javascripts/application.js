@@ -17,9 +17,7 @@
 //= require best_in_place
 //= require jquery.Jcrop.min
 //= require bootstrap
-//= require jquery.jqplot.min
-//= require jqplot_plugins/jqplot.pieRenderer.min.js
-//= require excanvas.min
+//= require charCount.js
 //= require ckeditor/init
 //= require_tree .
 

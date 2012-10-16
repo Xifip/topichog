@@ -21,7 +21,7 @@
       %tbody
         %tr
           %td.span1 Bio:
-          %td.span4= best_in_place @profile, :bio, type: :textarea, :activator => '#edit_bio'
+          %td.span4.edit_bio_col= best_in_place @profile, :bio, type: :textarea, :activator => '#edit_bio'
           %td.span1
             %a#edit_bio{:href => "#"} edit   
         %tr
