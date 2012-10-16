@@ -5,8 +5,8 @@ jQuery ->
   $('.best_in_place').best_in_place()
   handler = ->
     $(".edit_bio_col textarea").charCount
-      allowed: 50
-      warning: 20
+      allowed: 1000
+      warning: 50
       counterText: "Characters left: "
 
 
