@@ -283,7 +283,7 @@ describe "User pages" do
 
     subject{page}    
 
-    it { should have_selector("h3", text: "Favorited items") }
+    it { should have_selector("h4", text: "Favorited items") }
     it "should render the user's liked posts feed" do
       user.liked_posts.each do |item|
         page.should have_selector("li##{item.id}", text: item.postable.title)
