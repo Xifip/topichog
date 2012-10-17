@@ -8,4 +8,5 @@ CarrierWave.configure do |config|
   config.fog_directory = "topichogire"
   #config.max_file_size     = 700.kilobytes
   #config.fog_directory = ENV["AWS_S3_BUCKET"]
+  config.fog_host       = 'https://s3-eu-west-1.amazonaws.com/topichogire'
 end
