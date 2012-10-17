@@ -1,4 +1,127 @@
 = provide(:title, 'Learn more')
-%h1 Learn more page
-%p
-  This is the TopicHog Learn more page
+.row
+  #nav-left-div.span3.divheight5
+    %ul#nav-left.span2.nav.nav-list.nav-stacked.affix-top{"data-offset-top" => "10", "data-spy" => "affix"}
+      %li#features-tab.nav-header
+        %a{:href => '#features' }
+          %h4.muted
+            What is it?
+            %i.icon-chevron-right.bs-docs-sidenav      
+      %li#cases-tab.nav-header
+        %a{:href => '#cases' }
+          %h4.muted
+            Use cases
+            %i.icon-chevron-right.bs-docs-sidenav     
+      %li#student-case-tab
+        %a{:href => '#cases' }
+          %h6.muted
+            Students
+      %li#professional-case-tab
+        %a{:href => '#professional-case' }
+          %h6.muted
+            Professionals
+      %li#jobseeker-case-tab
+        %a{:href => '#jobseeker-case' }
+          %h6.muted
+            Jobseekers
+      %li#company-case-tab
+        %a{:href => '#company-case' }
+          %h6.muted
+            companies  
+      %li#institution-case-tab
+        %a{:href => '#institution-case' }
+          %h6.muted
+            Institutions                                                      
+      %li#pricing-tab.nav-header
+        %a{:href => '#pricing' }
+          %h4.muted
+            Pricing
+            %i.icon-chevron-right.bs-docs-sidenav
+      %li#about-tab.nav-header
+        %a{:href => '#about' }
+          %h4.muted
+            About us
+            %i.icon-chevron-right.bs-docs-sidenav                                            
+    .span1
+  .span9 
+    %section#features 
+      .well.well-small
+        %h3 What is it?
+      .row  
+        .span3
+          %h5.center Create your profile
+          =image_tag("profile_240px_w.png")  
+          %p
+            Your profile includes a short bio where you describe who you are and what you are about. 
+          %p  
+            You can include links to you twitter, facebook, linkedin, blog and website.
+          %p 
+          Here's my
+          = link_to "profile", user_path(1)
+        .span3
+          %h5.center Build your knowledge portfolio
+          =image_tag("profile_240px_w.png")
+          %p 
+            You are knowledgeable about many things and have build up experiance while
+            working and studying . 
+          %p  
+            Build your knowledge portfolio by documenting
+            %strong Topics
+            and
+            %strong Projects.
+        .span3
+          %h5.center Share anywhere
+          =image_tag("profile_240px_w.png")
+          %p  
+            Add a link to your profile on linkedin, Twitter or email a link. 
+          %p  
+            Your 
+            %strong topics
+            and
+            %strong projects 
+            will be seen by viewers of your profile.          
+      .row.spacer50 
+        %br.bs-docs-separator    
+      .row  
+        .span3
+          .spacer20
+          %p
+            Topics and Projects are blog posts 
+            that document a piece of knowledge that you have or a project that
+            you have done. 
+          %p
+            = link_to "Explore", posts_path   
+            projects and topics created by others
+        .span3
+          %h5.center Topics
+          =image_tag("profile_240px_w.png")  
+        .span3
+          %h5.center Projects
+          =image_tag("profile_240px_w.png")                
+    %section#cases
+      .well.well-small
+        %h3 Use cases
+      %p#student-case 
+        %h3 Students
+      %section#professional-case 
+        %h3 Professionals
+      %section#jobseeker-case 
+        %h3 Jobseekers
+      %section#company-case 
+        %h3 Companies
+      %section#institution-case 
+        %h3 Institutions           
+    %section#pricing 
+      .well.well-small 
+        %h3 Pricing
+    %h4 It's Free!
+    %P
+      We are in Beta and may offer premium features in the future.         
+    %section#about 
+      .well.well-small 
+        %h3 About us
+      %h4 We are a web start-up based in Dublin 
+      %p You can contact us email at support@topichog.com
+    .spacer200       
+    .spacer200 
+    .spacer200  

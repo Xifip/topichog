@@ -1,7 +1,7 @@
 = form_for(topicdraft, :url => user_update_topicdraft_path(@user, topicdraft), :html => { :method => "put" }) do |f|
   = render partial: 'shared/error_messages', locals: {object: f.object}
   .field
-    %h2.span8 New Topic
+    %h2.span8 Edit Topic
     %p.span8
       .span1
         = f.label :title, "Title"

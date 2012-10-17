@@ -25,9 +25,44 @@
           = link_to tag.name, post_path(tag.name), :class => 'label', method: :GET      
       .spacer200      
 - else
-  .center.hero-unit
-    %h1 Welcome to TopicHog Beta
+  .row.center.hero-unit
+    %h1 TopicHog Beta
     %h2
-      Organise resources for topics you're interested in and showcase your project work 
-    = link_to "Sign up now!", new_user_registration_path, |
-      class: "btn btn-large btn-primary"   |
+      Your knowledge and project portfolio 
+    = link_to "Sign up now!", new_user_registration_path, class: "btn btn-large btn-primary"  
+  .row
+    .span4
+      %h2.center Create your profile 
+    .span4
+      %h2.center Showcase your knowledge and work     
+    .span4
+      %h2.center Share anywhere       
+  .row  
+    .span4
+      =image_tag("profile_240px_w.png")  
+      %p
+        Describe who you are and what you are about,
+        include links to you twitter, facebook, linkedin, blog and website.
+      %p 
+      Checkout my
+      = link_to "profile", user_path(1)
+    .span4
+      =image_tag("profile_240px_w.png") 
+      %p  
+        Build your knowledge portfolio by documenting
+        %strong Topics
+        and
+        %strong Projects.
+      %p
+        = link_to "Explore", posts_path   
+        projects and topics created by others        
+    .span4
+      =image_tag("profile_240px_w.png")
+      %p  
+        Add a link to your profile on linkedin, Twitter or email a link. 
+      %p  
+        Share your 
+        %strong topics
+        and
+        %strong projects 
+        on twitter or facebook.              

@@ -3,6 +3,7 @@
 /* mixins, variables, etc. */
 
 $grayMediumLight: #eaeaea;
+$muted: #999999;
 
 @mixin box_sizing {
   -moz-box-sizing: border-box;
@@ -28,6 +29,10 @@ resize: vertical;
   h1 {
     margin-bottom: 10px;
   }
+}
+
+section {
+  padding-top: 100px;
 }
 
 /* typography */
@@ -355,4 +360,49 @@ aside {
 .spacer100 { height: 100px; width: 100%; font-size: 0; margin: 0; padding: 0; border: 0; display: block; }
 .spacer200 { height: 200px; width: 100%; font-size: 0; margin: 0; padding: 0; border: 0; display: block; }
 
+.divheight5 { height: 5px; }
+
+#nav-left li  { 
+  a h4{
+  color: $muted; 
+  }
+  
+  a:hover{
+    h4 {
+      color: black;
+      opacity: 0.75; 
+    }
+    color: black; 
+    i.bs-docs-sidenav {
+      opacity: 0.75;
+    }  
+  }
+  i.bs-docs-sidenav {
+    float: right;
+    margin-right: -6px;
+    margin-top: 2px;
+    opacity: 0.25;
+  }    
+}
+
+#nav-left li.active{
+   a h4, a h6 {
+      color: white;
+      opacity: 1;
+    }
+    i.bs-docs-sidenav {
+      opacity: 1;
+    }
+}
+
+.affix {
+    position: fixed; 
+    top: 100px; 
+    left: auto;
+    right: auto;
+}
+
+.bs-docs-separator{
+    margin: 40px 0 39px;
+}
 

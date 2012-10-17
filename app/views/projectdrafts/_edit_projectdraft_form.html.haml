@@ -1,7 +1,7 @@
 = form_for(projectdraft, :url => user_update_projectdraft_path(@user, projectdraft), :html => { :method => "put" }) do |f|
   = render partial: 'shared/error_messages', locals: {object: f.object}
   .field
-    %h2.span8 New Project
+    %h2.span8 Edit Project
     %p.span8
       .span1
         = f.label :title, "Title"

@@ -9,7 +9,7 @@ module UsersHelper
   
   def avatar_for(user, options = { size: 50 })
     if user.avatar.image?
-      image_tag(user.avatar.image_url(:thumb).to_s)
+      image_tag(user.avatar.image_url(:thumb).to_s, class: "img-polaroid")
     else
       gravatar_for user, size: 52
     end  
