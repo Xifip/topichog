@@ -362,6 +362,12 @@ aside {
 
 .divheight5 { height: 5px; }
 
+/*feed*/
+.feedpost img{
+    float: left; 
+    margin: 4px; 
+}
+/*static pages*/
 #nav-left li  { 
   a h4{
   color: $muted; 

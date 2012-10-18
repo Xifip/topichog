@@ -9,7 +9,7 @@
         = render 'shared/stats'  
   .span8
     = provide(:title, 'Explore')
-    %h1 Explore
+    %h2 Explore
     .row  
       #tags_remove.span6
         = link_to @tag_filter[0], post_path(@tag_filter[0]) ,id: 'tag1_remove'
@@ -30,7 +30,7 @@
       = hidden_field_tag 'tag4', value = @tag_filter[3] 
       = hidden_field_tag 'tag5', value = @tag_filter[4] 
     .row      
-      %h3.span8 
+      %h4.span8 
         Popular tags 
     .row
       #popular_tags.span8 
@@ -43,6 +43,6 @@
     .row
       .span8
         - if @feed_items.any?
-          %h3 Feed
+          %h4 Feed
           = render partial: 'shared/feed'
  

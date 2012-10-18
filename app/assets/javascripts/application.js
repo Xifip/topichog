@@ -19,6 +19,7 @@
 //= require bootstrap
 //= require charCount.js
 //= require ckeditor/init
+//= require ckeditor/config.js
 //= require avatars.js.coffee
 //= require posts.js.coffee
 //= require profiles.js.coffee

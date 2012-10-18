@@ -1,17 +1,18 @@
-%li{:id => project_feed_item.id}
+%li.feedpost{:id => project_feed_item.id}
   = link_to avatar_for(project_feed_item.user), project_feed_item.user
-  %span.user
-    = link_to project_feed_item.user.name, project_feed_item.user
-  %span.title
+  %div
     = link_to project_feed_item.postable.title, user_project_path(project_feed_item.user.id, project_feed_item.postable), id: "project_link_#{project_feed_item.id}"
-  %span.summary= project_feed_item.postable.summary
-  %span.timestamp
-    Posted #{time_ago_in_words(project_feed_item.created_at)} ago.
-  - if current_user == project_feed_item.user
-    = link_to "delete", project_feed_item, method: :delete, |
-      data: { confirm: "You sure?" },                       |
-      title: project_feed_item.postable.title                        |
-  %span.post_info
-  - if project_feed_item.likes_count > 0
-    %strong#liking.stat #{project_feed_item.likes_count}
-    favorites
+    %span.summary= project_feed_item.postable.summary
+  %div
+    %span.user
+      = link_to project_feed_item.user.name, project_feed_item.user  
+    %span.timestamp
+      Posted #{time_ago_in_words(project_feed_item.created_at)} ago.
+    - if current_user == project_feed_item.user
+      = link_to "delete", project_feed_item, method: :delete, |
+        data: { confirm: "You sure?" },                       |
+        title: project_feed_item.postable.title                        |
+    %span.post_info
+    - if project_feed_item.likes_count > 0
+      %strong#liking.stat #{project_feed_item.likes_count}
+      favorites

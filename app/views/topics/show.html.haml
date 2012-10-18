@@ -18,16 +18,14 @@
       .span8
         .row   
           %span.span6
-            %h1         
+            %h3         
               =@topic.title
           %span.span1
             =render 'posts/like_form' if user_signed_in?
           %span
             = link_to "edit topic", edit_user_topicdraft_path(@user, @post.postable.topicdraft) if @user == current_user
         .row
-          .span1
-            %h4 Summary: 
-          .span6  
+          .span7  
             =@topic.summary
         .row  
           %p.span8

@@ -1,32 +1,33 @@
-%li{:id => liked_feed_item.id}
+%li.feedpost{:id => liked_feed_item.id}
   = link_to avatar_for(liked_feed_item.user), liked_feed_item.user
-  %span.user
-    = link_to liked_feed_item.user.name, liked_feed_item.user
-  %span.title
-  - if liked_feed_item.postable_type == "Ppost"
-    = link_to liked_feed_item.postable.title, 
-        user_ppost_path(liked_feed_item.user.id, 
-        liked_feed_item.postable), id: "ppost_link_#{liked_feed_item.id}"
-  - if liked_feed_item.postable_type == "Tpost"   
-    = link_to liked_feed_item.postable.title, 
-      user_tpost_path(liked_feed_item.user.id, 
-      liked_feed_item.postable), id: "tpost_link_#{liked_feed_item.id}"
-  - if liked_feed_item.postable_type == "Project"
-    = link_to liked_feed_item.postable.title,
-      user_project_path(liked_feed_item.user.id, 
-      liked_feed_item.postable), id: "project_link_#{liked_feed_item.id}"
-  - if liked_feed_item.postable_type == "Topic"   
-    = link_to liked_feed_item.postable.title, 
-      user_topic_path(liked_feed_item.user.id, 
-      liked_feed_item.postable), id: "topic_link_#{liked_feed_item.id}"  
-  %span.summary= liked_feed_item.postable.summary
-  %span.timestamp
-    Posted #{time_ago_in_words(liked_feed_item.created_at)} ago
-  - if current_user == liked_feed_item.user
-    = link_to "delete", liked_feed_item, method: :delete, |
-      data: { confirm: "You sure?" },                       |
-      title: liked_feed_item.postable.title                        |
-  %span.post_info
-  - if liked_feed_item.likes_count > 0
-    %strong#liking.stat #{liked_feed_item.likes_count}
-    favorites
+  %div
+    - if liked_feed_item.postable_type == "Ppost"
+      = link_to liked_feed_item.postable.title, 
+          user_ppost_path(liked_feed_item.user.id, 
+          liked_feed_item.postable), id: "ppost_link_#{liked_feed_item.id}"
+    - if liked_feed_item.postable_type == "Tpost"   
+      = link_to liked_feed_item.postable.title, 
+        user_tpost_path(liked_feed_item.user.id, 
+        liked_feed_item.postable), id: "tpost_link_#{liked_feed_item.id}"
+    - if liked_feed_item.postable_type == "Project"
+      = link_to liked_feed_item.postable.title,
+        user_project_path(liked_feed_item.user.id, 
+        liked_feed_item.postable), id: "project_link_#{liked_feed_item.id}"
+    - if liked_feed_item.postable_type == "Topic"   
+      = link_to liked_feed_item.postable.title, 
+        user_topic_path(liked_feed_item.user.id, 
+        liked_feed_item.postable), id: "topic_link_#{liked_feed_item.id}"  
+    %span.summary= liked_feed_item.postable.summary
+  %div  
+    %span.user
+      = link_to liked_feed_item.user.name, liked_feed_item.user  
+    %span.timestamp
+      Posted #{time_ago_in_words(liked_feed_item.created_at)} ago
+    - if current_user == liked_feed_item.user
+      = link_to "delete", liked_feed_item, method: :delete, |
+        data: { confirm: "You sure?" },                       |
+        title: liked_feed_item.postable.title                        |
+    %span.post_info
+    - if liked_feed_item.likes_count > 0
+      %strong#liking.stat #{liked_feed_item.likes_count}
+      favorites
