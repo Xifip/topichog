@@ -78,8 +78,7 @@ config.toolbar_Easy =
 
 config.toolbar_ContentToolbar =
     [
-        { name: 'document',    items : [ 'Source','-',
-          'Preview' ] },
+        { name: 'document',    items : [ 'Source'] },
         //{ name: 'document',    items : [ 'Source','-','Save','NewPage',
         //  'DocProps','Preview','Print','-','Templates' ] },    
         { name: 'tools',       items : [ 'Maximize' ] },
@@ -89,10 +88,12 @@ config.toolbar_ContentToolbar =
         { name: 'links', items : [ 'Link','Unlink' ] },
         //{ name: 'links', items : [ 'Link','Unlink','Anchor' ] },  
         { name: 'editing',     items : [ 'Find','Replace','-','SelectAll','-',
-          'SpellChecker' ] },       
-        { name: 'undoredo',     items : [ 'Undo','Redo' ] },              
+          'Scayt' ] },  
+        { name: 'clipboard', items : [ 'Cut','Copy','Paste'] },
+        //        { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText',
+        //  'PasteFromWord'] }                
                 '/',
-        { name: 'styles',      items : [ 'Format' ] },
+        { name: 'styles',      items : [ 'Format', 'FontSize' ] },
         //{ name: 'styles',      items : [ 'Styles','Format','Font','FontSize' ] },        
         { name: 'basicstyles', items : [ 'TextColor', 'Bold','Italic','Strike','RemoveFormat' ] },
         { name: 'paragraph',   items : [ 'NumberedList','BulletedList','-',
@@ -101,8 +102,7 @@ config.toolbar_ContentToolbar =
         //{ name: 'paragraph',   items : [ 'NumberedList','BulletedList','-',
         //  'Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft',
         //  'JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
-        { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText',
-          'PasteFromWord'] }
+        { name: 'undoredo',     items : [ 'Undo','Redo' ] }
         //{ name: 'insert', items : [ 'Image','Flash','Table','HorizontalRule',
         //  'Smiley','SpecialChar','PageBreak','Iframe' ] },        
     ];
@@ -114,7 +114,8 @@ config.toolbar_ContentToolbar =
         { name: 'links', items : [ 'Link','Unlink' ] },
         { name: 'editing',     items : [ 'SpellChecker' ] },       
         { name: 'undoredo',     items : [ 'Undo','Redo' ] }, 
-        { name: 'paragraph',   items : [ 'NumberedList','BulletedList' ] }    
+        { name: 'paragraph',   items : [ 'NumberedList','BulletedList' ] } ,
+        { name: 'styles',      items: [ 'FontSize' ] }        
     ];
 };
 
