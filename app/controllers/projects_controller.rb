@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
  
   def show 
     @project_user = User.find_by_id(params[:user_id]) 
-    @post = @project_user.posts.find_by_postable_id(params[:id])
+    @post = @project_user.posts.project_with_postable_id(params[:id])
     @project = @post.postable
     @user = @post.user
     @likers = @post.likers#.paginate(page: params[:page])

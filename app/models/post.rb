@@ -20,6 +20,14 @@ class Post < ActiveRecord::Base
     likes.count
   end
   
+  def self.project_with_postable_id(postable_id)
+    where("postable_type = ? AND postable_id = ?", "Project", postable_id).first
+  end
+  
+  def self.topic_with_postable_id(postable_id)
+    where("postable_type = ? AND postable_id = ?", "Topic", postable_id).first
+  end
+  
   def self.from_users_followed_by(user)
     followed_user_ids = "SELECT followed_id FROM relationships
                           WHERE follower_id = :user_id"
