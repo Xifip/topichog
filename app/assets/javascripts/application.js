@@ -18,6 +18,8 @@
 //= require jquery.Jcrop.min
 //= require bootstrap
 //= require charCount.js
+//= require jquery.watermark.min.js
+//= require jquery.tagsinput.min.js
 //= require ckeditor/init
 //= require ckeditor/config.js
 //= require avatars.js.coffee

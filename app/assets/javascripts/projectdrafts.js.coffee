@@ -2,7 +2,11 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
-  
+  $("#projectdraft_title").watermark "Project title..."  
+  $("#projectdraft_summary").watermark "Project summary..."  
+  $("#projectdraft_tag_list").watermark "Comma separated tags..."    
+  $("#projectdraft_tag_list").tagsInput()
+  #$("#projectdraft_tag_list").tagsInput autocomplete_url: tags_names_url 
   #default usage
   $("#projectdraft_title").charCount
     allowed: 30

@@ -6,12 +6,12 @@
       .span1
         = f.label :title, "Title"
       .span6  
-        = f.text_field :title, placeholder: "Project title..."
+        = f.text_field :title
     %p.span8
       .span1
         = f.label :summary, "Summary"
       .span6          
-        = f.text_area :summary, placeholder: "Project summary...", rows: 3
+        = f.text_area :summary, rows: 3
     %p.span8
       .span1
         = f.label :reference, "Links & references"
@@ -21,7 +21,12 @@
       .span1
         = f.label :tag_list, "Tags"
       .span6       
-        = f.text_field :tag_list, placeholder: "Comma separated tags..."      
+        = f.text_field :tag_list
+    %p.span8
+      %em
+        %small.muted.offset1 (tags must be comma separated)
+    %p.span8
+      Project description         
     %p.span8   
       = f.text_area :content, :id =>'content_textarea', placeholder: "Project content..."
     %p.span8  
