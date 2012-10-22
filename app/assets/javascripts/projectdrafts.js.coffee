@@ -5,8 +5,7 @@ jQuery ->
   $("#projectdraft_title").watermark "Project title..."  
   $("#projectdraft_summary").watermark "Project summary..."  
   $("#projectdraft_tag_list").watermark "Comma separated tags..."    
-  $("#projectdraft_tag_list").tagsInput()
-  #$("#projectdraft_tag_list").tagsInput autocomplete_url: tags_names_url 
+  $("#projectdraft_tag_list").tagsInput autocomplete_url: $('#projectdraft_tag_list').data('autocomplete-source')
   #default usage
   $("#projectdraft_title").charCount
     allowed: 30

@@ -5,7 +5,7 @@ jQuery ->
   $("#topicdraft_title").watermark "Topic title..."  
   $("#topicdraft_summary").watermark "Topic summary..."  
   $("#topicdraft_tag_list").watermark "Comma separated tags..."  
-  $("#topicdraft_tag_list").tagsInput()
+  $("#topicdraft_tag_list").tagsInput autocomplete_url: $('#topicdraft_tag_list').data('autocomplete-source')
   #default usage
   $("#topicdraft_title").charCount
     allowed: 30

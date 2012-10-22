@@ -21,7 +21,7 @@
       .span1
         = f.label :tag_list, "Tags"
       .span6       
-        = f.text_field :tag_list
+        = f.text_field :tag_list, data: {autocomplete_source: tags_names_url}  
     %p.span8
       %em
         %small.muted.offset1 (tags must be comma separated)
