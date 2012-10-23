@@ -50,20 +50,21 @@
       .row  
         .span3
           %h5.center Create your profile
-          =image_tag("profile_240px_w.png")  
+          =image_tag("profile.png")  
           %p
             Your profile includes a short bio where you describe who you are and what you are about. 
           %p  
             You can include links to you twitter, facebook, linkedin, blog and website.
           %p 
-          Here's my
+          Check out an existing
           = link_to "profile", user_path(1)
+          \.
         .span3
           %h5.center Build your knowledge portfolio
-          =image_tag("profile_240px_w.png")
+          =image_tag("projects&topics.png")
           %p 
             You are knowledgeable about many things and have built up experience while
-            working and studying . 
+            working and studying. 
           %p  
             Build your knowledge portfolio by documenting
             %strong Topics
@@ -71,7 +72,7 @@
             %strong Projects.
         .span3
           %h5.center Share anywhere
-          =image_tag("profile_240px_w.png")
+          =image_tag("social-share.png")
           %p  
             Add a link to your profile on linkedin, Twitter or email a link. 
           %p  
@@ -91,13 +92,15 @@
             you have done. 
           %p
             = link_to "Explore", posts_path   
-            projects and topics created by others
+            projects and topics created by others.
         .span3
           %h5.center Topics
-          =image_tag("profile_240px_w.png")  
+          %a{"data-toggle" => "modal", :href => "#topicModal", :role => "button", "data-show" => false}                    
+            =image_tag("topic.png")  
         .span3
           %h5.center Projects
-          =image_tag("profile_240px_w.png")                
+          %a{"data-toggle" => "modal", :href => "#projectModal", :role => "button", "data-show" => false}          
+            =image_tag("project.png")                
     %section#cases
       .well.well-small
         %h3 Use cases
@@ -125,3 +128,23 @@
     .spacer200       
     .spacer200 
     .spacer200  
+#topicModal.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3#topicModalLabel Example topic
+  .modal-body
+    %p
+      =image_tag("topic_2_full.png")
+  .modal-footer
+    %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+    =link_to 'View Topic', user_topic_path(1,2), class: "btn btn-primary"     
+#projectModal.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3#projectModalLabel Example project
+  .modal-body
+    %p
+      =image_tag("project_2_full.png")
+  .modal-footer
+    %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+    =link_to 'View Project', user_project_path(1,3), class: "btn btn-primary"     
