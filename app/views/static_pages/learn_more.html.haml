@@ -10,25 +10,25 @@
       %li#cases-tab.nav-header
         %a{:href => '#cases' }
           %h4.muted
-            Use cases
+            How can I use it?
             %i.icon-chevron-right.bs-docs-sidenav     
       %li#student-case-tab
-        %a{:href => '#cases' }
+        %a{:href => '#student-case' }
           %h6.muted
             Students
-      %li#professional-case-tab
+      %li#professional-case-tab.hide
         %a{:href => '#professional-case' }
           %h6.muted
             Professionals
       %li#jobseeker-case-tab
         %a{:href => '#jobseeker-case' }
           %h6.muted
-            Jobseekers
-      %li#company-case-tab
+            Professionals and Jobseekers
+      %li#company-case-tab.hide
         %a{:href => '#company-case' }
           %h6.muted
             companies  
-      %li#institution-case-tab
+      %li#institution-case-tab.hide
         %a{:href => '#institution-case' }
           %h6.muted
             Institutions                                                      
@@ -41,85 +41,36 @@
         %a{:href => '#about' }
           %h4.muted
             About us
-            %i.icon-chevron-right.bs-docs-sidenav                                            
+            %i.icon-chevron-right.bs-docs-sidenav
+      %li
+        .spacer20  
+        .span2
+          = link_to "Sign up now!", new_user_registration_path, class: "btn btn-small btn-primary"                                          
     .span1
-  .span9 
-    %section#features 
-      .well.well-small
-        %h3 What is it?
-      .row  
-        .span3
-          %h5.center Create your profile
-          =image_tag("profile.png")  
-          %p
-            Your profile includes a short bio where you describe who you are and what you are about. 
-          %p  
-            You can include links to you twitter, facebook, linkedin, blog and website.
-          %p 
-          Check out an existing
-          = link_to "profile", user_path(1)
-          \.
-        .span3
-          %h5.center Build your knowledge portfolio
-          =image_tag("projects&topics.png")
-          %p 
-            You are knowledgeable about many things and have built up experience while
-            working and studying. 
-          %p  
-            Build your knowledge portfolio by documenting
-            %strong Topics
-            and
-            %strong Projects.
-        .span3
-          %h5.center Share anywhere
-          =image_tag("social-share.png")
-          %p  
-            Add a link to your profile on linkedin, Twitter or email a link. 
-          %p  
-            Your 
-            %strong topics
-            and
-            %strong projects 
-            will be seen by viewers of your profile.          
-      .row.spacer50 
-        %br.bs-docs-separator    
-      .row  
-        .span3
-          .spacer20
-          %p
-            Topics and Projects are blog posts 
-            that document a piece of knowledge that you have or a project that
-            you have done. 
-          %p
-            = link_to "Explore", posts_path   
-            projects and topics created by others.
-        .span3
-          %h5.center Topics
-          %a{"data-toggle" => "modal", :href => "#topicModal", :role => "button", "data-show" => false}                    
-            =image_tag("topic.png")  
-        .span3
-          %h5.center Projects
-          %a{"data-toggle" => "modal", :href => "#projectModal", :role => "button", "data-show" => false}          
-            =image_tag("project.png")                
+  .span9
+    =render partial: 'features'                  
+    .spacer100
     %section#cases
       .well.well-small
-        %h3 Use cases
-      %p#student-case 
-        %h3 Students
-      %section#professional-case 
+        %h3 How can I use it?
+      %section#student-case 
+        =render partial: 'students'
+      %section#professional-case.hide 
         %h3 Professionals
       %section#jobseeker-case 
-        %h3 Jobseekers
-      %section#company-case 
+        =render partial: 'jobseekers'
+      %section#company-case.hide 
         %h3 Companies
-      %section#institution-case 
+      %section#institution-case.hide 
         %h3 Institutions           
+    .spacer100
     %section#pricing 
       .well.well-small 
         %h3 Pricing
     %h4 It's Free!
     %P
       We are in Beta and may offer premium features in the future.         
+    .spacer100
     %section#about 
       .well.well-small 
         %h3 About us

@@ -1,0 +1,60 @@
+%section#features 
+  .well.well-small
+    %h3 What is it?
+  .row  
+    .span3
+      %h5.center Create your profile
+      =image_tag("profile.png")  
+      %p
+        Your profile includes a short bio where you describe who you are and what you are about. 
+      %p  
+        You can include links to you twitter, facebook, linkedin, blog and website.
+      %p 
+      Check out an existing
+      = link_to "profile", user_path(1)
+      \.
+    .span3
+      %h5.center Build your knowledge portfolio
+      =image_tag("projects&topics.png")
+      %p 
+        You are knowledgeable about many things and have built up experience while
+        working and studying. 
+      %p  
+        Build your knowledge portfolio by documenting
+        %strong Topics
+        and
+        %strong Projects.
+    .span3
+      %h5.center Share anywhere
+      =image_tag("topichog-to-facebook-twitter-linkedin.png")
+      %p  
+        Add a link to your profile on linkedin, Twitter or email a link. 
+      %p  
+        Your 
+        %strong topics
+        and
+        %strong projects 
+        will be seen by viewers of your profile.          
+  .row.spacer50 
+    %br.bs-docs-separator    
+  .row  
+    .span3
+      .spacer20
+      %p
+        Topics and Projects are blog posts 
+        that document a piece of knowledge that you have or a project that
+        you have done. 
+      %p
+        = link_to "Explore", posts_path   
+        projects and topics created by others.
+    .span3
+      %h5.center Topics
+      %a{"data-toggle" => "modal", :href => "#topicModal", :role => "button", "data-show" => false}                    
+        =image_tag("topic.png")  
+        Click here to view
+    .span3
+      %h5.center Projects
+      %a{"data-toggle" => "modal", :href => "#projectModal", :role => "button", "data-show" => false}          
+        =image_tag("project.png")
+        Click here to view
+  .spacer50      
