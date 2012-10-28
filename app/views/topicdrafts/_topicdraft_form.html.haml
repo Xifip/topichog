@@ -1,33 +1,38 @@
 = form_for(topicdraft, :url => user_topicdrafts_url(@user)) do |f|
   = render partial: 'shared/error_messages', locals: {object: f.object}
   .field
-    %h2.span8 New Topic
-    %p.span8
+    = f.hidden_field :image_id 
+    %p.row.span8
+      .span2  
+        = f.submit "Save draft topic", class: "btn btn-large btn-primary"
+      %h2.span4 New Topic
+    %p.row.span8
       .span1
         = f.label :title, "Title"
       .span6  
         = f.text_field :title
-    %p.span8
+    %p.row.span8
       .span1
         = f.label :summary, "Summary"
       .span6          
         = f.text_area :summary, rows: 3
-    %p.span8
-      .span1
-        = f.label :reference, "Links & references"
-      .span6   
-        = f.text_area :reference, :id =>'reference_textarea', placeholder: "Topic references and links..."                     
-    %p.span8
+    %p.row.span8
       .span1
         = f.label :tag_list, "Tags"
       .span6       
-        = f.text_field :tag_list, data: {autocomplete_source: tags_names_url}    
-    %p.span8
+        = f.text_field :tag_list, data: {autocomplete_source: tags_names_url}  
+    %p.row.span8
       %em
-        %small.muted.offset1 (tags must be comma separated)
-    %p.span8
+        %small.muted.offset1 (tags must be comma separated)                
+    %p.row.span8
+      .span1
+        = f.label :reference, "Links & references"
+      .span6   
+        = f.text_area :reference, :id =>'reference_textarea', placeholder: "Topic references and links..."                       
+    %p.row.span8.spacer30
+    %p.row.span8
       Topic description           
-    %p.span8   
+    %p.row.span8   
       = f.text_area :content, :id =>'content_textarea', placeholder: "Topic content..."
-    %p.span8  
+    %p.row.span8  
       = f.submit "Save draft topic", class: "btn btn-large btn-primary"

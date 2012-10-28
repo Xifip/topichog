@@ -2,13 +2,28 @@ class TopicdraftsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :correct_user, only: [:create, :destroy, :edit, :show]
   
-  def create  
-    @topicdraft = current_user.topicdrafts.new(params[:topicdraft])
+  def create 
+  debugger 
+    @topicdraftimage = Topicdraftimage.find_by_id(params[:topicdraft][:image_id])
+    #topicdraft_image = @topicdraftimage.image.to_s || "add_image.png"    
+    if @topicdraftimage
+      topicdraft_image = File.open(@topicdraftimage.image.current_path)
+    else  
+      topicdraft_image = nil
+    end
+    @topicdraft = current_user.topicdrafts.new(title: params[:topicdraft][:title],
+                                             summary: params[:topicdraft][:summary],
+                                             reference: params[:topicdraft][:reference],
+                                             content: params[:topicdraft][:content],
+                                             tag_list: params[:topicdraft][:tag_list],
+                                             image: topicdraft_image)
     @topicdraft.draft_ahead = true
       # note update_attributes Updates this resource with all the attributes 
       # from the passed-in Hash and requests that the record be saved.
     if @topicdraft.save
-
+      if @topicdraftimage
+        @topicdraftimage.topicdraft_id = @topicdraft.id
+      end  
       flash[:success] = "Topic draft created!"
       redirect_to user_topicdraft_path(current_user, @topicdraft)
     else
@@ -31,6 +46,7 @@ class TopicdraftsController < ApplicationController
                                    reference: params[:topicdraft][:reference],
                                    content: params[:topicdraft][:content],
                                    tag_list: params[:topicdraft][:tag_list],
+                                   image: params[:topicdraft][:image],
                                    draft_ahead: true
                                    )
            
@@ -44,11 +60,12 @@ class TopicdraftsController < ApplicationController
   def show 
 
     @user = User.find_by_id(params[:user_id]) 
-    @topicdraft = @user.topicdrafts.find_by_id(params[:id])   
+    @topicdraft = @user.topicdrafts.find_by_id(params[:id])  
 
   end
   
   def new
+    #@topicdraftimage = Topicdraftimage.first
     @user = User.find_by_id(params[:user_id])
     if current_user != @user
       flash[:error] = "You can't create a topic for another user!"

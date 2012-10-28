@@ -280,7 +280,6 @@ input, textarea, select, .uneditable-input {
       
 /* projecs */
 
-
 .edit_bio_col, form.new_projectdraft, form.new_topicdraft, form.edit_projectdraft, form.edit_topicdraft {
   .counter{
 	  font-weight:bold;
@@ -370,6 +369,26 @@ aside {
 .spacer50 { height: 50px; width: 100%; font-size: 0; margin: 0; padding: 0; border: 0; display: block; }
 .spacer100 { height: 100px; width: 100%; font-size: 0; margin: 0; padding: 0; border: 0; display: block; }
 .spacer200 { height: 200px; width: 100%; font-size: 0; margin: 0; padding: 0; border: 0; display: block; }
+
+.mas{margin:5px;} 
+.mam{margin:10px;}
+.mal{margin:20px;}
+.mts{margin-top:5px;}
+.mtm{margin-top:10px;}
+.mtl{margin-top:20px;}
+.mbs{margin-bottom:5px;}
+.mbm{margin-bottom:10px;}
+.mbl{margin-bottom:20px;}
+
+.pas{padding:5px;} 
+.pam{padding:10px;}
+.pal{padding:20px;}
+.pts{padding-top:5px;}
+.ptm{padding-top:10px;}
+.ptl{padding-top:20px;}
+.pbs{padding-bottom:5px;}
+.pbm{padding-bottom:10px;}
+.pbl{padding-bottom:20px;}
 
 .divheight5 { height: 5px; }
 

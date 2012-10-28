@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require jquery-fileupload/basic
+//= require jquery-fileupload/vendor/tmpl
 //= require jquery.purr
 //= require best_in_place
 //= require jquery.Jcrop.min
@@ -27,6 +29,7 @@
 //= require profiles.js.coffee
 //= require projectdrafts.js.coffee
 //= require tags_names.js.coffee
+//= require topicdraftimages.js.coffee
 //= require topicdrafts.js.coffee
 //= require static_pages.js.coffee
 //= require projects.js.coffee

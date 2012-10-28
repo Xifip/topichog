@@ -15,7 +15,7 @@ TopicHog::Application.routes.draw do
   get 'posts/:tag1', to: 'posts#index', as: :post
 
   devise_for :users #, :controllers => { :registrations => "registrations" } 
-  
+  resources :topicdraftimages
   resources :users, :only => [:show, :index] do
     member do
       get :following, :followers 

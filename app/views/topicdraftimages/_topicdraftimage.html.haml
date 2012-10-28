@@ -1,0 +1,6 @@
+.painting
+  = link_to image_tag(topicdraftimage.image_url(:thumb)), topicdraftimage if topicdraftimage.image?
+  .actions
+    = link_to "edit", edit_topicdraftimage_path(topicdraftimage)
+    |
+    \#{link_to "remove", topicdraftimage, :confirm => 'Are you sure?', :method => :delete}

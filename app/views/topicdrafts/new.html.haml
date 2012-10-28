@@ -1,12 +1,10 @@
 = provide(:title, @user.name + ' | new topic draft')
-.row
-  %aside.span4
-    %section
-      = render 'shared/user_info'
-    %section
-      = render 'shared/stats'
-    %section
-      %p= link_to "View all users", users_path      
-  .span8
+.row  
+  .span8.offset2
     = render partial: 'topicdraft_form', locals: {topicdraft: @topicdraft}
-    
+#topicdraftimages
+  %p= image_tag @topicdraftimage.image_url if @topicdraftimage
+.clear
+= form_for Topicdraftimage.new do |f|
+  = f.label :image, "Upload topicdraftimage:"
+  = f.file_field :image, multiple: false, name: "topicdraftimage[image]"    

@@ -1,33 +1,51 @@
-= form_for(topicdraft, :url => user_update_topicdraft_path(@user, topicdraft), :html => { :method => "put" }) do |f|
+= form_for(topicdraft, :url => user_update_topicdraft_path(@user, topicdraft), :html => { :method => "put", :multipart => true }) do |f|
   = render partial: 'shared/error_messages', locals: {object: f.object}
   .field
-    %h2.span8 Edit Topic
-    %p.span8
+    %p.row.span8
+      .span2  
+        = f.submit "Save draft topic", class: "btn btn-large btn-primary"
+      %h2.span4 Edit Topic
+    %p.row.span8
+      .span5
+        %table
+          %tr
+            %td.pbl
+              %div.span1
+                = f.label :title, "Title"
+            %td.span1.pbl
+            %td.span4.pbl           
+              = f.text_field :title 
+          %tr
+            %td.pbl
+              %div.span1
+                = f.label :summary, "Summary"
+            %td.span1.pbl
+            %td.pbl
+              = f.text_area :summary, rows: 4           
+      .span2
+        %p  
+          = f.label :image, "Topic Image"      
+        =image_tag(@topicdraft.image_url(:thumb).to_s, alt: @user.name, class: "img-polaroid")  
+        %p
+          = f.file_field :image                   
+    %p.row.row.span8.spacer30    
+    %p.row
       .span1
-        = f.label :title, "Title"
-      .span6  
-        = f.text_field :title
-    %p.span8
-      .span1
-        = f.label :summary, "Summary"
-      .span6          
-        = f.text_area :summary, rows: 3
-    %p.span8
+        = f.label :tag_list, "Tags"
+      .span6      
+        = f.text_field :tag_list, data: {autocomplete_source: tags_names_url}  
+    %p.row.span8
+      %em
+        %small.muted.offset1 (tags must be comma separated)        
+    %p.row.span8
       .span1
         = f.label :reference, "Links & references"
       .span6   
         = f.text_area :reference, :id =>'reference_textarea', placeholder: "Topic references and links..."                     
-    %p.span8
-      .span1
-        = f.label :tag_list, "Tags"
-      .span6       
-        = f.text_field :tag_list, data: {autocomplete_source: tags_names_url}    
-    %p.span8
-      %em
-        %small.muted.offset1 (tags must be comma separated)
-    %p.span8
+    %p.row.row.span8.spacer30    
+    %p.row.span8
       Topic description          
-    %p.span8   
+    %p.row.span8   
       = f.text_area :content, :id =>'content_textarea', placeholder: "Topic content..."
-    %p.span8  
+    %p.row.span8  
       = f.submit "Save draft topic", class: "btn btn-large btn-primary"

@@ -1,9 +1,4 @@
 = provide(:title, @user.name + ' | edit ' + @projectdraft.title)
-.row
-  %aside.span4
-    %section
-      = render 'shared/user_info'
-    %section
-      = render 'shared/stats'    
-  .span8
+.row  
+  .span8.offset2
     = render partial: 'edit_projectdraft_form', locals: {projectdraft: @projectdraft}

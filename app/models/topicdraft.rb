@@ -1,5 +1,5 @@
 class Topicdraft < ActiveRecord::Base
-  attr_accessible :summary, :title, :tag_list, :content, :reference,:draft_ahead
+  attr_accessible :summary, :title, :tag_list, :content, :reference,:draft_ahead, :image, :image_id
   
   acts_as_taggable_on :tags
     
@@ -10,6 +10,8 @@ class Topicdraft < ActiveRecord::Base
   validates :summary, presence: true, length: { maximum: 140 }
   validate :validate_tags#, :on => :create
   
+  mount_uploader :image, TopicdraftimageUploader
+  attr_accessor :image_id
   default_scope order: 'topicdrafts.created_at DESC' 
 
   def self.topicdrafts_unpublished_from(user)

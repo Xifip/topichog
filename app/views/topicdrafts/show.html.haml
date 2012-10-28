@@ -16,8 +16,14 @@
         .row
           .span5
             .row.span5
-              %h3         
-                =@topicdraft.title
+              .span1 
+                -if @topicdraft.image?
+                  = image_tag(@topicdraft.image_url(:thumb).to_s, alt: "", class: "img-polaroid")
+                -if !@topicdraft.image?
+                  = avatar_for @user, size: 52  
+              .span3
+                %h3        
+                  =@topicdraft.title
             .row
               .span5 
                 =@topicdraft.summary              

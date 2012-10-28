@@ -1,0 +1,6 @@
+- if @topicdraftimage.new_record?
+  alert("Failed to upload image: #{j @topicdraftimage.errors.full_messages.join(', ').html_safe}");
+- else
+  $("#topicdraftimages").children().remove();
+  $("#topicdraftimages").append("#{j render(@topicdraftimage)}");
+  $('#topicdraft_image_id').val(#{@topicdraftimage.id})

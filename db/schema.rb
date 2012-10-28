@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121015111711) do
+ActiveRecord::Schema.define(:version => 20121026152645) do
 
   create_table "avatars", :force => true do |t|
     t.integer  "user_id"
@@ -89,12 +89,12 @@ ActiveRecord::Schema.define(:version => 20121015111711) do
   create_table "projectdrafts", :force => true do |t|
     t.string   "title"
     t.string   "summary"
+    t.integer  "user_id"
     t.text     "content"
     t.text     "reference"
     t.integer  "project_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.integer  "user_id"
     t.boolean  "draft_ahead"
   end
 
@@ -136,6 +136,13 @@ ActiveRecord::Schema.define(:version => 20121015111711) do
     t.string "name"
   end
 
+  create_table "topicdraftimages", :force => true do |t|
+    t.string   "image"
+    t.integer  "topicdraft_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
   create_table "topicdrafts", :force => true do |t|
     t.string   "title"
     t.string   "summary"
@@ -146,6 +153,7 @@ ActiveRecord::Schema.define(:version => 20121015111711) do
     t.boolean  "draft_ahead"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "image"
   end
 
   create_table "topics", :force => true do |t|
