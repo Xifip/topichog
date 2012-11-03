@@ -1,6 +1,7 @@
 #uri = URI.parse(ENV["REDISTOGO_URL"])
 #REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 #$redis = Redis.new(:host => 'localhost', :port => 6379)
+
 if Rails.env.test? || Rails.env.cucumber?
   REDIS = Redis.new(:db => 1)
 else
@@ -10,3 +11,4 @@ else
 
   REDIS = Redis.new(:host => redis_config[:host], :port => redis_config[:port], :password => redis_config[:password])
 end  
+

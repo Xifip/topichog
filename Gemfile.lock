@@ -246,11 +246,6 @@ GEM
       multi_json (~> 1)
       redis (~> 3)
       redis-namespace
-    sidekiq-failures (0.0.1)
-      sidekiq (>= 2.2.1)
-      sinatra
-      slim
-      sprockets
     simplecov (0.6.4)
       multi_json (~> 1.0)
       simplecov-html (~> 0.5.3)
@@ -339,7 +334,6 @@ DEPENDENCIES
   rspec-rails (= 2.11.0)
   sass-rails (= 3.2.4)
   sidekiq
-  sidekiq-failures
   simplecov
   sinatra
   slim

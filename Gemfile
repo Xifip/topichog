@@ -18,10 +18,10 @@ gem "carrierwave_direct"
 gem "sidekiq"
 #gem "aws-s3", :require => 'aws/s3' 
 #gem 'aws-sdk'
-# sinatra & slim needed for sidekiq web interface
+#sinatra & slim needed for sidekiq web interface
 gem 'sinatra', require:false
 gem 'slim'
-gem 'sidekiq-failures'
+#gem 'sidekiq-failures'
 gem 'redis'
 group :development, :test do
 gem 'pg', '0.12.2'
