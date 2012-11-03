@@ -5,6 +5,8 @@ class Topicdraft < ActiveRecord::Base
     
   belongs_to :topic
   belongs_to :user
+  has_many :topicdraftimages, dependent: :destroy
+  
   validates :user_id, presence: true
   validates :title, presence: true, length: { maximum: 30 }
   validates :summary, presence: true, length: { maximum: 140 }

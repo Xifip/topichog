@@ -6,6 +6,7 @@
     %section
       = render 'shared/stats'   
     = render partial: 'users/follow_form' if user_signed_in? 
+    .spacer50      
     %section.my-hero-unit
       %h4 Links and references:
       .ref 
@@ -14,13 +15,16 @@
     .row.my-hero-unit
       .span8
         .row
-          .span5
-            .row.span5
-              %h3         
-                =@projectdraft.title
-            .row
-              .span5  
-                =@projectdraft.summary              
+          .span1
+            -if @projectdraftimage
+              = image_tag(@projectdraftimage.image_url(:thumb).to_s, alt: "", class: "img-polaroid row")
+            -if !@projectdraftimage
+              = avatar_for @user, size: 52           
+          .span4
+            %h3      
+              =@projectdraft.title
+            %div
+              =@projectdraft.summary                      
           .span2
             .row  
               .spacer5  

@@ -1,27 +1,40 @@
-%li
-  %span.title
-  - if post.postable_type == "Ppost"
-    = link_to post.postable.title, user_ppost_path(post.user.id, post.postable), id: "ppost_link_#{post.id}"
-  - if post.postable_type == "Tpost"   
-    = link_to post.postable.title, user_tpost_path(post.user.id, post.postable), id: "tpost_link_#{post.id}"
-  - if post.postable_type == "Project"
-    = link_to post.postable.title, user_project_path(post.user.id, post.postable), id: "project_link_#{post.id}"
-  - if post.postable_type == "Topic"   
-    = link_to post.postable.title, user_topic_path(post.user.id, post.postable), id: "topic_link_#{post.id}"  
-  %span.summary= post.postable.summary
-  %span.timestamp
-    Posted #{time_ago_in_words(post.created_at)} ago.
-  - if current_user == post.user 
-    = link_to "delete", post, method: :delete, |
-      data: { confirm: "You sure?" },          |
-      title: post.postable.title               |
-  - if post.postable_type == "Project" && current_user == post.user
-    - if post.postable.projectdraft.draft_ahead
-      = link_to "draft (unpublished)", user_projectdraft_path(post.user, post.postable.projectdraft )  
-  - if post.postable_type == "Topic" && current_user == post.user
-    - if post.postable.topicdraft.draft_ahead
-      = link_to "draft (unpublished)", user_topicdraft_path(post.user, post.postable.topicdraft )               
-  %span.post_info
-  - if post.likes_count > 0
-    %strong#liking.stat #{post.likes_count}
-    favorites  
+%li.feedpost
+  -if post.postable_type == "Project"
+    -if post.postable.projectdraftimages.count == 0
+      = avatar_for post.user, size: 52 
+    -else
+      = image_tag(post.postable.projectdraftimages.first.image_url(:thumb).to_s, alt: "", class: "img-polaroid")    
+  -if post.postable_type == "Topic"
+    -if post.postable.topicdraftimages.count == 0
+      = avatar_for post.user, size: 52 
+    -else
+      = image_tag(post.postable.topicdraftimages.first.image_url(:thumb).to_s, alt: "", class: "img-polaroid")    
+  %div.title
+    - if post.postable_type == "Ppost"
+      = link_to post.postable.title, user_ppost_path(post.user.id, post.postable), id: "ppost_link_#{post.id}"
+    - if post.postable_type == "Tpost"   
+      = link_to post.postable.title, user_tpost_path(post.user.id, post.postable), id: "tpost_link_#{post.id}"
+    - if post.postable_type == "Project"
+      = link_to post.postable.title, user_project_path(post.user.id, post.postable), id: "project_link_#{post.id}"
+    - if post.postable_type == "Topic"   
+      = link_to post.postable.title, user_topic_path(post.user.id, post.postable), id: "topic_link_#{post.id}"  
+    %span.summary= post.postable.summary
+  %div
+    %span.timestamp
+      Posted #{time_ago_in_words(post.updated_at)} ago.
+    - if current_user == post.user 
+      = link_to "delete", post, method: :delete, |
+        data: { confirm: "You sure?" },          |
+        title: post.postable.title               |
+    - if post.postable_type == "Project" && current_user == post.user
+      - if post.postable.projectdraft.draft_ahead
+        |
+        \#{ link_to "view draft", user_projectdraft_path(post.user, post.postable.projectdraft ) }      
+    - if post.postable_type == "Topic" && current_user == post.user
+      - if post.postable.topicdraft.draft_ahead
+        |
+        \#{ link_to "view draft", user_topicdraft_path(post.user, post.postable.topicdraft ) }
+    %span.post_info
+    - if post.likes_count > 0
+      %strong#liking.stat #{post.likes_count}
+      favorites  

@@ -16,7 +16,7 @@ describe "Topic pages" do
     subject {page} 
     
     describe "shows user info and topic" do
-      it { should have_selector('h1', text: user.name) }
+      it { should have_selector('h4', text: user.name) }
       it { should have_content ( post.postable.title) }
       it { should have_content ( post.postable.summary) }
       #user nokogiri or elementor to scrap content  
@@ -40,7 +40,7 @@ describe "Topic pages" do
     subject {page} 
     
     describe "shows user and topic info" do
-      it { should have_selector('h1', text: other_user.name) }
+      it { should have_selector('h4', text: other_user.name) }
       it { should have_content ( post.postable.title) }
       it { should have_content ( post.postable.summary) }
       #user nokogiri or elementor to scrap content  
@@ -144,7 +144,7 @@ describe "Topic pages" do
     end  
     
     describe "shows user and topic info" do
-      it { should have_selector('h1', text: other_user.name) }
+      it { should have_selector('h4', text: other_user.name) }
       it { should have_content ( liked_post.postable.title) }
       it { should have_content ( liked_post.postable.summary) }
       it { should have_link('view profile', href: user_path(other_user)) }

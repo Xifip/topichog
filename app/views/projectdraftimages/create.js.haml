@@ -1,0 +1,6 @@
+- if @projectdraftimage.new_record?
+  alert("Failed to upload image: #{j @projectdraftimage.errors.full_messages.join(', ').html_safe}");
+- else
+  $("#projectdraftimages").children().remove();
+  $("#projectdraftimages").append("#{j render(@projectdraftimage)}");
+  $('#projectdraft_image_id').val(#{@projectdraftimage.id})

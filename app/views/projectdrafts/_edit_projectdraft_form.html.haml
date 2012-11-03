@@ -1,21 +1,44 @@
+%p.row.span8
+  .span3
+    %button#save_draft_project.btn.btn-large.btn-primary
+      Save draft project
+  .span3
+    %h2 Edit Project   
+%p.row
+  .span1
+    Project Image
+  .span1      
+    #projectdraftimages
+      -if @projectdraftimage
+        %p= image_tag(@projectdraftimage.image_url(:thumb).to_s, alt: "", class: "img-polaroid")
+      -else  
+        %p= image_tag 'add_image.png'
+  .span5
+    .clear          
+    -if !@projectdraftimage.nil?
+      = form_for @projectdraftimage do |f|
+        = f.file_field :image, multiple: false, name: "projectdraftimage[image]" , class: "span1"
+    -else           
+      = form_for Projectdraftimage.new do |f|
+        = f.file_field :image, multiple: false, name: "projectdraftimage[image]" 
 = form_for(projectdraft, :url => user_update_projectdraft_path(@user, projectdraft), :html => { :method => "put" }) do |f|
   = render partial: 'shared/error_messages', locals: {object: f.object}
   .field
-    %p.row.span8
-      .span2  
-        = f.submit "Save draft project", class: "btn btn-large btn-primary"
-      %h2.span4 Edit Project 
-    %p.row.span8
+    = f.hidden_field :image_id  
+    %p.row.span8.spacer30  
+    %p.row
       .span1
         = f.label :title, "Title"
       .span6  
         = f.text_field :title
-    %p.row.span8
+    %p.row.span8.spacer30          
+    %p.row
       .span1
         = f.label :summary, "Summary"
       .span6          
-        = f.text_area :summary, rows: 3
-    %p.row.span8
+        = f.text_area :summary, rows: 4
+    %p.row.span8.spacer30  
+    %p.row
       .span1
         = f.label :tag_list, "Tags"
       .span6       

@@ -7,9 +7,8 @@ describe "Projectdraft pages" do
     
     subject {page}
     
-    describe "shows user info" do
+    describe "is the right page" do
       it { should have_selector('title', text: full_title(user.name + ' | new project draft')) }
-      it { should have_selector('h1', text: user.name) }
     end
     
     describe "with invalid information" do
@@ -17,13 +16,19 @@ describe "Projectdraft pages" do
       it {page.should have_content "New Project"}
      
       it "should not create a project" do
-        expect { page.click_button "Save draft project" }.to_not change(Projectdraft, :count)
-        expect { page.click_button "Save draft project" }.to_not change(Post, :count)
-        expect { page.click_button "Save draft project" }.to_not change(Project, :count)
+        within("form.new_projectdraft") do
+          expect { click_button "Save draft project" }.to_not change(Projectdraft, :count)
+          expect { click_button "Save draft project" }.to_not change(Post, :count)
+          expect { click_button "Save draft project" }.to_not change(Project, :count)
+        end  
       end
       
       describe "error messages" do
-        before { page.click_button "Save draft project" }
+         before do
+           within("form.new_projectdraft") do
+            click_button "Save draft project" 
+           end
+         end
         it { page.should have_content('error') }
       end      
     end
@@ -36,34 +41,53 @@ describe "Projectdraft pages" do
          page.fill_in 'reference_textarea', with: "Ipsum lorem"
          page.fill_in 'Tags', with: "tag1, tag2, tag3"
       end
-      it "should create a projectdraft" do        
-        expect { page.click_button "Save draft project" }.to change(Projectdraft, :count).by(1)
+      it "should create a projectdraft" do 
+        within("form.new_projectdraft") do       
+          expect { click_button "Save draft project" }.to change(Projectdraft, :count).by(1)
+        end
       end
-      it "should not create a project" do        
-        expect { page.click_button "Save draft project" }.to_not change(Project, :count).by(1)
+      it "should not create a project" do 
+        within("form.new_projectdraft") do       
+          expect { click_button "Save draft project" }.to_not change(Project, :count).by(1)
+        end
       end
       it "should not create a post" do
-        expect { page.click_button "Save draft project" }.to_not change(Post, :count).by(1)        
+        within("form.new_projectdraft") do
+          expect { click_button "Save draft project" }.to_not change(Post, :count).by(1)        
+        end
       end
       
       describe "associations created" do
        
-       before { page.click_button "Save draft project" }
-      
+       
+       before do
+         within("form.new_projectdraft") do
+          click_button "Save draft project" 
+         end
+       end
+       
        it "should have the right user assositations" do
         Projectdraft.last.user.should eq user
        end
              
       end
       describe "draft status" do
-        before {page.click_button "Save draft project"}
+       before do
+         within("form.new_projectdraft") do
+          click_button "Save draft project" 
+         end
+       end
         it "draft is ahead of published" do
           Projectdraft.last.draft_ahead.should eq true 
         end
       end
       
       describe "tag creation" do
-        before {page.click_button "Save draft project"}
+       before do
+         within("form.new_projectdraft") do
+          click_button "Save draft project" 
+         end
+       end
          it "should create project tags" do            
           Projectdraft.last.tag_list.should include("tag1") 
           Projectdraft.last.tag_list.should include("tag2")
@@ -82,7 +106,6 @@ describe "Projectdraft pages" do
     subject {page} 
     
     describe "shows user and project info" do
-      it { should have_selector('h1', text: user.name) }
       it { should have_content ( projectdraft.title) }
       it { should have_content ( projectdraft.summary) }
       #user nokogiri or elementor to scrap content  
@@ -303,8 +326,10 @@ describe "Projectdraft pages" do
       
       describe "save draft with invalid information" do
         before do
-           page.fill_in 'Title', with: ""
-           page.click_button "Save draft project"
+          within("form.edit_projectdraft") do
+            fill_in 'Title', with: ""
+            click_button "Save draft project"
+          end
         end
        
         it "should not update the project" do
@@ -318,12 +343,14 @@ describe "Projectdraft pages" do
     
       describe "save draft with valid information" do
         before do
-           page.fill_in 'Title', with: "Lorem ipsum draft"
-           page.fill_in 'Summary', with: "Ipsum lorem draft"
-           page.fill_in 'content_textarea', with: "Ipsum lorem draft"
-           page.fill_in 'reference_textarea', with: "Ipsum lorem draft"
-           page.fill_in 'Tags', with: "tag1_draft, tag2_draft, tag3_draft"
-           page.click_button "Save draft project"
+          within("form.edit_projectdraft") do
+            fill_in 'Title', with: "Lorem ipsum draft"
+            fill_in 'Summary', with: "Ipsum lorem draft"
+            fill_in 'content_textarea', with: "Ipsum lorem draft"
+            fill_in 'reference_textarea', with: "Ipsum lorem draft"
+            fill_in 'Tags', with: "tag1_draft, tag2_draft, tag3_draft"
+            click_button "Save draft project"
+          end   
         end
         it "should update the projectdraft" do        
           Projectdraft.last.title.should eq("Lorem ipsum draft")
@@ -377,8 +404,10 @@ describe "Projectdraft pages" do
       
       describe "save draft with invalid information" do
         before do
-           page.fill_in 'Title', with: ""
-           page.click_button "Save draft project"
+          within("form.edit_projectdraft") do
+            fill_in 'Title', with: ""
+            click_button "Save draft project"
+          end 
         end      
         
         describe "error messages" do
@@ -388,12 +417,14 @@ describe "Projectdraft pages" do
     
       describe "save draft with valid information" do
         before do
-           page.fill_in 'Title', with: "Lorem ipsum draft"
-           page.fill_in 'Summary', with: "Ipsum lorem draft"
-           page.fill_in 'content_textarea', with: "Ipsum lorem draft"
-           page.fill_in 'reference_textarea', with: "Ipsum lorem draft"
-           page.fill_in 'Tags', with: "tag1_draft, tag2_draft, tag3_draft"
-           page.click_button "Save draft project"
+         within("form.edit_projectdraft") do
+           fill_in 'Title', with: "Lorem ipsum draft"
+           fill_in 'Summary', with: "Ipsum lorem draft"
+           fill_in 'content_textarea', with: "Ipsum lorem draft"
+           fill_in 'reference_textarea', with: "Ipsum lorem draft"
+           fill_in 'Tags', with: "tag1_draft, tag2_draft, tag3_draft"
+           click_button "Save draft project"
+         end  
         end
         
         it "should update the projectdraft" do        

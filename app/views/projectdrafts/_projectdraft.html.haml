@@ -1,8 +1,13 @@
-%li{:id => "projectdraft_" + projectdraft.id.to_s}
-  %span.title
+%li.feedpost{:id => "projectdraft_" + projectdraft.id.to_s}
+  -if projectdraft.projectdraftimages.count == 0
+    = avatar_for @user, size: 52 
+  -else
+    = image_tag(projectdraft.projectdraftimages.first.image_url(:thumb).to_s, alt: "", class: "img-polaroid")  
+  %div.title
     = link_to projectdraft.title, user_projectdraft_path(projectdraft.user, projectdraft), id: "projectdraft_link_#{projectdraft.id}"
-  %span.summary= projectdraft.summary
-  %span.timestamp
-    Last edited #{time_ago_in_words(projectdraft.created_at)} ago.
+    %span.summary= projectdraft.summary
+  %div
+    %span.timestamp
+      Last edited #{time_ago_in_words(projectdraft.created_at)} ago.
   
           

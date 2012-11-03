@@ -1,7 +1,0 @@
-%p= image_tag @topicdraftimage.image_url
-%p 
-  =link_to "Back to images", topicdraftimages_path
-.clear
-= form_for Topicdraftimage.new do |f|
-  = f.label :image, "Upload topicdraftimage:"
-  = f.file_field :image, multiple: false, name: "topicdraftimage[image]"  

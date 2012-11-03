@@ -16,6 +16,8 @@ gem "best_in_place"
 gem "fog"
 gem "carrierwave_direct"
 gem "sidekiq"
+#gem "aws-s3", :require => 'aws/s3' 
+#gem 'aws-sdk'
 # sinatra & slim needed for sidekiq web interface
 gem 'sinatra', require:false
 gem 'slim'

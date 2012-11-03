@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121026152645) do
+ActiveRecord::Schema.define(:version => 20121103103931) do
 
   create_table "avatars", :force => true do |t|
     t.integer  "user_id"
@@ -86,6 +86,15 @@ ActiveRecord::Schema.define(:version => 20121026152645) do
     t.string   "myblog_url"
   end
 
+  create_table "projectdraftimages", :force => true do |t|
+    t.string   "image"
+    t.integer  "projectdraft_id"
+    t.integer  "user_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "project_id"
+  end
+
   create_table "projectdrafts", :force => true do |t|
     t.string   "title"
     t.string   "summary"
@@ -96,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20121026152645) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.boolean  "draft_ahead"
+    t.string   "image"
   end
 
   create_table "projects", :force => true do |t|
@@ -106,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20121026152645) do
     t.datetime "updated_at", :null => false
     t.text     "content"
     t.text     "reference"
+    t.string   "image"
   end
 
   create_table "relationships", :force => true do |t|
@@ -141,6 +152,8 @@ ActiveRecord::Schema.define(:version => 20121026152645) do
     t.integer  "topicdraft_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.integer  "user_id"
+    t.integer  "topic_id"
   end
 
   create_table "topicdrafts", :force => true do |t|
@@ -164,6 +177,7 @@ ActiveRecord::Schema.define(:version => 20121026152645) do
     t.datetime "updated_at", :null => false
     t.text     "content"
     t.text     "reference"
+    t.string   "image"
   end
 
   create_table "tposts", :force => true do |t|

@@ -7,8 +7,8 @@ class Post < ActiveRecord::Base
   #likes
   has_many :likes, :foreign_key => "liked_id", :dependent => :destroy
   has_many :likers, :through => :likes, :source => :liker, 
-    :class_name => "User"
-    
+    :class_name => "User"  
+     
   validates :user_id, presence: true
   validates :postable_id, presence: true
   validates :postable_type, presence: true

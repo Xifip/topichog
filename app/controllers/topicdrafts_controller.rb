@@ -3,26 +3,19 @@ class TopicdraftsController < ApplicationController
   before_filter :correct_user, only: [:create, :destroy, :edit, :show]
   
   def create 
-  debugger 
-    @topicdraftimage = Topicdraftimage.find_by_id(params[:topicdraft][:image_id])
-    #topicdraft_image = @topicdraftimage.image.to_s || "add_image.png"    
-    if @topicdraftimage
-      topicdraft_image = File.open(@topicdraftimage.image.current_path)
-    else  
-      topicdraft_image = nil
-    end
+    @topicdraftimage = Topicdraftimage.find_by_id(params[:topicdraft][:image_id])  
     @topicdraft = current_user.topicdrafts.new(title: params[:topicdraft][:title],
                                              summary: params[:topicdraft][:summary],
                                              reference: params[:topicdraft][:reference],
                                              content: params[:topicdraft][:content],
-                                             tag_list: params[:topicdraft][:tag_list],
-                                             image: topicdraft_image)
+                                             tag_list: params[:topicdraft][:tag_list])
     @topicdraft.draft_ahead = true
       # note update_attributes Updates this resource with all the attributes 
       # from the passed-in Hash and requests that the record be saved.
     if @topicdraft.save
       if @topicdraftimage
         @topicdraftimage.topicdraft_id = @topicdraft.id
+        @topicdraftimage.save
       end  
       flash[:success] = "Topic draft created!"
       redirect_to user_topicdraft_path(current_user, @topicdraft)
@@ -35,21 +28,28 @@ class TopicdraftsController < ApplicationController
   def edit
     @user = User.find_by_id(params[:user_id]) 
     @topicdraft = @user.topicdrafts.find_by_id(params[:id])   
+    @topicdraftimage = Topicdraftimage.topicdraftimage_for_topicdraft(@topicdraft).first
   end 
 
   def update
     @user = User.find_by_id(params[:user_id]) 
+    @topicdraftimage = Topicdraftimage.find_by_id(params[:topicdraft][:image_id])  
     @topicdraft = @user.topicdrafts.find_by_id(params[:id])     
+       
+    if @topicdraftimage
+      if @topicdraftimage.topicdraft_id != @topicdraft.id
+        @topicdraftimage.topicdraft_id = @topicdraft.id
+        @topicdraftimage.save
+      end  
+    end 
     
     if @topicdraft.update_attributes(title: params[:topicdraft][:title],
                                    summary: params[:topicdraft][:summary],
                                    reference: params[:topicdraft][:reference],
                                    content: params[:topicdraft][:content],
                                    tag_list: params[:topicdraft][:tag_list],
-                                   image: params[:topicdraft][:image],
                                    draft_ahead: true
-                                   )
-           
+                                   )         
       flash[:notice] = "Successfully updated topic draft."
       redirect_to user_topicdraft_path(@user, @topicdraft)
     else
@@ -61,11 +61,10 @@ class TopicdraftsController < ApplicationController
 
     @user = User.find_by_id(params[:user_id]) 
     @topicdraft = @user.topicdrafts.find_by_id(params[:id])  
-
+    @topicdraftimage = Topicdraftimage.topicdraftimage_for_topicdraft(@topicdraft).first 
   end
   
   def new
-    #@topicdraftimage = Topicdraftimage.first
     @user = User.find_by_id(params[:user_id])
     if current_user != @user
       flash[:error] = "You can't create a topic for another user!"
@@ -78,6 +77,10 @@ class TopicdraftsController < ApplicationController
   def discard
     @user = User.find_by_id(params[:user_id]) 
     @topicdraft = @user.topicdrafts.find_by_id(params[:id])
+    @topicdraftimage = Topicdraftimage.topicdraftimage_for_topicdraft(@topicdraft).first    
+    if @topicdraftimage
+      @topicdraftimage.destroy
+    end      
     if @topicdraft.topic
       if @topicdraft.update_attributes(title:@topicdraft.topic.title,
                                      summary: @topicdraft.topic.summary,
@@ -101,17 +104,27 @@ class TopicdraftsController < ApplicationController
   def publish
    @user = User.find_by_id(params[:user_id]) 
    @topicdraft = @user.topicdrafts.find_by_id(params[:id])   
-   @topicdraft.update_attributes(draft_ahead: false)
+   @topicdraft.update_attributes(draft_ahead: false)   
+   @topicdraftimage = Topicdraftimage.topicdraftimage_for_topicdraft(@topicdraft).first 
+
    if @topicdraft.topic == nil
     #create topic and post   
     @topic = Topic.new(title: @topicdraft.title,
                                summary: @topicdraft.summary,
                                content: @topicdraft.content,
                                reference: @topicdraft.reference,
-                               tag_list: @topicdraft.tag_list )  
+                               tag_list: @topicdraft.tag_list)  
      
     @post = current_user.posts.build    
-    if @topic.save     
+    if @topic.save
+      if @topicdraftimage
+        @topicimage = @user.topicdraftimages.create(image: @topicdraftimage.image)        
+        if @topicimage.topic_id != @topic.id
+          @topicimage.topic_id = @topic.id
+          @topicimage.save
+        end  
+      end 
+               
       @post.postable = @topic
       @topic.topicdraft = @topicdraft
       if @post.save      
@@ -135,8 +148,21 @@ class TopicdraftsController < ApplicationController
                                    summary: @topicdraft.summary,
                                    reference: @topicdraft.reference,
                                    content: @topicdraft.content,
-                                   tag_list: @topicdraft.tag_list
-                                   )
+                                   tag_list: @topicdraft.tag_list)
+                                   
+      @topicoldimage = Topicdraftimage.topicdraftimage_for_topic(@topic).first 
+      
+      
+      if @topicdraftimage
+        @topicimage = @user.topicdraftimages.create(image: @topicdraftimage.image)   
+        if @topicimage.topic_id != @topic.id
+          @topicimage.topic_id = @topic.id
+          if @topicimage.save && @topicoldimage
+            @topicoldimage.destroy
+          end
+        end  
+      end                                    
+                                   
       @post.user.tag(@post, :with =>  @topic.tag_list, :on => :tags)
       flash[:success] = "Topic published!"        
       redirect_to user_path(@user)                                   

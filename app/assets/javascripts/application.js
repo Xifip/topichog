@@ -30,6 +30,7 @@
 //= require projectdrafts.js.coffee
 //= require tags_names.js.coffee
 //= require topicdraftimages.js.coffee
+//= require projectdraftimages.js.coffee
 //= require topicdrafts.js.coffee
 //= require static_pages.js.coffee
 //= require projects.js.coffee

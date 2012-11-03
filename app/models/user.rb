@@ -27,7 +27,8 @@ class User < ActiveRecord::Base
   has_many :likes, foreign_key: "liker_id", dependent: :destroy
   has_many :liked_posts, :through => :likes, :source => :liked, 
           :class_name => "Post"
-  
+  has_many :topicdraftimages, dependent: :destroy
+  has_many :projectdraftimages, dependent: :destroy
   acts_as_tagger
   after_create :add_profile
   after_create :add_avatar

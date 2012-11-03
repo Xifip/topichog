@@ -7,9 +7,8 @@ describe "Topicdraft pages" do
     
     subject {page}
     
-    describe "shows user info" do
+    describe "is the right page" do
       it { should have_selector('title', text: full_title(user.name + ' | new topic draft')) }
-      it { should have_selector('h1', text: user.name) }
     end
     
     describe "with invalid information" do
@@ -17,13 +16,19 @@ describe "Topicdraft pages" do
       it {page.should have_content "New Topic"}
      
       it "should not create a topic" do
-        expect { page.click_button "Save draft topic" }.to_not change(Topicdraft, :count)
-        expect { page.click_button "Save draft topic" }.to_not change(Post, :count)
-        expect { page.click_button "Save draft topic" }.to_not change(Topic, :count)
+        within("form.new_topicdraft") do
+          expect { click_button "Save draft topic" }.to_not change(Topicdraft, :count)
+          expect { click_button "Save draft topic" }.to_not change(Post, :count)
+          expect { click_button "Save draft topic" }.to_not change(Topic, :count)
+        end  
       end
       
       describe "error messages" do
-        before { page.click_button "Save draft topic" }
+        before do
+          within("form.new_topicdraft") do
+            click_button "Save draft topic" 
+          end  
+        end  
         it { page.should have_content('error') }
       end      
     end
@@ -36,19 +41,29 @@ describe "Topicdraft pages" do
          page.fill_in 'reference_textarea', with: "Ipsum lorem"
          page.fill_in 'Tags', with: "tag1, tag2, tag3"
       end
-      it "should create a topicdraft" do        
-        expect { page.click_button "Save draft topic" }.to change(Topicdraft, :count).by(1)
+      it "should create a topicdraft" do  
+        within("form.new_topicdraft") do      
+         expect { click_button "Save draft topic" }.to change(Topicdraft, :count).by(1)
+        end
       end
-      it "should not create a topic" do        
-        expect { page.click_button "Save draft topic" }.to_not change(Topic, :count).by(1)
+      it "should not create a topic" do
+        within("form.new_topicdraft") do        
+          expect { click_button "Save draft topic" }.to_not change(Topic, :count).by(1)
+        end  
       end
       it "should not create a post" do
-        expect { page.click_button "Save draft topic" }.to_not change(Post, :count).by(1)        
+        within("form.new_topicdraft") do
+          expect { click_button "Save draft topic" }.to_not change(Post, :count).by(1)        
+        end  
       end
       
       describe "associations created" do
        
-       before { page.click_button "Save draft topic" }
+        before do
+          within("form.new_topicdraft") do
+            click_button "Save draft topic" 
+          end  
+        end  
       
        it "should have the right user assositations" do
         Topicdraft.last.user.should eq user
@@ -56,14 +71,22 @@ describe "Topicdraft pages" do
              
       end
       describe "draft status" do
-        before {page.click_button "Save draft topic"}
+        before do
+          within("form.new_topicdraft") do
+            click_button "Save draft topic" 
+          end  
+        end  
         it "draft is ahead of published" do
           Topicdraft.last.draft_ahead.should eq true 
         end
       end
       
       describe "tag creation" do
-        before {page.click_button "Save draft topic"}
+        before do
+          within("form.new_topicdraft") do
+            click_button "Save draft topic" 
+          end  
+        end  
          it "should create topic tags" do            
           Topicdraft.last.tag_list.should include("tag1") 
           Topicdraft.last.tag_list.should include("tag2")
@@ -83,7 +106,6 @@ describe "Topicdraft pages" do
     subject {page} 
     
     describe "shows user and topic info" do
-      it { should have_selector('h1', text: user.name) }
       it { should have_content ( topicdraft.title) }
       it { should have_content ( topicdraft.summary) }
       #user nokogiri or elementor to scrap content  
@@ -302,8 +324,10 @@ describe "Topicdraft pages" do
       
       describe "save draft with invalid information" do
         before do
-           page.fill_in 'Title', with: ""
-           page.click_button "Save draft topic"
+          within("form.edit_topicdraft") do
+            fill_in 'Title', with: ""
+            click_button "Save draft topic"
+          end    
         end
        
         it "should not update the topic" do
@@ -317,12 +341,14 @@ describe "Topicdraft pages" do
     
       describe "save draft with valid information" do
         before do
-           page.fill_in 'Title', with: "Lorem ipsum draft"
-           page.fill_in 'Summary', with: "Ipsum lorem draft"
-           page.fill_in 'content_textarea', with: "Ipsum lorem draft"
-           page.fill_in 'reference_textarea', with: "Ipsum lorem draft"
-           page.fill_in 'Tags', with: "tag1_draft, tag2_draft, tag3_draft"
-           page.click_button "Save draft topic"
+          within("form.edit_topicdraft") do
+            fill_in 'Title', with: "Lorem ipsum draft"
+            fill_in 'Summary', with: "Ipsum lorem draft"
+            fill_in 'content_textarea', with: "Ipsum lorem draft"
+            fill_in 'reference_textarea', with: "Ipsum lorem draft"
+            fill_in 'Tags', with: "tag1_draft, tag2_draft, tag3_draft"
+            click_button "Save draft topic"
+          end
         end
         it "should update the topicdraft" do        
           Topicdraft.last.title.should eq("Lorem ipsum draft")
@@ -365,7 +391,6 @@ describe "Topicdraft pages" do
     subject {page} 
     
     describe "shows user and topic info" do
-      it { should have_selector('h1', text: user.name) }
       it { should have_content ( topicdraft.title) }
       it { should have_content ( topicdraft.summary) }
       #user nokogiri or elementor to scrap content  
@@ -412,8 +437,10 @@ describe "Topicdraft pages" do
       
       describe "save draft with invalid information" do
         before do
-           page.fill_in 'Title', with: ""
-           page.click_button "Save draft topic"
+          within("form.edit_topicdraft") do
+            fill_in 'Title', with: ""
+            click_button "Save draft topic"
+          end   
         end      
         
         describe "error messages" do
@@ -423,12 +450,14 @@ describe "Topicdraft pages" do
     
       describe "save draft with valid information" do
         before do
-           page.fill_in 'Title', with: "Lorem ipsum draft"
-           page.fill_in 'Summary', with: "Ipsum lorem draft"
-           page.fill_in 'content_textarea', with: "Ipsum lorem draft"
-           page.fill_in 'reference_textarea', with: "Ipsum lorem draft"
-           page.fill_in 'Tags', with: "tag1_draft, tag2_draft, tag3_draft"
-           page.click_button "Save draft topic"
+          within("form.edit_topicdraft") do
+            fill_in 'Title', with: "Lorem ipsum draft"
+            fill_in 'Summary', with: "Ipsum lorem draft"
+            fill_in 'content_textarea', with: "Ipsum lorem draft"
+            fill_in 'reference_textarea', with: "Ipsum lorem draft"
+            fill_in 'Tags', with: "tag1_draft, tag2_draft, tag3_draft"
+            click_button "Save draft topic"
+          end   
         end
         
         it "should update the topicdraft" do        

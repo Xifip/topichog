@@ -1,6 +1,11 @@
-%li{:id => "topicdraft_" + topicdraft.id.to_s}
-  %span.title
+%li.feedpost{:id => "topicdraft_" + topicdraft.id.to_s} 
+  -if topicdraft.topicdraftimages.count == 0
+    = avatar_for @user, size: 52 
+  -else      
+    = image_tag(topicdraft.topicdraftimages.first.image_url(:thumb).to_s, alt: "", class: "img-polaroid")
+  %div.title
     = link_to topicdraft.title, user_topicdraft_path(topicdraft.user, topicdraft), id: "topicdraft_link_#{topicdraft.id}"
-  %span.summary= topicdraft.summary
-  %span.timestamp
-    Last edited #{time_ago_in_words(topicdraft.created_at)} ago.
+    %span.summary= topicdraft.summary
+  %div
+    %span.timestamp
+      Last edited #{time_ago_in_words(topicdraft.updated_at)} ago.

@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
-  $('#new_topicdraftimage').fileupload
+  $('#new_projectdraftimage').fileupload
     dataType: "script"
-  $('.edit_topicdraftimage').fileupload
-    dataType: "script"    
+  $('.edit_projectdraftimage').fileupload
+    dataType: "script" 

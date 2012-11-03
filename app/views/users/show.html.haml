@@ -17,7 +17,7 @@
       = link_to "new project", new_user_projectdraft_path(@user), class: "btn btn-small btn-info" if @user == current_user
     %ol.posts
       = render @projects
-    = will_paginate @projects, :param_name => 'project_page'
+    = will_paginate @projects, :param_name => 'project_page' 
   .span4  
     %h4.well.well-small
       .span2
@@ -25,7 +25,7 @@
       = link_to "new topic", new_user_topicdraft_path(@user), class: "btn btn-small btn-info" if @user == current_user      
     %ol.posts
       = render @topics
-    = will_paginate @topics, :param_name => 'topic_page'
+    = will_paginate @topics, :param_name => 'topic_page'   
   .span4  
     %h4.well.well-small
       Favorited items (#{@liked_posts.count})

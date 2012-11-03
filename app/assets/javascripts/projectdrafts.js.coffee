@@ -16,3 +16,5 @@ jQuery ->
     allowed: 140
     warning: 120
     counterText: "Characters left: "
+  $("#save_draft_project").click ->
+      $('form.edit_projectdraft').submit()     

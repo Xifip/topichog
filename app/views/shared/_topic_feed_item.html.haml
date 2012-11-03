@@ -1,5 +1,14 @@
 %li.feedpost{:id => topic_feed_item.id}
-  = link_to avatar_for(topic_feed_item.user), topic_feed_item.user
+  -if topic_feed_item.postable_type == "Project"
+    -if topic_feed_item.postable.projectdraftimages.count == 0
+      = avatar_for topic_feed_item.user, size: 52 
+    -else
+      = image_tag(topic_feed_item.postable.projectdraftimages.first.image_url(:thumb).to_s, alt: "", class: "img-polaroid")    
+  -if topic_feed_item.postable_type == "Topic"
+    -if topic_feed_item.postable.topicdraftimages.count == 0
+      = avatar_for topic_feed_item.user, size: 52 
+    -else
+      = image_tag(topic_feed_item.postable.topicdraftimages.first.image_url(:thumb).to_s, alt: "", class: "img-polaroid")    
   %div
     = link_to topic_feed_item.postable.title, user_topic_path(topic_feed_item.user.id, topic_feed_item.postable), id: "topic_link_#{topic_feed_item.id}"
     %span.summary= topic_feed_item.postable.summary

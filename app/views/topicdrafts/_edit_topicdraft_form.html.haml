@@ -1,34 +1,42 @@
+%p.row.span8
+  %div
+    %button#save_draft_topic.btn.btn-large.btn-primary.span2
+      Save draft topic
+  %h2.span4 Edit Topic   
+%p.row
+  .span1
+    Topic Image
+  .span1      
+    #topicdraftimages
+      -if @topicdraftimage
+        %p= image_tag(@topicdraftimage.image_url(:thumb).to_s, alt: "", class: "img-polaroid")
+      -else  
+        %p= image_tag 'add_image.png'
+  .span5
+    .clear          
+    -if !@topicdraftimage.nil?
+      = form_for @topicdraftimage do |f|
+        = f.file_field :image, multiple: false, name: "topicdraftimage[image]" , class: "span1"
+    -else           
+      = form_for Topicdraftimage.new do |f|
+        = f.file_field :image, multiple: false, name: "topicdraftimage[image]" 
 = form_for(topicdraft, :url => user_update_topicdraft_path(@user, topicdraft), :html => { :method => "put", :multipart => true }) do |f|
   = render partial: 'shared/error_messages', locals: {object: f.object}
   .field
-    %p.row.span8
-      .span2  
-        = f.submit "Save draft topic", class: "btn btn-large btn-primary"
-      %h2.span4 Edit Topic
-    %p.row.span8
-      .span5
-        %table
-          %tr
-            %td.pbl
-              %div.span1
-                = f.label :title, "Title"
-            %td.span1.pbl
-            %td.span4.pbl           
-              = f.text_field :title 
-          %tr
-            %td.pbl
-              %div.span1
-                = f.label :summary, "Summary"
-            %td.span1.pbl
-            %td.pbl
-              = f.text_area :summary, rows: 4           
-      .span2
-        %p  
-          = f.label :image, "Topic Image"      
-        =image_tag(@topicdraft.image_url(:thumb).to_s, alt: @user.name, class: "img-polaroid")  
-        %p
-          = f.file_field :image                   
-    %p.row.row.span8.spacer30    
+    = f.hidden_field :image_id                                 
+    %p.row.span8.spacer30    
+    %p.row
+      .span1
+        = f.label :title, "Title"
+      .span6      
+        = f.text_field :title   
+    %p.row.span8.spacer30         
+    %p.row
+      .span1
+        = f.label :summary, "Summary"
+      .span6      
+        = f.text_area :summary, rows: 4  
+    %p.row.span8.spacer30                    
     %p.row
       .span1
         = f.label :tag_list, "Tags"
@@ -42,7 +50,7 @@
         = f.label :reference, "Links & references"
       .span6   
         = f.text_area :reference, :id =>'reference_textarea', placeholder: "Topic references and links..."                     
-    %p.row.row.span8.spacer30    
+    %p.row.span8.spacer30    
     %p.row.span8
       Topic description          
     %p.row.span8   

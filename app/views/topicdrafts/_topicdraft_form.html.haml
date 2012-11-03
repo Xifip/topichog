@@ -1,21 +1,35 @@
+%p.row.span8
+  %h2.span4 New Topic  
+%p.row.span8
+  .span1
+    Topic image
+  .span1
+    #topicdraftimages
+      -if @topicdraftimage
+        %p= image_tag(@topicdraftimage.image_url(:thumb).to_s, alt: "", class: "img-polaroid")
+      -else  
+        %p= image_tag 'add_image.png'
+  .span5    
+    = form_for Topicdraftimage.new do |f|
+      = f.label :image, "Upload topicdraftimage:"
+      = f.file_field :image, multiple: false, name: "topicdraftimage[image]"   
 = form_for(topicdraft, :url => user_topicdrafts_url(@user)) do |f|
   = render partial: 'shared/error_messages', locals: {object: f.object}
   .field
-    = f.hidden_field :image_id 
-    %p.row.span8
-      .span2  
-        = f.submit "Save draft topic", class: "btn btn-large btn-primary"
-      %h2.span4 New Topic
+    = f.hidden_field :image_id                                                
+    %p.row.span8.spacer30          
     %p.row.span8
       .span1
         = f.label :title, "Title"
       .span6  
         = f.text_field :title
+    %p.row.span8.spacer30       
     %p.row.span8
       .span1
         = f.label :summary, "Summary"
       .span6          
         = f.text_area :summary, rows: 3
+    %p.row.span8.spacer30       
     %p.row.span8
       .span1
         = f.label :tag_list, "Tags"
@@ -36,3 +50,4 @@
       = f.text_area :content, :id =>'content_textarea', placeholder: "Topic content..."
     %p.row.span8  
       = f.submit "Save draft topic", class: "btn btn-large btn-primary"
+     

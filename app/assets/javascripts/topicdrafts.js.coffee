@@ -2,9 +2,9 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
-  $('form.edit_topicdraft').fileupload()
-  $("#topicdraft_image").change ->
-      $('form.edit_topicdraft').submit()  
+#  $('form.edit_topicdraft').fileupload()
+#  $("#topicdraft_image").change ->
+#      $('form.edit_topicdraft').submit()  
   $("#topicdraft_title").watermark "Topic title..."  
   $("#topicdraft_summary").watermark "Topic summary..."  
   $("#topicdraft_tag_list").watermark "Comma separated tags..."  
@@ -19,5 +19,5 @@ jQuery ->
     allowed: 140
     warning: 120
     counterText: "Characters left: "
-
-    
+  $("#save_draft_topic").click ->
+      $('form.edit_topicdraft').submit()    

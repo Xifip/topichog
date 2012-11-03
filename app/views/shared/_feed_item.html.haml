@@ -1,5 +1,14 @@
 %li.feedpost{:id => feed_item.id}
-  = link_to avatar_for(feed_item.user), feed_item.user 
+  -if feed_item.postable_type == "Project"
+    -if feed_item.postable.projectdraftimages.count == 0
+      = avatar_for feed_item.user, size: 52 
+    -else
+      = image_tag(feed_item.postable.projectdraftimages.first.image_url(:thumb).to_s, alt: "", class: "img-polaroid")    
+  -if feed_item.postable_type == "Topic"
+    -if feed_item.postable.topicdraftimages.count == 0
+      = avatar_for feed_item.user, size: 52 
+    -else
+      = image_tag(feed_item.postable.topicdraftimages.first.image_url(:thumb).to_s, alt: "", class: "img-polaroid")    
   %div  
     - if feed_item.postable_type == "Tpost"
       = link_to feed_item.postable.title, user_tpost_path(feed_item.user.id, feed_item.postable), id: "feed_topic_link_#{feed_item.id}"
