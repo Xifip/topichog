@@ -19,6 +19,7 @@
 //= require best_in_place
 //= require jquery.Jcrop.min
 //= require bootstrap
+//= require user_profile.js.coffee
 //= require charCount.js
 //= require jquery.watermark.min.js
 //= require jquery.tagsinput.min.js

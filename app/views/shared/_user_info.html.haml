@@ -12,3 +12,5 @@
     -if @user == current_user && @page == 'profile'
       .actions
         = link_to "edit profile", edit_profile_path(@user)
+        %a#biotip.hide{ "data-trigger" => "manual", "data-placement" => "right", "data-content" => "Write a short bio of yourself. Mention your skills, interests, achievements and your current activity. ", "data-original-title" => "Create your bio. <a href='#'><i id='close-bio-popover' class='icon-remove popover-close mas'></i></a>", :href => "#", :rel => "popover"}        
+          %i.icon-question-sign        
