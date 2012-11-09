@@ -1,0 +1,22 @@
+.row
+  .span3
+    = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+      = devise_error_messages!
+      %div
+        = f.label :name        
+        = f.text_field :name        
+      %div
+        %br/
+        = f.label :email, "Email"        
+        = f.email_field :email
+      %div
+        %br/
+        = f.label :password        
+        = f.password_field :password
+      %div
+        %br/
+        = f.label :password_confirmation        
+        = f.password_field :password_confirmation
+      .spacer10
+      %div= f.submit "Create your portfolio", class: "btn btn-large btn-primary"
+

@@ -18,6 +18,10 @@ class StaticPagesController < ApplicationController
    def learn_more
   end
   
+  def professional_landing_page
+    @hide_navbar = true
+  end
+  
   def tag_cloud
     @tags = Post.tag_counts_on(:tags)
     @tags.sort! { |a,b| b.count <=> a.count }
