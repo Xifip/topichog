@@ -56,6 +56,22 @@ upload = (content == null ? null : content.get('upload'));
 if (upload && upload.filebrowser['params'] == null) {
 upload.filebrowser['params'] = config.filebrowserParams();
 upload.action = config.addQueryString(upload.action, upload.filebrowser['params']);
+if ( dialogName == 'link' )
+		{
+			// FCKConfig.LinkDlgHideAdvanced = true
+			dialogDefinition.removeContents( 'advanced' );
+ 
+			// FCKConfig.LinkDlgHideTarget = true
+			//dialogDefinition.removeContents( 'target' );
+
+//Enable this part only if you don't remove the 'target' tab in the previous block.			
+			// FCKConfig.DefaultLinkTarget = '_blank'
+			// Get a reference to the "Target" tab.
+			var targetTab = dialogDefinition.getContents( 'target' );
+			// Set the default value for the URL field.
+			var targetField = targetTab.get( 'linkTargetType' );
+			targetField[ 'default' ] = '_blank';
+    }
 }
 }
 });
