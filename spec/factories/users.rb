@@ -11,6 +11,15 @@ FactoryGirl.define do
 
   end
   
+  factory :user_preference do
+    mail_on_follower_post true
+    mail_on_follower true
+    mail_monthly_update true
+    mail_new_features true
+    mail_on_liker true
+    user
+  end
+    
   factory :profile do
     bio "my bio summary"
     linkedin_url "http://www.google.com"

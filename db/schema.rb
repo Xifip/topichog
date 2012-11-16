@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103103931) do
+ActiveRecord::Schema.define(:version => 20121116172522) do
 
   create_table "avatars", :force => true do |t|
     t.integer  "user_id"
@@ -185,6 +185,17 @@ ActiveRecord::Schema.define(:version => 20121103103931) do
     t.string   "summary"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "user_preferences", :force => true do |t|
+    t.boolean  "mail_on_liker"
+    t.boolean  "mail_on_follower_post"
+    t.boolean  "mail_on_follower"
+    t.boolean  "mail_monthly_update"
+    t.boolean  "mail_new_features"
+    t.integer  "user_id"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
   end
 
   create_table "users", :force => true do |t|

@@ -4,13 +4,14 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
-
+  
+  
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :email, :password, :password_confirmation, 
     :remember_me, :profile_attributes
   
   # attr_accessible :title, :body
-  
+  has_one :user_preference, dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :projectdrafts, dependent: :destroy
   has_many :topicdrafts, dependent: :destroy  
@@ -30,13 +31,13 @@ class User < ActiveRecord::Base
   has_many :topicdraftimages, dependent: :destroy
   has_many :projectdraftimages, dependent: :destroy
   acts_as_tagger
+  after_create :add_preferences
   after_create :add_profile
   after_create :add_avatar
   accepts_nested_attributes_for :profile  
   validates_presence_of :name
   validates_uniqueness_of :email, :case_sensitive => false
-
-    
+      
   def project_drafts_ahead
     Projectdraft.projectdrafts_unpublished_from(self)
   end
@@ -84,6 +85,14 @@ class User < ActiveRecord::Base
    private
 
   def add_profile
+    self.create_user_preference(mail_on_follower_post: true,
+    mail_on_follower: true,
+    mail_monthly_update: true,
+    mail_new_features: true,
+    mail_on_liker: true)
+  end
+  
+  def add_preferences
     self.create_profile
   end
   

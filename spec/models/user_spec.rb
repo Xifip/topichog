@@ -122,8 +122,31 @@ describe User do
     it { should respond_to(:liking?) }
     it { should respond_to(:like!) }
     it { should respond_to(:profile) }
-
+    it { should respond_to(:user_preference) }
   end
+
+ describe "user_preference assossiation" do
+   before do
+     @user = User.new(@attr)
+     @user.save
+   end  
+   
+    let!(:user_preference) do
+      #FactoryGirl.create(:profile, user: @user)
+      @user.user_preference
+    end
+    
+    it "should have the right profile" do 
+      UserPreference.find_by_id(user_preference.id).should == user_preference 
+    end 
+    
+    it "should destroy associated profile associations" do      
+      #debugger
+      @user.destroy
+      UserPreference.find_by_id(user_preference.id).should be_nil 
+    end
+    
+ end
 
  describe "profile assossiation" do
    before do
