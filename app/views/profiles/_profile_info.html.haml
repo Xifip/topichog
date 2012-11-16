@@ -5,19 +5,19 @@
     .span2
       -if @user.profile.twitter_url != '' && @user.profile.twitter_url != nil
         =image_tag("Twitter-Blue-Transparent-t-3D-Button-Logo.png", :size => "16x10", :alt => "Edit Entry")
-        = link_to "my twitter", @user.profile.twitter_url
+        = link_to "my twitter", @user.profile.twitter_url, :target => "_blank"
     .span2
       -if @user.profile.facebook_url != '' && @user.profile.facebook_url != nil
         = image_tag("facebook_icon.png", :size => "16x10", :alt => "Edit Entry") 
-        = link_to "my facebook", @user.profile.facebook_url
+        = link_to "my facebook", @user.profile.facebook_url, :target => "_blank"
     .span2      
       -if @user.profile.linkedin_url != '' && @user.profile.linkedin_url != nil
         = image_tag("linkedin-icon.png", :size => "16x10", :alt => "Edit Entry") 
-        = link_to "my linkedin", @user.profile.linkedin_url
+        = link_to "my linkedin", @user.profile.linkedin_url, :target => "_blank"
     .span2
       -if @user.profile.mysite_url != '' && @user.profile.mysite_url != nil
-        = link_to "my site", @user.profile.mysite_url   
+        = link_to "my site", @user.profile.mysite_url, :target => "_blank"   
     .span2
       -if @user.profile.myblog_url != '' && @user.profile.myblog_url != nil
-        = link_to "my blog", @user.profile.myblog_url                 
+        = link_to "my blog", @user.profile.myblog_url, :target => "_blank"                 
       
