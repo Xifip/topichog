@@ -4,3 +4,12 @@
 %p
   = link_to @follower.name, user_url(@follower)
   is now following you on TopicHog
+%p{:style => "color:#999999; margin-top:50px"}
+  %small
+    %span
+      =link_to 'unsubscribe', edit_user_preference_url(@user, auth_token: @user.authentication_token)
+    %span
+      from these emails or change your  
+    %span
+      =link_to 'notification settings', edit_user_preference_url(@user, auth_token: @user.authentication_token)                                                                                  
+   

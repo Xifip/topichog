@@ -3,5 +3,5 @@ class UserPreference < ActiveRecord::Base
                      :mail_monthly_update, :mail_new_features, :mail_on_liker
     
     belongs_to :user                 
-                     
+    validates :user_id, :presence => true                 
 end

@@ -1,0 +1,55 @@
+= provide(:title, @user.name + '| notification preferences' )
+= form_for @user_preference, :url => user_preference_path(@user) do |f|
+  - if @user_preference.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@user_preference.errors.count, "error")
+        prohibited this from being saved:
+      %ul
+        - @user_preference.errors.full_messages.each do |msg|
+          %li= msg
+  .span8.offset2
+    .row
+      %p
+        %h4.muted.center
+          your preferences for email notifications
+    .spacer50    
+    .row
+      %strong.span2
+        email me when
+      .span6             
+        %p.field.row
+          .span1
+            = f.check_box :mail_on_follower        
+          .span4
+            = f.label :mail_on_follower, "I'm followed by someone"
+        %p.field.row
+          .span1
+            = f.check_box :mail_on_follower_post       
+          .span4
+            = f.label :mail_on_follower_post, "someone I follow posts a project or topic"
+        %p.field.row
+          .span1
+            = f.check_box :mail_on_liker              
+          .span4
+            = f.label :mail_on_liker, "My posts are favorited"   
+    .spacer50
+    .row
+      %strong.span2
+        email me with
+      .span6           
+        %p.field.row
+          .span1
+            = f.check_box :mail_monthly_update        
+          .span4
+            = f.label :mail_monthly_update, "Monthly digest of things I missed and suggestions about people, projects and topics I may be interested in" 
+        %p.field.row
+          .span1
+            = f.check_box :mail_new_features        
+          .span4
+            = f.label :mail_new_features, "Occasional news about product features and updates"                   
+    .spacer50
+    .row
+      %p.actions.row
+        .span4.offset2
+          = f.submit 'Update preferences', class: "btn btn-large btn-primary"

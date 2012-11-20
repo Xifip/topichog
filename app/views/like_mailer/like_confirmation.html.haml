@@ -4,7 +4,14 @@
 %p
   = link_to @liker.name, user_url(@liker)
   liked '#{@liked_post.postable.title}' on TopicHog!
-
+%p{:style => "color:#999999; margin-top:50px"}
+  %small
+    %span
+      =link_to 'unsubscribe', edit_user_preference_url(@liked_post.user, auth_token: @liked_post.user.authentication_token)
+    %span
+      from these emails or change your  
+    %span
+      =link_to 'notification settings', edit_user_preference_url(@liked_post.user, auth_token: @liked_post.user.authentication_token)                                                                                  
   
 
 

@@ -141,11 +141,47 @@ describe "User pages" do
           it "should have a link to the follower" do
             last_email.body.encoded.should have_link(user.name, href: user_url(user, host: 'localhost:3000'))
           end
+          it "should have an unsubscribe link" do
+            last_email.body.encoded.should have_link('unsubscribe', href: edit_user_preference_url(other_user, auth_token: other_user.authentication_token, host: 'localhost:3000') )
+          end
           it { last_email.to.should include(other_user.email) }
           it { last_email.from.should include("no-reply@topichog.com") }
           it { last_email.subject.should eq(user.name + " followed you on TopicHog!") }
           it { last_email.body.encoded.should include(user.name) }
           it { last_email.body.encoded.should include(" is now following you on TopicHog") }
+        end
+
+        describe "follower email notification with no mail preferences set" do
+        
+          before do
+            reset_email
+            other_user.user_preference.destroy
+            click_button "Follow"  
+          end
+          
+          it "should have a link to the follower" do
+            last_email.body.encoded.should have_link(user.name, href: user_url(user, host: 'localhost:3000'))
+          end
+          it "should have an unsubscribe link" do
+            last_email.body.encoded.should have_link('unsubscribe', href: edit_user_preference_url(other_user, auth_token: other_user.authentication_token, host: 'localhost:3000') )
+          end          
+          it { last_email.to.should include(other_user.email) }
+          it { last_email.from.should include("no-reply@topichog.com") }
+          it { last_email.subject.should eq(user.name + " followed you on TopicHog!") }
+          it { last_email.body.encoded.should include(user.name) }
+          it { last_email.body.encoded.should include(" is now following you on TopicHog") }
+        end
+
+        describe "follower email notification with mail_on_follower = false" do
+        
+          before do
+            reset_email
+            other_user.user_preference.update_attributes( mail_on_follower: false)
+            click_button "Follow" 
+          end
+          
+          it { last_email.should be_nil } 
+
         end
 
         it "should increment the other user's followers count" do

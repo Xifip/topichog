@@ -16,6 +16,7 @@ TopicHog::Application.routes.draw do
   get 'posts/:tag1', to: 'posts#index', as: :post
 
   devise_for :users #, :controllers => { :registrations => "registrations" } 
+  resources :token_authentications, :only => [:create, :destroy]
   resources :topicdraftimages, :only => [:create, :update, :edit, :destroy]
   resources :projectdraftimages, :only => [:create, :update, :edit, :destroy]
   resources :users, :only => [:show, :index] do
@@ -62,6 +63,7 @@ TopicHog::Application.routes.draw do
 
   
   resources :profiles, only: [:edit, :update, :show]
+  resources :user_preferences, only: [:edit, :update]
   resources :avatars, only: [:edit, :update]
   resources :relationships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]

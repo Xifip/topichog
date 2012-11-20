@@ -2,10 +2,12 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
+
+  
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :token_authenticatable
   
-  
+  before_save :ensure_authentication_token
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :email, :password, :password_confirmation, 
     :remember_me, :profile_attributes
@@ -84,7 +86,7 @@ class User < ActiveRecord::Base
   
    private
 
-  def add_profile
+  def add_preferences
     self.create_user_preference(mail_on_follower_post: true,
     mail_on_follower: true,
     mail_monthly_update: true,
@@ -92,7 +94,7 @@ class User < ActiveRecord::Base
     mail_on_liker: true)
   end
   
-  def add_preferences
+  def add_profile
     self.create_profile
   end
   

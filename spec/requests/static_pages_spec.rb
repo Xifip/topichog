@@ -31,7 +31,9 @@ describe "Static pages" do
       it { should_not have_link("new project", 
                                  href: new_user_projectdraft_path(user)) }
       it { should_not have_link("Edit account", 
-                            href: edit_user_registration_path) }                                 
+                            href: edit_user_registration_path) }  
+      it { should_not have_link("Notification preferences", 
+                            href: edit_user_preference_path(user)) }                                                             
       it { should_not have_link("Logout", 
                             href: destroy_user_session_path, method: :delete) }   
                                                           
@@ -63,7 +65,9 @@ describe "Static pages" do
       it { should have_link("new topic", href: new_user_topicdraft_path(user)) }
       it { should have_link("new project", href: new_user_projectdraft_path(user)) }
       it { should have_link("Edit account", 
-                            href: edit_user_registration_path) }                                 
+                            href: edit_user_registration_path) }       
+      it { should have_link("Notification preferences", 
+                            href: edit_user_preference_path(user)) }                                                       
       it { should have_link("Logout", 
                             href: destroy_user_session_path, method: :delete) }               
 

@@ -5,7 +5,24 @@ class LikesController < ApplicationController
     @post = Post.find(params[:like][:liked_id])
     @liker_id_selector = '#liker_id_' + current_user.id.to_s
     @liker = current_user
-    LikeMailer.like_confirmation(@liker, @post).deliver
+    
+    if !@post.user.user_preference
+      @post.user.create_user_preference(mail_on_follower_post: true,
+      mail_on_follower: true,
+      mail_monthly_update: true,
+      mail_new_features: true,
+      mail_on_liker: true)
+    end
+
+    if @post.user.user_preference.mail_on_liker 
+      if !@post.user.authentication_token
+        @post.user.reset_authentication_token!
+      end
+      if @post.user.authentication_token
+        LikeMailer.like_confirmation(@liker, @post).deliver
+      end  
+    end          
+    
     current_user.like!(@post)
     respond_to do |format|
       format.html {
