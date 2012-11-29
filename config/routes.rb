@@ -15,7 +15,7 @@ TopicHog::Application.routes.draw do
   resources :posts, only: [:index, :destroy]
   get 'posts/:tag1', to: 'posts#index', as: :post
 
-  devise_for :users #, :controllers => { :registrations => "registrations" } 
+  devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"} #, :controllers => { :registrations => "registrations" } 
   resources :token_authentications, :only => [:create, :destroy]
   resources :topicdraftimages, :only => [:create, :update, :edit, :destroy]
   resources :projectdraftimages, :only => [:create, :update, :edit, :destroy]

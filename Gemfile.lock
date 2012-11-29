@@ -39,6 +39,10 @@ GEM
     best_in_place (1.1.2)
       jquery-rails
       rails (~> 3.1)
+    bitly (0.8.0)
+      crack (>= 0.1.4)
+      httparty (>= 0.7.6)
+      oauth2 (>= 0.5.0, < 0.9)
     bootstrap-sass (2.1.0.1)
     bootstrap-will_paginate (0.0.6)
       will_paginate
@@ -73,6 +77,7 @@ GEM
     coffee-script-source (1.3.3)
     columnize (0.3.6)
     connection_pool (0.9.2)
+    crack (0.3.1)
     cucumber (1.2.1)
       builder (>= 2.1.2)
       diff-lcs (>= 1.1.3)
@@ -90,6 +95,11 @@ GEM
     debugger-linecache (1.1.2)
       debugger-ruby_core_source (>= 1.1.1)
     debugger-ruby_core_source (1.1.3)
+    delayed_job (3.0.4)
+      activesupport (~> 3.0)
+    delayed_job_active_record (0.3.3)
+      activerecord (>= 2.1.0, < 4)
+      delayed_job (~> 3.0)
     devise (2.1.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -107,6 +117,8 @@ GEM
       railties (>= 3.0.0)
     faker (1.0.1)
       i18n (~> 0.4)
+    faraday (0.8.4)
+      multipart-post (~> 1.1)
     ffi (1.1.5)
     ffi (1.1.5-x86-mingw32)
     fog (1.6.0)
@@ -136,7 +148,12 @@ GEM
       guard (>= 0.8.4)
       spork (>= 0.8.4)
     haml (3.1.7)
+    hashie (1.2.0)
     hike (1.2.1)
+    httparty (0.9.0)
+      multi_json (~> 1.0)
+      multi_xml
+    httpauth (0.2.0)
     i18n (0.6.0)
     journey (1.0.4)
     jquery-fileupload-rails (0.3.4)
@@ -147,12 +164,21 @@ GEM
       thor (~> 0.14)
     jruby-pageant (1.1.1)
     json (1.7.5)
+    jwt (0.1.5)
+      multi_json (>= 1.0)
+    koala (1.5.0)
+      faraday (~> 0.7)
+      multi_json (~> 1.3)
     launchy (2.1.2)
       addressable (~> 2.3)
     letter_opener (0.0.2)
       launchy
     libwebsocket (0.1.5)
       addressable
+    linkedin (0.3.7)
+      hashie (~> 1.2)
+      multi_json (~> 1.0)
+      oauth (~> 0.4)
     listen (0.4.7)
       rb-fchange (~> 0.0.5)
       rb-fsevent (~> 0.9.1)
@@ -167,6 +193,8 @@ GEM
     mini_magick (3.4)
       subexec (~> 0.2.1)
     multi_json (1.3.6)
+    multi_xml (0.5.1)
+    multipart-post (1.1.5)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (2.6.0)
@@ -174,6 +202,29 @@ GEM
     newrelic_rpm (3.5.0.1)
     nokogiri (1.5.5)
     nokogiri (1.5.5-x86-mingw32)
+    oauth (0.4.7)
+    oauth2 (0.8.0)
+      faraday (~> 0.8)
+      httpauth (~> 0.1)
+      jwt (~> 0.1.4)
+      multi_json (~> 1.0)
+      rack (~> 1.2)
+    omniauth (1.1.1)
+      hashie (~> 1.2)
+      rack
+    omniauth-facebook (1.4.1)
+      omniauth-oauth2 (~> 1.1.0)
+    omniauth-linkedin (0.0.8)
+      omniauth-oauth (~> 1.0)
+    omniauth-oauth (1.0.1)
+      oauth
+      omniauth (~> 1.0)
+    omniauth-oauth2 (1.1.1)
+      oauth2 (~> 0.8.0)
+      omniauth (~> 1.0)
+    omniauth-twitter (0.0.14)
+      multi_json (~> 1.3)
+      omniauth-oauth (~> 1.0)
     orm_adapter (0.4.0)
     pg (0.12.2)
     pg (0.12.2-x86-mingw32)
@@ -246,6 +297,7 @@ GEM
       multi_json (~> 1)
       redis (~> 3)
       redis-namespace
+    simple_oauth (0.1.9)
     simplecov (0.6.4)
       multi_json (~> 1.0)
       simplecov-html (~> 0.5.3)
@@ -273,6 +325,10 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
+    twitter (4.3.0)
+      faraday (~> 0.8)
+      multi_json (~> 1.3)
+      simple_oauth (~> 0.1.6)
     tzinfo (0.3.33)
     uglifier (1.2.3)
       execjs (>= 0.3.0)
@@ -303,6 +359,7 @@ DEPENDENCIES
   annotate (~> 2.4.1.beta)
   bcrypt-ruby (= 3.0.1)
   best_in_place
+  bitly
   bootstrap-sass (~> 2.1.0.1)
   bootstrap-will_paginate (= 0.0.6)
   capybara (= 1.1.2)
@@ -313,6 +370,7 @@ DEPENDENCIES
   cucumber-rails (= 1.2.1)
   database_cleaner (= 0.7.0)
   debugger
+  delayed_job_active_record
   devise
   factory_girl_rails (= 1.4.0)
   faker (= 1.0.1)
@@ -323,9 +381,14 @@ DEPENDENCIES
   haml
   jquery-fileupload-rails
   jquery-rails
+  koala
   letter_opener
+  linkedin
   mini_magick
   newrelic_rpm
+  omniauth-facebook
+  omniauth-linkedin
+  omniauth-twitter
   pg (= 0.12.2)
   rails (= 3.2.6)
   rb-notifu (= 0.0.4)
@@ -338,5 +401,6 @@ DEPENDENCIES
   sinatra
   slim
   spork (= 0.9.0)
+  twitter
   uglifier (= 1.2.3)
   will_paginate (= 3.0.3)

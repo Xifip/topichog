@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
 
   
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :token_authenticatable
   
   before_save :ensure_authentication_token
@@ -39,6 +39,78 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :profile  
   validates_presence_of :name
   validates_uniqueness_of :email, :case_sensitive => false
+  
+
+
+  def self.from_omniauth(auth)
+    where(auth.slice(:provider, :uid)).first_or_create do |user|
+      user.provider = auth.provider
+      user.uid = auth.uid
+      if auth.provider == "facebook"
+        user.name = auth.info.name
+        user.email = auth.info.email
+        user.oauth_token = auth.credentials.token
+        user.oauth_expires_at = Time.at(auth.credentials.expires_at)
+      elsif auth.provider == "twitter"  
+        user.oauth_token = auth.credentials.token
+        user.oauth_secret = auth.credentials.secret
+        user.name = auth.info.name
+      elsif auth.provider == "linkedin"  
+        user.oauth_token = auth.credentials.token
+        user.oauth_secret = auth.credentials.secret
+        user.name = auth.info.name      
+        user.email = auth.info.email  
+      end
+    end
+  end  
+  
+  def facebook
+    @facebook ||= Koala::Facebook::API.new(oauth_token)
+  end
+  
+  def fb_avatar
+    'http://graph.facebook.com/' + self.facebook.get_object("me")["id"] + '/picture' 
+  end
+  
+  def twitter_avatar
+    client = Twitter::Client.new(
+        :oauth_token => oauth_token,
+        :oauth_token_secret => oauth_secret
+      )   
+        
+     image_url = client.user(Integer(self.uid)).profile_image_url
+  end
+  
+  def linkedin_avatar
+    client = LinkedIn::Client.new(ENV["LINKEDIN_CONSUMER_KEY"], ENV["LINKEDIN_CONSUMER_SECRET"])
+    client.authorize_from_access(oauth_token, oauth_secret)
+    
+    client.profile(:fields => %w(picture-url)).picture_url
+  end
+  
+  def self.new_with_session(params, session)
+
+    if session["devise.user_attributes"]
+      new(session["devise.user_attributes"], without_protection: true) do |user|
+        user.attributes = params
+        user.valid?
+      end
+    else
+      super
+    end    
+  end   
+
+  def update_with_password(params, *options)
+    if encrypted_password.blank?
+      update_attributes(params, *options)
+    else
+      super
+    end
+  end  
+    
+  def password_required?
+    super && provider.blank?
+  end
       
   def project_drafts_ahead
     Projectdraft.projectdrafts_unpublished_from(self)
@@ -96,6 +168,25 @@ class User < ActiveRecord::Base
   
   def add_profile
     self.create_profile
+    if self.provider == 'facebook'
+      self.profile.update_attributes(bio: self.facebook.get_object("me")["bio"])      
+    end
+    
+    if self.provider == 'twitter'
+      client = Twitter::Client.new(
+        :oauth_token => oauth_token,
+        :oauth_token_secret => oauth_secret
+      ) 
+      self.profile.update_attributes(bio: client.user(Integer(self.uid)).description)
+    end
+    
+    if self.provider == 'linkedin'
+      client = LinkedIn::Client.new(ENV["LINKEDIN_CONSUMER_KEY"], ENV["LINKEDIN_CONSUMER_SECRET"])
+      client.authorize_from_access(oauth_token, oauth_secret)  
+      linkedin_bio = client.profile(:fields => %w(summary)).summary
+      self.profile.update_attributes(bio: linkedin_bio )  
+    end
+       
   end
   
   def add_avatar

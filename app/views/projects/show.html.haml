@@ -1,4 +1,11 @@
 = provide(:title, @user.name + ' | ' + @project.title)
+- content_for :head do
+  = tag :meta, property: "fb:app_id", content: ENV["FACEBOOK_APP_ID"]
+  = tag :meta, property: "og:site_name", content: "topichog"
+  = tag :meta, property: "og:type", content: "movie"
+  = tag :meta, property: "og:title", content: @project.title
+  = tag :meta, property: "og:url", content: user_project_url(@user, @project)
+  = tag :meta, property: "og:image", content: image_path(@projectdraftimage.image_url(:large).to_s)
 .row
   %aside.span4
     %section  

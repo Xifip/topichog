@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     @users = User.paginate(page: params[:page])
   end
 
-  def show    
+  def show 
     @user = User.find(params[:id])
     @offset_links = 'offset6' if @user.profile.bio == "" || @user.profile.bio == nil
     @pposts = @user.posts.find_all_by_postable_type("Ppost").paginate(page: params[:ppost_page], per_page: 5)
