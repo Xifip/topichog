@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
                                     class_name: "Relationship",
                                     dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
-  
+  has_many :authentications
  #likes
   has_many :likes, foreign_key: "liker_id", dependent: :destroy
   has_many :liked_posts, :through => :likes, :source => :liked, 
@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, :case_sensitive => false
   
 
-
+=begin
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid)).first_or_create do |user|
       user.provider = auth.provider
@@ -63,9 +63,25 @@ class User < ActiveRecord::Base
       end
     end
   end  
+=end
+
+  def apply_omniauth(omni)
+
+   if omni.provider != 'facebook'
+    oauth_expires_at = nil
+   else
+    oauth_expires_at = Time.at(omni['credentials'].expires_at)
+   end 
+   authentications.build(:provider => omni['provider'],
+   :uid => omni['uid'],
+   :oauth_token => omni['credentials'].token,
+   :oauth_token_secret => omni['credentials'].secret,
+   :oauth_expires_at => oauth_expires_at)
+  end
   
   def facebook
-    @facebook ||= Koala::Facebook::API.new(oauth_token)
+    authentication = Authentication.find_by_provider_and_user_id('facebook', self.id)  
+    @facebook ||= Koala::Facebook::API.new(authentication.oauth_token)
   end
   
   def fb_avatar
@@ -73,17 +89,19 @@ class User < ActiveRecord::Base
   end
   
   def twitter_avatar
+    authentication = Authentication.find_by_provider_and_user_id('twitter', self.id) 
     client = Twitter::Client.new(
-        :oauth_token => oauth_token,
-        :oauth_token_secret => oauth_secret
+        :oauth_token => authentication.oauth_token,
+        :oauth_token_secret => authentication.oauth_secret
       )   
         
-     image_url = client.user(Integer(self.uid)).profile_image_url
+     image_url = client.user(Integer(authentication.uid)).profile_image_url
   end
   
   def linkedin_avatar
+    authentication = Authentication.find_by_provider_and_user_id('linkedin', self.id) 
     client = LinkedIn::Client.new(ENV["LINKEDIN_CONSUMER_KEY"], ENV["LINKEDIN_CONSUMER_SECRET"])
-    client.authorize_from_access(oauth_token, oauth_secret)
+    client.authorize_from_access(authentication.oauth_token, authentication.oauth_secret)
     
     client.profile(:fields => %w(picture-url)).picture_url
   end
@@ -109,7 +127,7 @@ class User < ActiveRecord::Base
   end  
     
   def password_required?
-    super && provider.blank?
+    (authentications.empty? || !password.blank?) && super
   end
       
   def project_drafts_ahead
@@ -173,16 +191,18 @@ class User < ActiveRecord::Base
     end
     
     if self.provider == 'twitter'
+      authentication = Authentication.find_by_provider_and_user_id('twitter', self.id)  
       client = Twitter::Client.new(
-        :oauth_token => oauth_token,
-        :oauth_token_secret => oauth_secret
+        :oauth_token => authentication.oauth_token,
+        :oauth_token_secret => authentication.oauth_secret
       ) 
-      self.profile.update_attributes(bio: client.user(Integer(self.uid)).description)
+      self.profile.update_attributes(bio: client.user(Integer(authentication.uid)).description)
     end
     
     if self.provider == 'linkedin'
+      authentication = Authentication.find_by_provider_and_user_id('linkedin', self.id)  
       client = LinkedIn::Client.new(ENV["LINKEDIN_CONSUMER_KEY"], ENV["LINKEDIN_CONSUMER_SECRET"])
-      client.authorize_from_access(oauth_token, oauth_secret)  
+      client.authorize_from_access(authentication.oauth_token, authentication.oauth_secret)  
       linkedin_bio = client.profile(:fields => %w(summary)).summary
       self.profile.update_attributes(bio: linkedin_bio )  
     end
