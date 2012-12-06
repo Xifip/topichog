@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
                                     class_name: "Relationship",
                                     dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
-  has_many :authentications
+  has_many :authentications, dependent: :destroy
  #likes
   has_many :likes, foreign_key: "liker_id", dependent: :destroy
   has_many :liked_posts, :through => :likes, :source => :liked, 
@@ -53,11 +53,11 @@ class User < ActiveRecord::Base
         user.oauth_expires_at = Time.at(auth.credentials.expires_at)
       elsif auth.provider == "twitter"  
         user.oauth_token = auth.credentials.token
-        user.oauth_secret = auth.credentials.secret
+        user.oauth_token_secret = auth.credentials.secret
         user.name = auth.info.name
       elsif auth.provider == "linkedin"  
         user.oauth_token = auth.credentials.token
-        user.oauth_secret = auth.credentials.secret
+        user.oauth_token_secret = auth.credentials.secret
         user.name = auth.info.name      
         user.email = auth.info.email  
       end
@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
 =end
 
   def apply_omniauth(omni)
-
+  #debugger
    if omni.provider != 'facebook'
     oauth_expires_at = nil
    else
@@ -92,7 +92,7 @@ class User < ActiveRecord::Base
     authentication = Authentication.find_by_provider_and_user_id('twitter', self.id) 
     client = Twitter::Client.new(
         :oauth_token => authentication.oauth_token,
-        :oauth_token_secret => authentication.oauth_secret
+        :oauth_token_secret => authentication.oauth_token_secret
       )   
         
      image_url = client.user(Integer(authentication.uid)).profile_image_url
@@ -101,7 +101,7 @@ class User < ActiveRecord::Base
   def linkedin_avatar
     authentication = Authentication.find_by_provider_and_user_id('linkedin', self.id) 
     client = LinkedIn::Client.new(ENV["LINKEDIN_CONSUMER_KEY"], ENV["LINKEDIN_CONSUMER_SECRET"])
-    client.authorize_from_access(authentication.oauth_token, authentication.oauth_secret)
+    client.authorize_from_access(authentication.oauth_token, authentication.oauth_token_secret)
     
     client.profile(:fields => %w(picture-url)).picture_url
   end
@@ -125,6 +125,10 @@ class User < ActiveRecord::Base
       super
     end
   end  
+   
+  def name_required?
+    authentications.empty? 
+  end
     
   def password_required?
     (authentications.empty? || !password.blank?) && super
@@ -186,27 +190,31 @@ class User < ActiveRecord::Base
   
   def add_profile
     self.create_profile
-    if self.provider == 'facebook'
+    twitter_auth = self.authentications.find_by_provider('twitter')
+    facebook_auth = self.authentications.find_by_provider('facebook')
+    linkedin_auth = self.authentications.find_by_provider('linkedin') 
+
+    if facebook_auth
       self.profile.update_attributes(bio: self.facebook.get_object("me")["bio"])      
     end
     
-    if self.provider == 'twitter'
+    if twitter_auth
       authentication = Authentication.find_by_provider_and_user_id('twitter', self.id)  
       client = Twitter::Client.new(
         :oauth_token => authentication.oauth_token,
-        :oauth_token_secret => authentication.oauth_secret
+        :oauth_token_secret => authentication.oauth_token_secret
       ) 
       self.profile.update_attributes(bio: client.user(Integer(authentication.uid)).description)
     end
     
-    if self.provider == 'linkedin'
+    if linkedin_auth
       authentication = Authentication.find_by_provider_and_user_id('linkedin', self.id)  
       client = LinkedIn::Client.new(ENV["LINKEDIN_CONSUMER_KEY"], ENV["LINKEDIN_CONSUMER_SECRET"])
-      client.authorize_from_access(authentication.oauth_token, authentication.oauth_secret)  
+      client.authorize_from_access(authentication.oauth_token, authentication.oauth_token_secret)  
       linkedin_bio = client.profile(:fields => %w(summary)).summary
       self.profile.update_attributes(bio: linkedin_bio )  
     end
-       
+      
   end
   
   def add_avatar

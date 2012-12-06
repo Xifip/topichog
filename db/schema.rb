@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(:version => 20121129205620) do
 
   create_table "authentications", :force => true do |t|
-    t.string   "user_id"
+    t.integer  "user_id"
     t.string   "provider"
     t.string   "uid"
     t.string   "oauth_token"

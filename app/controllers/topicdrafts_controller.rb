@@ -128,10 +128,9 @@ class TopicdraftsController < ApplicationController
       @post.postable = @topic
       @topic.topicdraft = @topicdraft
       if @post.save      
-        @post.user.tag(@post, :with =>  @topic.tag_list, :on => :tags)           
-        PublishtopicWorker.perform_async(current_user.id, user_topic_url(@user, @topic), @topic.id) 
+        @post.user.tag(@post, :with =>  @topic.tag_list, :on => :tags)                
         flash[:success] = "Topic published!"        
-        redirect_to user_path(@post.user)
+        redirect_to user_topic_path(@post.user, @topic)
       else
         @user = @post.user  
         @topic.destroy 
@@ -166,7 +165,7 @@ class TopicdraftsController < ApplicationController
                                    
       @post.user.tag(@post, :with =>  @topic.tag_list, :on => :tags)
       flash[:success] = "Topic published!"        
-      redirect_to user_path(@user)                                   
+      redirect_to user_topic_path(@post.user, @topic)                                 
     else
       @user = current_user   
       render :edit

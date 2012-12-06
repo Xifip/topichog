@@ -2,13 +2,19 @@ class PublishtopicWorker
   include Sidekiq::Worker
   sidekiq_options retry: false
   
-  def perform(user_id, post_url, topic_id)
+  def perform(user_id, post_url, topic_id, linkedin_publicise, facebook_publicise, twitter_publicise)
     user = User.find(user_id)
     topic = Topic.find(topic_id)
-
-    if user.provider == "facebook"
-      user.facebook.put_connections("me", "topichog:post", article: post_url)
-    elsif user.provider == "twitter"      
+    
+    twitter_auth = user.authentications.find_by_provider('twitter')
+    facebook_auth = user.authentications.find_by_provider('facebook')
+    linkedin_auth = user.authentications.find_by_provider('linkedin') 
+    
+    if facebook_auth && facebook_publicise
+     user.facebook.put_connections("me", "topichog:post", article: post_url)
+    end
+    
+    if twitter_auth && twitter_publicise
       Bitly.use_api_version_3
       bitly_client = Bitly.new( ENV["bitly_Username"], ENV["bitly_API_Key"])
       post_url = bitly_client.shorten(post_url).short_url
@@ -35,14 +41,15 @@ class PublishtopicWorker
             
       tweet_text = topic.title + ': ' + post_url + shorter_tag + longer_tag + ' via: @topichog'
       client = Twitter::Client.new(
-        :oauth_token => user.oauth_token,
-        :oauth_token_secret => user.oauth_secret
+        :oauth_token => twitter_auth.oauth_token,
+        :oauth_token_secret => twitter_auth.oauth_token_secret
       )       
       client.update(tweet_text) if tweet_text.length <= 140        
-    
-    elsif user.provider == "linkedin"    
+    end
+           
+    if linkedin_auth && linkedin_publicise
       client = LinkedIn::Client.new(ENV["LINKEDIN_CONSUMER_KEY"], ENV["LINKEDIN_CONSUMER_SECRET"])
-      client.authorize_from_access(user.oauth_token, user.oauth_secret) 
+      client.authorize_from_access(linkedin_auth.oauth_token, linkedin_auth.oauth_token_secret) 
       client.add_share({
             comment: "has posted a new topic via TopicHog",
             content: {
@@ -62,5 +69,6 @@ class PublishtopicWorker
           }
         })                     
     end
+    
   end
 end

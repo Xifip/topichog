@@ -15,10 +15,11 @@ TopicHog::Application.routes.draw do
   resources :posts, only: [:index, :destroy]
   get 'posts/:tag1', to: 'posts#index', as: :post
 
-  resources :authentications
+  
 #  devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"} #, :controllers => { :registrations => "registrations" } 
   devise_for :users, controllers: {omniauth_callbacks: "authentications", registrations: "registrations" } 
   
+  resources :authentications
   resources :token_authentications, :only => [:create, :destroy]
   resources :topicdraftimages, :only => [:create, :update, :edit, :destroy]
   resources :projectdraftimages, :only => [:create, :update, :edit, :destroy]
@@ -49,7 +50,11 @@ TopicHog::Application.routes.draw do
     resources :projectdrafts, :only => [ :update] , as: :update_projectdrafts
     resources :pposts, :only => [:create, :show, :new] 
     resources :tposts, :only => [:create, :show, :new] 
-    resources :topics, :only => [:create, :show, :new, :edit]     
+    resources :topics, :only => [:create, :show, :new, :edit] do
+      member do
+        put :publicise
+      end  
+    end    
     resources :topics, :only => [ :update] , as: :update_topics
     resources :topicdrafts, :only => [:create, :show, :new, :edit, :destroy] do
      member do

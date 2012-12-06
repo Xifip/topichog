@@ -1,4 +1,11 @@
-class AuthenticationsController < Devise::OmniauthCallbacksController
+#class AuthenticationsController < Devise::OmniauthCallbacksController
+class AuthenticationsController < ApplicationController  
+  def index
+    @twitter_auth = current_user.authentications.find_by_provider('twitter')
+    @facebook_auth = current_user.authentications.find_by_provider('facebook')
+    @linkedin_auth = current_user.authentications.find_by_provider('linkedin')        
+  end
+  
   def all
     #raise request.env["omniauth.auth"].to_yaml
     omni = request.env["omniauth.auth"]
@@ -16,18 +23,17 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
          token_secret = omni['credentials'].secret 
          token_expires_at = ''         
        end  
-       current_user.authentications.create!(:provider => omni['provider'], :uid => omni['uid'], :omni_token => token, :omni_token_secret => token_secret, :oauth_expires_at => token_expires_at)
+       current_user.authentications.create!(:provider => omni['provider'], :uid => omni['uid'], :oauth_token => token, :oauth_token_secret => token_secret, :oauth_expires_at => token_expires_at)
        flash[:notice] = "Authentication successful."
        sign_in_and_redirect current_user
      else
        user = User.new
-       debugger
        user.name = omni.info.name
        if omni['provider'] == 'facebook' || 'linkedin'
         user.email = omni['extra']['raw_info'].email 
        end 
        user.apply_omniauth(omni)
-
+       #debugger
        if user.save
          flash[:notice] = "Logged in."
          sign_in_and_redirect User.find(user.id)

@@ -1,0 +1,26 @@
+= form_tag({:controller => "topics",:action => "publicise"}, {:method => "put"}) do
+  = submit_tag "Publicise", class: "btn btn-large btn-primary"
+  %table
+    %tbody
+      %tr
+        %td
+          %span
+            = image_tag 'linkedin-icon.png', class: "publicise_icon"      
+          %span
+            = check_box_tag(:linkedin_pub, '1', false, {:disabled => !@linkedin_auth })    
+        %td
+          %span
+            = image_tag 'Twitter-Blue-Transparent-t-3D-Button-Logo.png', class: "publicise_icon"     
+          %span
+            = check_box_tag(:twitter_pub, '1', false, {:disabled => !@twitter_auth }) 
+        %td
+          %span
+            = image_tag 'facebook_icon.png', class: "publicise_icon"      
+          %span
+            = check_box_tag(:facebook_pub, '1', false, {:disabled => !@facebook_auth }) 
+  %span
+    = link_to "add networks", authentications_path if !@facebook_auth || !@twitter_auth || !@linkedin_auth                                                       
+  
+  
+ 
+       

@@ -49,10 +49,17 @@
               =@topic.summary 
             %p
               =render 'shared/tags'              
-          .span1
-            =render 'posts/like_form' if user_signed_in?
-          %span
-            = link_to "edit topic", edit_user_topicdraft_path(@user, @post.postable.topicdraft) if @user == current_user
+          -if user_signed_in? 
+            .span2
+              =render 'posts/like_form'         
+          -if @user == current_user
+            .span2
+              .row                              
+                .span2
+                  =render 'shared/topic_publicise_form'    
+                .spacer5 
+                .span2               
+                  = link_to "edit topic", edit_user_topicdraft_path(@user, @post.postable.topicdraft) 
     .row
       .span8                 
         .row
