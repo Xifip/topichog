@@ -19,7 +19,7 @@ gem 'acts-as-taggable-on', '~>2.2.0'
 gem "rmagick"
 gem "carrierwave"
 gem "mini_magick"
-gem "ckeditor", "3.7.1"
+gem "ckeditor", "3.7.1", :git => 'git://github.com/paranoida/ckeditor.git'
 gem "best_in_place"
 gem "fog"
 gem "carrierwave_direct"
