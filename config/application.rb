@@ -68,7 +68,7 @@ module TopicHog
     config.active_record.whitelist_attributes = true
     
     #Procompile ckeditor js and css files
-    config.assets.precompile += Ckeditor.assets
+    #config.assets.precompile += Ckeditor.assets
     
     # Enable the asset pipeline
     config.assets.enabled = true
