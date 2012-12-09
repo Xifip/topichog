@@ -14,10 +14,10 @@
           %span
             = check_box_tag(:twitter_pub, '1', false, {:disabled => !@twitter_auth }) 
         %td
-          %span
+          %span.hide
             = image_tag 'facebook_icon.png', class: "publicise_icon"      
-          %span
-            = check_box_tag(:facebook_pub, '1', false, {:disabled => !@facebook_auth }) 
+          %span.hide
+            = check_box_tag(:facebook_pub, '1', false, {:disabled => true }) 
   %span
     = link_to "add networks", authentications_path if !@facebook_auth || !@twitter_auth || !@linkedin_auth                                                       
   

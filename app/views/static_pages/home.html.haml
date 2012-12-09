@@ -26,16 +26,18 @@
       .spacer200      
 - else
   .row.center.hero-unit
-    %h1 TopicHog Beta
+    %h1 TopicHog
     %h2
       Your knowledge and project portfolio 
-    = link_to "Sign up now!", new_user_registration_path, class: "btn btn-large btn-primary"
-    |
-    \#{link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter)} 
-    |
-    \#{link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)}  
-    |
-    \#{link_to "Sign in with Linkedin", user_omniauth_authorize_path(:linkedin)}    
+    .spacer50  
+    %Span
+      Sign in the easy way
+    \#{link_to image_tag("twitter_64.png", class: 'signin_icon'), user_omniauth_authorize_path(:twitter)} 
+    \#{link_to image_tag("facebook_64.png", class: 'signin_icon'), user_omniauth_authorize_path(:facebook)}  
+    \#{link_to image_tag("linkedin_64.png", class: 'signin_icon'), user_omniauth_authorize_path(:linkedin)} 
+    %Span
+      or 
+    \#{link_to "Sign up here", new_user_registration_path}            
   .row
     .span4
       %h2.center Create your profile 

@@ -9,10 +9,12 @@
 		    <div><%= f.label :name %><br />
 		    <%= f.text_field :name %></div>
 		 <% end %>  
-  
+    
+     
 		  <div><%= f.label :email %><br />
 		  <%= f.email_field :email %></div>
-
+      
+      
       <% if f.object.password_required? %>		
 		    <div><%= f.label :password %><br />
 		    <%= f.password_field :password %></div>

@@ -36,9 +36,9 @@
             -else
               Twitter is connected !         
         %tr
-          %td.publicise_cell
+          %td.publicise_cell.hide
             =image_tag "Facebook.png", class: 'publicise_logo'
-          %td.publicise_cell      
+          %td.publicise_cell.hide      
             -if !@facebook_auth 
               = link_to "Connect with Facebook", user_omniauth_authorize_path(:facebook)
             -else

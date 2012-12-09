@@ -10,7 +10,6 @@ class AuthenticationsController < ApplicationController
     #raise request.env["omniauth.auth"].to_yaml
     omni = request.env["omniauth.auth"]
     authentication = Authentication.find_by_provider_and_uid(omni['provider'], omni['uid'])    
-
      if authentication
        flash.notice = "Signed in!"      
        sign_in_and_redirect User.find(authentication.user_id), notice: "Signed in!"  
@@ -29,11 +28,13 @@ class AuthenticationsController < ApplicationController
      else
        user = User.new
        user.name = omni.info.name
-       if omni['provider'] == 'facebook' || 'linkedin'
+       if omni['provider'] == 'facebook' 
         user.email = omni['extra']['raw_info'].email 
        end 
+       if omni['provider'] == 'linkedin'
+        user.email = omni['extra']['raw_info'].emailAddress
+       end
        user.apply_omniauth(omni)
-       #debugger
        if user.save
          flash[:notice] = "Logged in."
          sign_in_and_redirect User.find(user.id)
