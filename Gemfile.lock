@@ -42,6 +42,9 @@ GEM
     addressable (2.3.2)
     annotate (2.4.1.beta1)
     arel (3.0.2)
+    autoscaler (0.0.3)
+      heroku-api
+      sidekiq (~> 2.2)
     bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-x86-mingw32)
     best_in_place (1.1.2)
@@ -154,6 +157,8 @@ GEM
       spork (>= 0.8.4)
     haml (3.1.7)
     hashie (1.2.0)
+    heroku-api (0.3.5)
+      excon (~> 0.16.1)
     hike (1.2.1)
     httparty (0.9.0)
       multi_json (~> 1.0)
@@ -362,6 +367,7 @@ DEPENDENCIES
   ZenTest
   acts-as-taggable-on (~> 2.2.0)
   annotate (~> 2.4.1.beta)
+  autoscaler
   bcrypt-ruby (= 3.0.1)
   best_in_place
   bitly
