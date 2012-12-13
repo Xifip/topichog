@@ -2,11 +2,12 @@ class PublishWorker
   include Sidekiq::Worker
   sidekiq_options retry: true
   
-  def perform(user_id, post_url, postable_id, linkedin_publicise, facebook_publicise, twitter_publicise)
+  def perform(user_id, post_url, postable_id, postable_type, linkedin_publicise, facebook_publicise, twitter_publicise)
     user = User.find(user_id)
-    if postable.posts[0].postable_type = "Topic"
+    
+    if postable_type = "Topic"
       postable = Topic.find(topic_id)
-    elsif postable.posts[0].postable_type = "Project"
+    elsif postable_type = "Project"
       postable = Project.find(topic_id)
     end
     
@@ -54,7 +55,7 @@ class PublishWorker
     if linkedin_auth && linkedin_publicise
       client = LinkedIn::Client.new(ENV["LINKEDIN_CONSUMER_KEY"], ENV["LINKEDIN_CONSUMER_SECRET"])
       client.authorize_from_access(linkedin_auth.oauth_token, linkedin_auth.oauth_token_secret) 
-      if postable.posts[0].postable_type = "Topic"
+      if postable_type = "Topic"
         client.add_share({
               comment: "has posted a new topic via TopicHog",
               content: {
@@ -64,7 +65,7 @@ class PublishWorker
               description: postable.summary
               }
             })      
-      elsif postable.posts[0].postable_type = "Project"
+      elsif postable_type = "Project"
         client.add_share({
               comment: "has posted a new project via TopicHog",
               content: {
