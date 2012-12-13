@@ -129,9 +129,7 @@ class ProjectdraftsController < ApplicationController
       @project.projectdraft = @projectdraft
       if @post.save      
         @post.user.tag(@post, :with =>  @project.tag_list, :on => :tags)          
-        #User.delay.share_project_FB(current_user.id, user_project_url(@project)) 
-        #debugger
-        PublishWorker.perform_async(current_user.id, user_project_url(@user, @project))
+
         flash[:success] = "Project published!"     
         redirect_to user_path(@post.user)
       else
