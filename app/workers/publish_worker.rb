@@ -6,9 +6,9 @@ class PublishWorker
     user = User.find(user_id)
     
     if postable_type = "Topic"
-      postable = Topic.find(topic_id)
+      postable = Topic.find(postable_id)
     elsif postable_type = "Project"
-      postable = Project.find(topic_id)
+      postable = Project.find(postable_id)
     end
     
     twitter_auth = user.authentications.find_by_provider('twitter')
