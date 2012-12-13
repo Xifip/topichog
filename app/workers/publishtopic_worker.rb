@@ -1,6 +1,6 @@
 class PublishtopicWorker
   include Sidekiq::Worker
-  sidekiq_options retry: false
+  sidekiq_options retry: true
   
   def perform(user_id, post_url, topic_id, linkedin_publicise, facebook_publicise, twitter_publicise)
     user = User.find(user_id)
@@ -58,16 +58,7 @@ class PublishtopicWorker
             'submitted-image-url' => topic.topicdraftimages.first.image_url(:large).to_s,
             description: topic.summary
             }
-          }) 
-      client.add_share({
-          comment: 'Testcomment',
-          content: {
-          title: 'Thsi is a test title',
-          'submitted-url' => 'http://www.example.com',
-          'submitted-image-url' => 'https://topichogire.s3.amazonaws.com/uploads/topicdraftimage/image/215/large_049860-black-paint-splatter-icon-natural-wonders-cactus-sc48.png',
-          description: 'This is a test description....'
-          }
-        })                     
+          })                     
     end
     
   end

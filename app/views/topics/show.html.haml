@@ -6,12 +6,11 @@
   = tag :meta, property: "og:image", content: image_path(@topicdraftimage.image_url(:large).to_s)
   = tag :meta, property: "og:title", content: @topic.title
   = tag :meta, property: "og:description", content: @topic.summary
-  = tag :meta, property: "article:published_time", content: "2010-01-24"
-  = tag :meta, property: "article:expiration_time", content: "2010-01-26"
-  = tag :meta, property: "article:author", content: "http://www.stanforddaily.com/author/ivynguyen/"
-  = tag :meta, property: "article:section", content: "Sports"
-  = tag :meta, property: "article:tag", content: "USC"
-  = tag :meta, property: "article:tag", content: "Jeanette Pohlen"
+  = tag :meta, property: "article:published_time", content: @topic.created_at
+  = tag :meta, property: "article:modified_time", content: @topic.updated_at
+  = tag :meta, property: "article:author", content: @topic.user.name
+  = tag :meta, property: "article:tag", content: @tag0
+  = tag :meta, property: "article:tag", content: @tag1
   = tag :meta, name: "twitter:card", content: "summary"  
   = tag :meta, name: "twitter:url", content: user_topic_url(@user, @topic) 
   = tag :meta, name: "twitter:title", content: @topic.title    

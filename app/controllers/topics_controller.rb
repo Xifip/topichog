@@ -11,7 +11,9 @@ class TopicsController < ApplicationController
     @topicdraftimage = Topicdraftimage.topicdraftimage_for_topic(@topic).first
     @twitter_auth = @user.authentications.find_by_provider('twitter')
     @facebook_auth = @user.authentications.find_by_provider('facebook')
-    @linkedin_auth = @user.authentications.find_by_provider('linkedin')     
+    @linkedin_auth = @user.authentications.find_by_provider('linkedin') 
+    @tag0 = @topic.tag_list[0]
+    @tag1 = @topic.tag_list[1]      
   end
   
   def publicise

@@ -82,6 +82,10 @@ class User < ActiveRecord::Base
   def facebook
     authentication = Authentication.find_by_provider_and_user_id('facebook', self.id)  
     @facebook ||= Koala::Facebook::API.new(authentication.oauth_token)
+    block_given? ? yield(@facebook) : @facebook
+    rescue Koala::Facebook::APIError => e
+      logger.info e.to_s
+      nil    
   end
   
   def fb_avatar
