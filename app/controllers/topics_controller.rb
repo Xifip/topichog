@@ -13,7 +13,7 @@ class TopicsController < ApplicationController
     @facebook_auth = @user.authentications.find_by_provider('facebook')
     @linkedin_auth = @user.authentications.find_by_provider('linkedin') 
     @tag0 = @topic.tag_list[0]
-    @tag1 = @topic.tag_list[1]      
+    @tag1 = @topic.tag_list[1]    
   end
   
   def publicise
