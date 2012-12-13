@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
      if !linkedin_publicise && !facebook_publicise && !twitter_publicise
       flash[:failure] = "You need to select the networks that you want to post to!"
      else
-       PublishtopicWorker.perform_async(current_user.id, user_project_url(@user, @project), @project.id, linkedin_publicise, facebook_publicise, twitter_publicise) 
+       PublishWorker.perform_async(current_user.id, user_project_url(@user, @project), @project.id, linkedin_publicise, facebook_publicise, twitter_publicise) 
        flash[:success] = "Project posted to your networks!"
      end  
      redirect_to user_project_path(@user, @project)
