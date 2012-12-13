@@ -1,1 +1,2 @@
-:concurrency:  25
+#Sidekiq server defaults to (concurrency + 2) Redistogo Nano limited to 5 connections per process
+:concurrency:  3
