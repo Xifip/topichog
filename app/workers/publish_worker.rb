@@ -5,9 +5,9 @@ class PublishWorker
   def perform(user_id, post_url, postable_id, postable_type, linkedin_publicise, facebook_publicise, twitter_publicise)
     user = User.find(user_id)
     
-    if postable_type = "Topic"
+    if postable_type == "Topic"
       postable = Topic.find(postable_id)
-    elsif postable_type = "Project"
+    elsif postable_type == "Project"
       postable = Project.find(postable_id)
     end
     
@@ -55,7 +55,7 @@ class PublishWorker
     if linkedin_auth && linkedin_publicise
       client = LinkedIn::Client.new(ENV["LINKEDIN_CONSUMER_KEY"], ENV["LINKEDIN_CONSUMER_SECRET"])
       client.authorize_from_access(linkedin_auth.oauth_token, linkedin_auth.oauth_token_secret) 
-      if postable_type = "Topic"
+      if postable_type == "Topic"
         client.add_share({
               comment: "has posted a new topic via TopicHog",
               content: {
@@ -65,7 +65,7 @@ class PublishWorker
               description: postable.summary
               }
             })      
-      elsif postable_type = "Project"
+      elsif postable_type == "Project"
         client.add_share({
               comment: "has posted a new project via TopicHog",
               content: {
