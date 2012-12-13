@@ -36,7 +36,11 @@ TopicHog::Application.routes.draw do
       end
     end
 
-    resources :projects, :only => [:show]
+    resources :projects, :only => [:show] do
+      member do
+        put :publicise
+      end  
+    end 
     #resources :projects, :only => [:create, :show, :new, :edit] 
     #resources :projects, :only => [ :update] , as: :update_projects
     resources :projectdrafts, :only => [:create, :show, :new, :edit, :destroy] do

@@ -50,15 +50,27 @@ class PublishtopicWorker
     if linkedin_auth && linkedin_publicise
       client = LinkedIn::Client.new(ENV["LINKEDIN_CONSUMER_KEY"], ENV["LINKEDIN_CONSUMER_SECRET"])
       client.authorize_from_access(linkedin_auth.oauth_token, linkedin_auth.oauth_token_secret) 
-      client.add_share({
-            comment: "has posted a new topic via TopicHog",
-            content: {
-            title: topic.title,
-            'submitted-url' => post_url,
-            'submitted-image-url' => topic.topicdraftimages.first.image_url(:large).to_s,
-            description: topic.summary
-            }
-          })                     
+      if topic.posts[0].postable_type = "Topic"
+        client.add_share({
+              comment: "has posted a new topic via TopicHog",
+              content: {
+              title: topic.title,
+              'submitted-url' => post_url,
+              'submitted-image-url' => topic.topicdraftimages.first.image_url(:large).to_s,
+              description: topic.summary
+              }
+            })      
+      elsif topic.posts[0].postable_type = "Project"
+        client.add_share({
+              comment: "has posted a new project via TopicHog",
+              content: {
+              title: topic.title,
+              'submitted-url' => post_url,
+              'submitted-image-url' => topic.projectdraftimages.first.image_url(:large).to_s,
+              description: topic.summary
+              }
+            })   
+      end                                
     end
     
   end

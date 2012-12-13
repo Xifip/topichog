@@ -129,7 +129,6 @@ class ProjectdraftsController < ApplicationController
       @project.projectdraft = @projectdraft
       if @post.save      
         @post.user.tag(@post, :with =>  @project.tag_list, :on => :tags)          
-
         flash[:success] = "Project published!"     
         redirect_to user_path(@post.user)
       else

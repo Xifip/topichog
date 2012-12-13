@@ -1,6 +1,5 @@
 = provide(:title, @user.name + ' | ' + @project.title)
 - content_for :head do
-  = tag :meta, property: "fb:app_id", content: ENV["FACEBOOK_APP_ID"]
   = tag :meta, property: "og:type", content: "article" 
   = tag :meta, property: "og:url", content: user_topic_url(@user, @project)
   = tag :meta, property: "og:site_name", content: "topichog"
@@ -48,13 +47,19 @@
               =@project.summary
             %p
               =render 'shared/tags'
-          .span1
-            =render 'posts/like_form' if user_signed_in?
-          %span
-            = link_to "edit project", edit_user_projectdraft_path(@user, @post.postable.projectdraft) if @user == current_user     
+          -if user_signed_in? 
+            .span2
+              =render 'posts/like_form'         
+          -if @user == current_user
+            .span2
+              .row                              
+                .span2
+                  =render 'shared/project_publicise_form'    
+                .spacer5 
+                .span2               
+                  = link_to "edit project", edit_user_projectdraft_path(@user, @post.postable.projectdraft)    
     .row
       .span8                 
         .row
           .span8
             =raw @project.content
-
