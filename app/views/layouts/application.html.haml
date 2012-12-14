@@ -66,5 +66,12 @@
         %li
           %a{"data-toggle" => "modal", :href => "#privacyModal", :role => "button", "data-show" => false}                    
             Privacy Statement             
-= render :partial => 'layouts/privacy_modal'      
+#privacyModal.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3#privacyModalLabel Privacy Statement
+  .modal-body
+    = render :partial => 'layouts/privacy_statement'  
+  .modal-footer
+    %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close           
 = render :partial => 'layouts/ga' if Rails.env == 'production'

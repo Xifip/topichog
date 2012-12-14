@@ -10,6 +10,7 @@ TopicHog::Application.routes.draw do
   root to: 'static_pages#home'
   match '/help', to: 'static_pages#help'
   match '/learn_more', to: 'static_pages#learn_more'
+  match '/privacy_statement', to: 'static_pages#privacy_statement'
   match '/how-to-create-a-profession-portfolio', to: 'static_pages#professional_landing_page'
   
   resources :posts, only: [:index, :destroy]
