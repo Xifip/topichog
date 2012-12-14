@@ -34,6 +34,13 @@ resize: vertical;
 .popover-close{
   float: right;
 }
+/* footer */
+body, html{ height:100%; margin:0; }
+.wrapper{ min-height:100%; }
+header{ height:86px; background:#fff; overflow:auto; display:block; }
+.content{ padding-bottom: 36px; }
+footer{ height: 36px; width:100%; background:#fff; margin-top:-36px; display:block; }
+    
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -405,7 +412,7 @@ aside {
 }
 /*static pages*/
 
-body #projectModal.modal, body #topicModal.modal {
+body #projectModal.modal, body #topicModal.modal, body #privacyModal.modal {
     //new custom width
     width: 940px;
     //must be half of the width, minus scrollbar on the left (30px)
