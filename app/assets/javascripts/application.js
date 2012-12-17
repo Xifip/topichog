@@ -33,6 +33,7 @@
 //= require topicdraftimages.js.coffee
 //= require projectdraftimages.js.coffee
 //= require topicdrafts.js.coffee
+//= require messages.js.coffee
 //= require static_pages.js.coffee
 //= require projects.js.coffee
 
