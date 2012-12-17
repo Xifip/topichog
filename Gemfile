@@ -7,6 +7,14 @@ gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.6'
 gem 'gon'
 gem 'devise'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'omniauth-linkedin'
+gem 'twitter'
+gem 'linkedin'
+gem 'koala'
+gem 'bitly'
+gem 'delayed_job_active_record'
 gem 'acts-as-taggable-on', '~>2.2.0'
 gem "rmagick"
 gem "carrierwave"
@@ -16,6 +24,7 @@ gem "best_in_place"
 gem "fog"
 gem "carrierwave_direct"
 gem "sidekiq"
+gem "autoscaler"
 #gem "aws-s3", :require => 'aws/s3' 
 #gem 'aws-sdk'
 #sinatra & slim needed for sidekiq web interface
@@ -23,6 +32,7 @@ gem 'sinatra', require:false
 gem 'slim'
 #gem 'sidekiq-failures'
 gem 'redis'
+gem 'active_attr'
 group :development, :test do
 gem 'pg', '0.12.2'
 #gem 'sqlite3', '1.3.5'

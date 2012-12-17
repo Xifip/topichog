@@ -1,4 +1,21 @@
 = provide(:title, @user.name + ' | ' + @topic.title)
+- content_for :head do
+  = tag :meta, property: "og:type", content: "article"     
+  = tag :meta, property: "og:url", content: user_topic_url(@user, @topic)
+  = tag :meta, property: "og:site_name", content: "topichog"
+  = tag :meta, property: "og:image", content: image_path(@topicdraftimage.image_url(:large).to_s)
+  = tag :meta, property: "og:title", content: @topic.title
+  = tag :meta, property: "og:description", content: @topic.summary
+  = tag :meta, property: "article:published_time", content: @topic.created_at
+  = tag :meta, property: "article:modified_time", content: @topic.updated_at
+  = tag :meta, property: "article:tag", content: @tag0
+  = tag :meta, property: "article:tag", content: @tag1
+  = tag :meta, name: "twitter:card", content: "summary"  
+  = tag :meta, name: "twitter:url", content: user_topic_url(@user, @topic) 
+  = tag :meta, name: "twitter:title", content: @topic.title    
+  = tag :meta, name: "twitter:description", content: @topic.summary     
+  = tag :meta, name: "twitter:image", content: image_path(@topicdraftimage.image_url(:large).to_s)    
+  = tag :meta, name: "twitter:site", content: "@topichog"
 .row
   %aside.span4
     %section  
@@ -30,10 +47,17 @@
               =@topic.summary 
             %p
               =render 'shared/tags'              
-          .span1
-            =render 'posts/like_form' if user_signed_in?
-          %span
-            = link_to "edit topic", edit_user_topicdraft_path(@user, @post.postable.topicdraft) if @user == current_user
+          -if user_signed_in? 
+            .span2
+              =render 'posts/like_form'         
+          -if @user == current_user
+            .span2
+              .row                              
+                .span2
+                  =render 'shared/topic_publicise_form'    
+                .spacer5 
+                .span2               
+                  = link_to "edit topic", edit_user_topicdraft_path(@user, @post.postable.topicdraft) 
     .row
       .span8                 
         .row

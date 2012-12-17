@@ -6,7 +6,6 @@ class ProfilesController < ApplicationController
     @profile = Profile.find_by_id(params[:id])
     @user = @profile.user
     @avatar = @user.avatar
-          #debugger
     if params[:key]
 
       @avatar.key = params[:key]

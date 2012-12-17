@@ -1,0 +1,45 @@
+.row
+  %h3.span6.offset3.center Publicise settings
+.spacer20
+.row
+  .span6.offset3
+    Connect to popular social networking sites and share new posts with your network when you choose to (never automagically!). |
+    %i.icon-info-sign 
+    %a{"data-toggle" => "collapse", :href => "#publicise_details"} how it works
+.spacer20
+.row
+  .span6.offset3      
+    #publicise_details.collapse
+      When you post a new item to your portfolio you have the option to publicise |
+      it through your social networks. Topichog will only ever post to your networks |
+      when you actively choose to do it. Each time you create a new post you need to |
+      choose where you want to publicise it.
+.spacer50
+.row
+  .span6.offset3
+    %table
+      %tbody
+        %tr
+          %td.publicise_cell
+            =image_tag "linkedin-logo.png", class: 'publicise_logo'
+          %td.publicise_cell      
+            -if !@linkedin_auth 
+              = link_to "Connect with Linkedin", user_omniauth_authorize_path(:linkedin)
+            -else
+              Linkedin is connected !      
+        %tr
+          %td.publicise_cell
+            =image_tag "logo_twitter.png", class: 'publicise_logo'
+          %td.publicise_cell      
+            -if !@twitter_auth 
+              = link_to "Connect with Twitter", user_omniauth_authorize_path(:twitter)
+            -else
+              Twitter is connected !         
+        %tr
+          %td.publicise_cell.hide
+            =image_tag "Facebook.png", class: 'publicise_logo'
+          %td.publicise_cell.hide      
+            -if !@facebook_auth 
+              = link_to "Connect with Facebook", user_omniauth_authorize_path(:facebook)
+            -else
+              Facebook is connected !                  

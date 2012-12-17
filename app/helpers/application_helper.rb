@@ -31,5 +31,18 @@ module ApplicationHelper
     @devise_mapping ||= Devise.mappings[:user]
   end  
   
+  def shorten_with_bitly(url)
+    # build url to bitly api
+    user = ENV["bitly_Username"]
+    apikey = ENV["bitly_API_Key"]
+    version = "2.0.1"
+    bitly_url = "http://api.bit.ly/shorten?version=#{version}&longUrl=#{url}&login=#{user}&apiKey=#{apikey}"
+     
+    # parse result and return shortened url
+    buffer = open(bitly_url, "UserAgent" => "Ruby-ExpandLink").read
+    result = JSON.parse(buffer)
+    short_url = result['results'][url]['shortUrl']
+  end
+  
 end
 

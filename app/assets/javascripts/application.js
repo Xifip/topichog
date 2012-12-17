@@ -13,12 +13,12 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require bootstrap
 //= require jquery-fileupload/basic
 //= require jquery-fileupload/vendor/tmpl
 //= require jquery.purr
 //= require best_in_place
 //= require jquery.Jcrop.min
-//= require bootstrap
 //= require user_profile.js.coffee
 //= require charCount.js
 //= require jquery.watermark.min.js
@@ -33,6 +33,7 @@
 //= require topicdraftimages.js.coffee
 //= require projectdraftimages.js.coffee
 //= require topicdrafts.js.coffee
+//= require messages.js.coffee
 //= require static_pages.js.coffee
 //= require projects.js.coffee
 

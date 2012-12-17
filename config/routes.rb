@@ -10,12 +10,19 @@ TopicHog::Application.routes.draw do
   root to: 'static_pages#home'
   match '/help', to: 'static_pages#help'
   match '/learn_more', to: 'static_pages#learn_more'
+  match '/privacy_statement', to: 'static_pages#privacy_statement'
+  match '/terms_of_use', to: 'static_pages#terms_of_use'  
   match '/how-to-create-a-profession-portfolio', to: 'static_pages#professional_landing_page'
   
   resources :posts, only: [:index, :destroy]
+  resources :messages, only: [:new, :create]
   get 'posts/:tag1', to: 'posts#index', as: :post
 
-  devise_for :users #, :controllers => { :registrations => "registrations" } 
+  
+#  devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"} #, :controllers => { :registrations => "registrations" } 
+  devise_for :users, controllers: {omniauth_callbacks: "authentications", registrations: "registrations" } 
+  
+  resources :authentications
   resources :token_authentications, :only => [:create, :destroy]
   resources :topicdraftimages, :only => [:create, :update, :edit, :destroy]
   resources :projectdraftimages, :only => [:create, :update, :edit, :destroy]
@@ -32,7 +39,11 @@ TopicHog::Application.routes.draw do
       end
     end
 
-    resources :projects, :only => [:show]
+    resources :projects, :only => [:show] do
+      member do
+        put :publicise
+      end  
+    end 
     #resources :projects, :only => [:create, :show, :new, :edit] 
     #resources :projects, :only => [ :update] , as: :update_projects
     resources :projectdrafts, :only => [:create, :show, :new, :edit, :destroy] do
@@ -46,7 +57,11 @@ TopicHog::Application.routes.draw do
     resources :projectdrafts, :only => [ :update] , as: :update_projectdrafts
     resources :pposts, :only => [:create, :show, :new] 
     resources :tposts, :only => [:create, :show, :new] 
-    resources :topics, :only => [:create, :show, :new, :edit]     
+    resources :topics, :only => [:create, :show, :new, :edit] do
+      member do
+        put :publicise
+      end  
+    end    
     resources :topics, :only => [ :update] , as: :update_topics
     resources :topicdrafts, :only => [:create, :show, :new, :edit, :destroy] do
      member do

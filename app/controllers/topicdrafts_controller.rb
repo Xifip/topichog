@@ -49,7 +49,7 @@ class TopicdraftsController < ApplicationController
                                    content: params[:topicdraft][:content],
                                    tag_list: params[:topicdraft][:tag_list],
                                    draft_ahead: true
-                                   )         
+                                   )             
       flash[:notice] = "Successfully updated topic draft."
       redirect_to user_topicdraft_path(@user, @topicdraft)
     else
@@ -128,9 +128,9 @@ class TopicdraftsController < ApplicationController
       @post.postable = @topic
       @topic.topicdraft = @topicdraft
       if @post.save      
-        @post.user.tag(@post, :with =>  @topic.tag_list, :on => :tags)
+        @post.user.tag(@post, :with =>  @topic.tag_list, :on => :tags)                
         flash[:success] = "Topic published!"        
-        redirect_to user_path(@post.user)
+        redirect_to user_topic_path(@post.user, @topic)
       else
         @user = @post.user  
         @topic.destroy 
@@ -165,7 +165,7 @@ class TopicdraftsController < ApplicationController
                                    
       @post.user.tag(@post, :with =>  @topic.tag_list, :on => :tags)
       flash[:success] = "Topic published!"        
-      redirect_to user_path(@user)                                   
+      redirect_to user_topic_path(@post.user, @topic)                                 
     else
       @user = current_user   
       render :edit

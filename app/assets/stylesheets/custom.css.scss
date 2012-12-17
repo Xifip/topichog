@@ -34,6 +34,13 @@ resize: vertical;
 .popover-close{
   float: right;
 }
+/* footer */
+body, html{ height:100%; margin:0; }
+.wrapper{ min-height:100%; }
+header{ height:86px; background:#fff; overflow:auto; display:block; }
+.content{ padding-bottom: 36px; }
+footer{ height: 36px; width:100%; background:#fff; margin-top:-36px; display:block; }
+    
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -281,9 +288,9 @@ input, textarea, select, .uneditable-input {
   }
 }
       
-/* projecs */
+/* projects */
 
-.edit_bio_col, form.new_projectdraft, form.new_topicdraft, form.edit_projectdraft, form.edit_topicdraft {
+.edit_bio_col, form.new_message, form.new_projectdraft, form.new_topicdraft, form.edit_projectdraft, form.edit_topicdraft {
   .counter{
 	  font-weight:bold;
 	  color:#ccc;
@@ -405,7 +412,7 @@ aside {
 }
 /*static pages*/
 
-body #projectModal.modal, body #topicModal.modal {
+body #projectModal.modal, body #topicModal.modal, body #privacyModal.modal, body #termsModal.modal {
     //new custom width
     width: 940px;
     //must be half of the width, minus scrollbar on the left (30px)
@@ -469,3 +476,18 @@ section.learn-more-section-spacer {
     margin: 40px 0 39px;
 }
 
+.publicise_cell{
+  vertical-align: middle;
+  padding: 20px;
+}
+
+.publicise_logo{
+  width: 150px;
+}
+.publicise_icon{
+  width: 15px;
+}
+
+.signin_icon{
+  width: 64px;
+}

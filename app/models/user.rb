@@ -4,8 +4,8 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
 
   
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :token_authenticatable
+  devise :database_authenticatable, :registerable, :omniauthable,
+         :recoverable, :rememberable, :trackable, :validatable, :token_authenticatable, :confirmable
   
   before_save :ensure_authentication_token
   # Setup accessible (or protected) attributes for your model
@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
                                     class_name: "Relationship",
                                     dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
-  
+  has_many :authentications, dependent: :destroy
  #likes
   has_many :likes, foreign_key: "liker_id", dependent: :destroy
   has_many :liked_posts, :through => :likes, :source => :liked, 
@@ -39,6 +39,104 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :profile  
   validates_presence_of :name
   validates_uniqueness_of :email, :case_sensitive => false
+  
+
+=begin
+  def self.from_omniauth(auth)
+    where(auth.slice(:provider, :uid)).first_or_create do |user|
+      user.provider = auth.provider
+      user.uid = auth.uid
+      if auth.provider == "facebook"
+        user.name = auth.info.name
+        user.email = auth.info.email
+        user.oauth_token = auth.credentials.token
+        user.oauth_expires_at = Time.at(auth.credentials.expires_at)
+      elsif auth.provider == "twitter"  
+        user.oauth_token = auth.credentials.token
+        user.oauth_token_secret = auth.credentials.secret
+        user.name = auth.info.name
+      elsif auth.provider == "linkedin"  
+        user.oauth_token = auth.credentials.token
+        user.oauth_token_secret = auth.credentials.secret
+        user.name = auth.info.name      
+        user.email = auth.info.email  
+      end
+    end
+  end  
+=end
+
+  def apply_omniauth(omni)
+  #debugger
+   if omni.provider != 'facebook'
+    oauth_expires_at = nil
+   else
+    oauth_expires_at = Time.at(omni['credentials'].expires_at)
+   end 
+   authentications.build(:provider => omni['provider'],
+   :uid => omni['uid'],
+   :oauth_token => omni['credentials'].token,
+   :oauth_token_secret => omni['credentials'].secret,
+   :oauth_expires_at => oauth_expires_at)
+  end
+  
+  def facebook
+    authentication = Authentication.find_by_provider_and_user_id('facebook', self.id)  
+    @facebook ||= Koala::Facebook::API.new(authentication.oauth_token)
+    block_given? ? yield(@facebook) : @facebook
+    rescue Koala::Facebook::APIError => e
+      logger.info e.to_s
+      nil    
+  end
+  
+  def fb_avatar
+    'http://graph.facebook.com/' + self.facebook.get_object("me")["id"] + '/picture' 
+  end
+  
+  def twitter_avatar
+    authentication = Authentication.find_by_provider_and_user_id('twitter', self.id) 
+    client = Twitter::Client.new(
+        :oauth_token => authentication.oauth_token,
+        :oauth_token_secret => authentication.oauth_token_secret
+      )   
+        
+     image_url = client.user(Integer(authentication.uid)).profile_image_url
+  end
+  
+  def linkedin_avatar
+    authentication = Authentication.find_by_provider_and_user_id('linkedin', self.id) 
+    client = LinkedIn::Client.new(ENV["LINKEDIN_CONSUMER_KEY"], ENV["LINKEDIN_CONSUMER_SECRET"])
+    client.authorize_from_access(authentication.oauth_token, authentication.oauth_token_secret)
+    
+    client.profile(:fields => %w(picture-url)).picture_url
+  end
+  
+  def self.new_with_session(params, session)
+
+    if session["devise.user_attributes"]
+      new(session["devise.user_attributes"], without_protection: true) do |user|
+        user.attributes = params
+        user.valid?
+      end
+    else
+      super
+    end    
+  end   
+
+  def update_with_password(params, *options)
+    if encrypted_password.blank?
+      update_attributes(params, *options)
+    else
+      super
+    end
+  end  
+   
+  def name_required?    
+    authentications.empty? 
+  end
+    
+  def password_required?
+    (authentications.empty? || !password.blank?) && super
+  end
       
   def project_drafts_ahead
     Projectdraft.projectdrafts_unpublished_from(self)
@@ -96,6 +194,31 @@ class User < ActiveRecord::Base
   
   def add_profile
     self.create_profile
+    twitter_auth = self.authentications.find_by_provider('twitter')
+    facebook_auth = self.authentications.find_by_provider('facebook')
+    linkedin_auth = self.authentications.find_by_provider('linkedin') 
+
+    if facebook_auth
+      self.profile.update_attributes(bio: self.facebook.get_object("me")["bio"])      
+    end
+    
+    if twitter_auth
+      authentication = Authentication.find_by_provider_and_user_id('twitter', self.id)  
+      client = Twitter::Client.new(
+        :oauth_token => authentication.oauth_token,
+        :oauth_token_secret => authentication.oauth_token_secret
+      ) 
+      self.profile.update_attributes(bio: client.user(Integer(authentication.uid)).description)
+    end
+    
+    if linkedin_auth
+      authentication = Authentication.find_by_provider_and_user_id('linkedin', self.id)  
+      client = LinkedIn::Client.new(ENV["LINKEDIN_CONSUMER_KEY"], ENV["LINKEDIN_CONSUMER_SECRET"])
+      client.authorize_from_access(authentication.oauth_token, authentication.oauth_token_secret)  
+      linkedin_bio = client.profile(:fields => %w(summary)).summary
+      self.profile.update_attributes(bio: linkedin_bio )  
+    end
+      
   end
   
   def add_avatar
