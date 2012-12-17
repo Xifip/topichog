@@ -32,12 +32,12 @@ gem 'sinatra', require:false
 gem 'slim'
 #gem 'sidekiq-failures'
 gem 'redis'
+gem 'active_attr'
 group :development, :test do
 gem 'pg', '0.12.2'
 #gem 'sqlite3', '1.3.5'
 #gem 'ruby-debug19'
 gem 'debugger'
-gem 'active_attr'
 end
 # Gems used only for assets and not required
 # in production environments by default.
