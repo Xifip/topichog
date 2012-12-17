@@ -65,7 +65,13 @@
       %ul
         %li
           %a{"data-toggle" => "modal", :href => "#privacyModal", :role => "button", "data-show" => false}                    
-            Privacy Statement             
+            Contact     
+        %li
+          %a{"data-toggle" => "modal", :href => "#termsModal", :role => "button", "data-show" => false}                    
+            Terms of use  
+        %li
+          %a{"data-toggle" => "modal", :href => "#privacyModal", :role => "button", "data-show" => false}                    
+            Privacy Statement           
 #privacyModal.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
   .modal-header
     %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
@@ -73,5 +79,13 @@
   .modal-body
     = render :partial => 'layouts/privacy_statement'  
   .modal-footer
-    %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close           
+    %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close 
+#termsModal.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3#privacyModalLabel Terms of use
+  .modal-body
+    = render :partial => 'layouts/terms_of_use'  
+  .modal-footer
+    %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close                
 = render :partial => 'layouts/ga' if Rails.env == 'production'

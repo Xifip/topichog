@@ -11,6 +11,7 @@ TopicHog::Application.routes.draw do
   match '/help', to: 'static_pages#help'
   match '/learn_more', to: 'static_pages#learn_more'
   match '/privacy_statement', to: 'static_pages#privacy_statement'
+  match '/terms_of_use', to: 'static_pages#terms_of_use'  
   match '/how-to-create-a-profession-portfolio', to: 'static_pages#professional_landing_page'
   
   resources :posts, only: [:index, :destroy]

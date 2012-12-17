@@ -412,7 +412,7 @@ aside {
 }
 /*static pages*/
 
-body #projectModal.modal, body #topicModal.modal, body #privacyModal.modal {
+body #projectModal.modal, body #topicModal.modal, body #privacyModal.modal, body #termsModal.modal {
     //new custom width
     width: 940px;
     //must be half of the width, minus scrollbar on the left (30px)
