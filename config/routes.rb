@@ -15,6 +15,7 @@ TopicHog::Application.routes.draw do
   match '/how-to-create-a-profession-portfolio', to: 'static_pages#professional_landing_page'
   
   resources :posts, only: [:index, :destroy]
+  resources :messages, only: [:new, :create]
   get 'posts/:tag1', to: 'posts#index', as: :post
 
   

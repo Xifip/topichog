@@ -64,8 +64,7 @@
     .container
       %ul
         %li
-          %a{"data-toggle" => "modal", :href => "#privacyModal", :role => "button", "data-show" => false}                    
-            Contact     
+          =link_to "Contact", new_message_path
         %li
           %a{"data-toggle" => "modal", :href => "#termsModal", :role => "button", "data-show" => false}                    
             Terms of use  

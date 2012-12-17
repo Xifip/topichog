@@ -19,7 +19,7 @@
           %span.hide
             = check_box_tag(:facebook_pub, '1', false, {:disabled => true }) 
   %span
-    = link_to "add networks", authentications_path if !@facebook_auth || !@twitter_auth || !@linkedin_auth                                                       
+    = link_to "add networks", authentications_path if !@twitter_auth || !@linkedin_auth                                                       
   
   
  
