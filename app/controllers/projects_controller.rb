@@ -18,17 +18,22 @@ class ProjectsController < ApplicationController
    end
 
   def publicise
-      @project = Project.find_by_id(params[:id])
-      @user = @project.posts[0].user
-      linkedin_publicise = params[:linkedin_pub] == '1' ? true : false 
-      facebook_publicise = params[:facebook_pub] == '1' ? true : false 
-      twitter_publicise = params[:twitter_pub] == '1' ? true : false 
-     if !linkedin_publicise && !facebook_publicise && !twitter_publicise
-      flash[:failure] = "You need to select the networks that you want to post to!"
-     else
-       PublishWorker.perform_async(current_user.id, user_project_url(@user, @project), @project.id, "Project", linkedin_publicise, facebook_publicise, twitter_publicise) 
-       flash[:success] = "Project posted to your networks!"
-     end  
-     redirect_to user_project_path(@user, @project)
+    @project = Project.find_by_id(params[:id])
+    @user = @project.posts[0].user
+    linkedin_publicise = params[:linkedin_pub] == '1' ? true : false 
+    facebook_publicise = params[:facebook_pub] == '1' ? true : false 
+    twitter_publicise = params[:twitter_pub] == '1' ? true : false 
+    if @project.projectdraftimages.count > 0
+      has_image = true
+    elsif @project.projectdraftimages.count == 0
+      has_image = false
+    end
+    if !linkedin_publicise && !facebook_publicise && !twitter_publicise
+     flash[:failure] = "You need to select the networks that you want to post to!"
+    else    
+      PublishWorker.perform_async(current_user.id, user_project_url(@user, @project), @project.id, "Project", linkedin_publicise, facebook_publicise, twitter_publicise,  has_image) 
+      flash[:success] = "Project posted to your networks!"
+    end  
+    redirect_to user_project_path(@user, @project)
   end
 end

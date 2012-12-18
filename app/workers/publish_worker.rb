@@ -2,7 +2,7 @@ class PublishWorker
   include Sidekiq::Worker
   sidekiq_options retry: true
   
-  def perform(user_id, post_url, postable_id, postable_type, linkedin_publicise, facebook_publicise, twitter_publicise)
+  def perform(user_id, post_url, postable_id, postable_type, linkedin_publicise, facebook_publicise, twitter_publicise, has_image)
     user = User.find(user_id)
     
     if postable_type == "Topic"
@@ -55,7 +55,7 @@ class PublishWorker
     if linkedin_auth && linkedin_publicise
       client = LinkedIn::Client.new(ENV["LINKEDIN_CONSUMER_KEY"], ENV["LINKEDIN_CONSUMER_SECRET"])
       client.authorize_from_access(linkedin_auth.oauth_token, linkedin_auth.oauth_token_secret) 
-      if postable_type == "Topic" && postable.topicdraftimages.first.nil?
+      if postable_type == "Topic" && !has_image
         client.add_share({
               comment: "has posted a new topic via TopicHog",
               content: {
@@ -65,7 +65,7 @@ class PublishWorker
               description: postable.summary
               }
             }) 
-     elsif postable_type == "Topic" && !postable.topicdraftimages.first.nil?
+     elsif postable_type == "Topic" && has_image
         client.add_share({
               comment: "has posted a new topic via TopicHog",
               content: {
@@ -75,7 +75,7 @@ class PublishWorker
               description: postable.summary
               }
             })                   
-      elsif postable_type == "Project" && postable.projectdraftimages.first.nil?
+      elsif postable_type == "Project" && !has_image
         client.add_share({
               comment: "has posted a new project via TopicHog",
               content: {
@@ -86,7 +86,7 @@ class PublishWorker
               }
             })   
     
-      elsif postable_type == "Project" && !postable.projectdraftimages.first.nil?
+      elsif postable_type == "Project" && has_image
         client.add_share({
               comment: "has posted a new project via TopicHog",
               content: {

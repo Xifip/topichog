@@ -22,10 +22,15 @@ class TopicsController < ApplicationController
       linkedin_publicise = params[:linkedin_pub] == '1' ? true : false 
       facebook_publicise = params[:facebook_pub] == '1' ? true : false 
       twitter_publicise = params[:twitter_pub] == '1' ? true : false 
+    if @topic.topicdraftimages.count > 0
+      has_image = true
+    elsif @topic.topicdraftimages.count == 0
+      has_image = false
+    end     
      if !linkedin_publicise && !facebook_publicise && !twitter_publicise
       flash[:failure] = "You need to select the networks that you want to post to!"
      else
-       PublishWorker.perform_async(current_user.id, user_topic_url(@user, @topic), @topic.id, "Topic", linkedin_publicise, facebook_publicise, twitter_publicise) 
+       PublishWorker.perform_async(current_user.id, user_topic_url(@user, @topic), @topic.id, "Topic", linkedin_publicise, facebook_publicise, twitter_publicise, has_image) 
        flash[:success] = "Topic posted to your networks!"
      end  
      redirect_to user_topic_path(@user, @topic)
