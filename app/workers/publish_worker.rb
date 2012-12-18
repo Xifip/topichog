@@ -71,7 +71,7 @@ class PublishWorker
               content: {
               title: postable.title,
               'submitted-url' => post_url,
-              'submitted-image-url' => postable.topicdraftimages.first.image_url(:large).to_s,,
+              'submitted-image-url' => postable.topicdraftimages.first.image_url(:large).to_s,
               description: postable.summary
               }
             })                   
@@ -81,7 +81,7 @@ class PublishWorker
               content: {
               title: postable.title,
               'submitted-url' => post_url,
-              'submitted-image-url' => "https://topichogire.s3.amazonaws.com/assets/logo_180.png"
+              'submitted-image-url' => "https://topichogire.s3.amazonaws.com/assets/logo_180.png",
               description: postable.summary
               }
             })   
