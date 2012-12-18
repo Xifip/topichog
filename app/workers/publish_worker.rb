@@ -55,17 +55,17 @@ class PublishWorker
     if linkedin_auth && linkedin_publicise
       client = LinkedIn::Client.new(ENV["LINKEDIN_CONSUMER_KEY"], ENV["LINKEDIN_CONSUMER_SECRET"])
       client.authorize_from_access(linkedin_auth.oauth_token, linkedin_auth.oauth_token_secret) 
-      if postable_type == "Topic"
+      if postable_type == "Topic" && postable.topicdraftimages.first.nil?
         client.add_share({
               comment: "has posted a new topic via TopicHog",
               content: {
               title: postable.title,
               'submitted-url' => post_url,
-              'submitted-image-url' => postable.topicdraftimages.first.image_url(:large).to_s,
+              'submitted-image-url' => "https://topichogire.s3.amazonaws.com/assets/logo_180.png",
               description: postable.summary
               }
             })      
-      elsif postable_type == "Project"
+      elsif postable_type == "Project" && !postable.projectdraftimages.first.nil?
         client.add_share({
               comment: "has posted a new project via TopicHog",
               content: {
@@ -75,6 +75,26 @@ class PublishWorker
               description: postable.summary
               }
             })   
+     elsif postable_type == "Topic" && postable.topicdraftimages.first.nil?
+        client.add_share({
+              comment: "has posted a new topic via TopicHog",
+              content: {
+              title: postable.title,
+              'submitted-url' => post_url,
+              'submitted-image-url' => "https://topichogire.s3.amazonaws.com/assets/logo_180.png",
+              description: postable.summary
+              }
+            })      
+      elsif postable_type == "Project" && !postable.projectdraftimages.first.nil?
+        client.add_share({
+              comment: "has posted a new project via TopicHog",
+              content: {
+              title: postable.title,
+              'submitted-url' => post_url,
+              'submitted-image-url' => postable.projectdraftimages.first.image_url(:large).to_s,
+              description: postable.summary
+              }
+            })               
       end                                
     end
     
