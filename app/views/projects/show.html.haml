@@ -20,7 +20,7 @@
   -if @projectdraftimage
     = tag :meta, name: "twitter:image", content: image_path(@projectdraftimage.image_url(:large).to_s)    
   -else
-    = tag :meta, name: "twitter:image", content: image_path"https://topichogire.s3.amazonaws.com/assets/logo_180.png")
+    = tag :meta, name: "twitter:image", content: image_path("https://topichogire.s3.amazonaws.com/assets/logo_180.png")
   = tag :meta, name: "twitter:site", content: "@topichog"  
 .row
   %aside.span4
