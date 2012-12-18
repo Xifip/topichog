@@ -3,7 +3,7 @@
   = tag :meta, property: "og:type", content: "article"     
   = tag :meta, property: "og:url", content: user_topic_url(@user, @topic)
   = tag :meta, property: "og:site_name", content: "topichog"
-  -if @topicdraftimage
+  -if !@topicdraftimage.nil?
     = tag :meta, property: "og:image", content: image_path(@topicdraftimage.image_url(:large).to_s)
   -else
     = tag :meta, property: "og:image", content: image_path("https://topichogire.s3.amazonaws.com/assets/logo_180.png")
@@ -17,7 +17,7 @@
   = tag :meta, name: "twitter:url", content: user_topic_url(@user, @topic) 
   = tag :meta, name: "twitter:title", content: @topic.title    
   = tag :meta, name: "twitter:description", content: @topic.summary     
-  -if @topicdraftimage
+  -if !@topicdraftimage.nil?
     = tag :meta, name: "twitter:image", content: image_path(@topicdraftimage.image_url(:large).to_s)    
   -else
     = tag :meta, name: "twitter:image", content: image_path("https://topichogire.s3.amazonaws.com/assets/logo_180.png")
