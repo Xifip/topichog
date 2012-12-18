@@ -84,8 +84,7 @@ class PublishWorker
               'submitted-image-url' => "https://topichogire.s3.amazonaws.com/assets/logo_180.png",
               description: postable.summary
               }
-            })   
-    
+            })       
       elsif postable_type == "Project" && has_image
         client.add_share({
               comment: "has posted a new project via TopicHog",

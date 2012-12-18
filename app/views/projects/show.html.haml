@@ -42,9 +42,9 @@
       .span8
         .row   
           .span1
-            -if @projectdraftimage
+            -if !@projectdraftimage.nil?
               = image_tag(@projectdraftimage.image_url(:thumb).to_s, alt: "", class: "img-polaroid row")
-            -if !@projectdraftimage
+            -if @projectdraftimage.nil?
               = avatar_for @user, size: 52                              
           .span5
             %h3         
