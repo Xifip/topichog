@@ -11,6 +11,7 @@ module UsersHelper
     twitter_auth = user.authentications.find_by_provider('twitter')
     facebook_auth = user.authentications.find_by_provider('facebook')
     linkedin_auth = user.authentications.find_by_provider('linkedin')   
+    
     if user.avatar.image?
       image_tag(user.avatar.image_url(:thumb).to_s, alt: user.name, class: "img-polaroid avatar")
     elsif linkedin_auth

@@ -14,7 +14,7 @@ describe "Static pages" do
       let(:user) { FactoryGirl.create(:user) }
       before { visit root_path }
       it { should have_selector('h1',
-            text: 'TopicHog Beta') }
+            text: 'TopicHog') }
       it { should have_xpath("//img[@src=\"/assets/wild-boar.png\"]") }
       it { should have_selector('title', text: full_title('')) }
       it { should have_link("Home", href: root_path) }

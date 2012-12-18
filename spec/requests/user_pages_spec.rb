@@ -72,7 +72,7 @@ describe "User pages" do
       it { should have_selector('title', text: full_title(user.name)) }
       it { should have_selector('h4', text: user.name) }
       it { should_not have_link('view my profile', href: user_path(user)) }
-      it { should have_link('edit profile', href: edit_profile_path(user)) }  
+      it { should have_link('edit profile', href: edit_profile_path(user.profile)) }  
       it { should have_content(user.profile.bio) }
       it { should have_link('my twitter', href: user.profile.twitter_url) }
       it { should have_link('my facebook', href: user.profile.facebook_url) }

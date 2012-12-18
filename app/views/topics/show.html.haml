@@ -3,7 +3,10 @@
   = tag :meta, property: "og:type", content: "article"     
   = tag :meta, property: "og:url", content: user_topic_url(@user, @topic)
   = tag :meta, property: "og:site_name", content: "topichog"
-  = tag :meta, property: "og:image", content: image_path(@topicdraftimage.image_url(:large).to_s)
+  -if @topicdraftimage
+    = tag :meta, property: "og:image", content: image_path(@topicdraftimage.image_url(:large).to_s)
+  -else
+    = tag :meta, property: "og:image", content: image_path(topicdraftimage_for(@topic).to_s)
   = tag :meta, property: "og:title", content: @topic.title
   = tag :meta, property: "og:description", content: @topic.summary
   = tag :meta, property: "article:published_time", content: @topic.created_at
@@ -14,7 +17,10 @@
   = tag :meta, name: "twitter:url", content: user_topic_url(@user, @topic) 
   = tag :meta, name: "twitter:title", content: @topic.title    
   = tag :meta, name: "twitter:description", content: @topic.summary     
-  = tag :meta, name: "twitter:image", content: image_path(@topicdraftimage.image_url(:large).to_s)    
+  -if @topicdraftimage
+    = tag :meta, name: "twitter:image", content: image_path(@topicdraftimage.image_url(:large).to_s)    
+  -else
+    = tag :meta, name: "twitter:image", content: image_path(topicdraftimage_for(@topic).to_s)
   = tag :meta, name: "twitter:site", content: "@topichog"
 .row
   %aside.span4

@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
- 
+  include UsersHelper
+
   def show 
     @project_user = User.find_by_id(params[:user_id]) 
     @post = @project_user.posts.project_with_postable_id(params[:id])
