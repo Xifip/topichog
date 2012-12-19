@@ -49,7 +49,11 @@ class PublishWorker
         :oauth_token => twitter_auth.oauth_token,
         :oauth_token_secret => twitter_auth.oauth_token_secret
       )       
-      client.update(tweet_text) if tweet_text.length <= 140        
+      client.update(tweet_text) if tweet_text.length <= 140
+      rescue Twitter::Error
+        flash[:error] = "You can't post duplicate posts to twitter!" 
+      rescue Exception
+        flash[:error] = "Woops there was an error posting to your network!"        
     end
            
     if linkedin_auth && linkedin_publicise

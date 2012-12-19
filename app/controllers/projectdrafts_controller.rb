@@ -130,7 +130,7 @@ class ProjectdraftsController < ApplicationController
       if @post.save      
         @post.user.tag(@post, :with =>  @project.tag_list, :on => :tags)          
         flash[:success] = "Project published!"     
-        redirect_to user_path(@post.user)
+        redirect_to user_project_path(@post.user, @project)
       else
         @user = @post.user  
         @project.destroy 
@@ -165,7 +165,7 @@ class ProjectdraftsController < ApplicationController
                                    
       @post.user.tag(@post, :with =>  @project.tag_list, :on => :tags)
       flash[:success] = "Project published!"        
-      redirect_to user_path(@user)                                   
+      redirect_to user_project_path(@post.user, @project)                                   
     else
       @user = current_user   
       render :edit
