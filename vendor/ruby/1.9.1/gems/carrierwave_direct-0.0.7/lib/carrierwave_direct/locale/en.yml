@@ -1,0 +1,7 @@
+en:
+  errors:
+    messages:
+      carrierwave_direct_filename_taken: filename was already taken
+      carrierwave_direct_upload_missing: upload is missing
+      carrierwave_direct_attachment_missing: attachment is missing
+

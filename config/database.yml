@@ -25,13 +25,13 @@
 #  timeout: 5000
 
 
-  
+
 development:
   adapter: postgresql
   encoding: unicode
   database: topichog_development
   pool: 25
-  username: johncostello
+  username: john
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -57,8 +57,8 @@ test:
   encoding: unicode
   database: topichog_test
   pool: 5
-  username: johncostello
-  password:  
-  
+  username: john
+  password:
+
 #cucumber:
 #  <<: *test  
